@@ -3,352 +3,539 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Animado</title>
+  <title>Sistema de Autenticación</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-      background-size: 400% 400%;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      animation: gradientBG 15s ease infinite;
-      overflow: hidden;
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* Contenedor de texto de bienvenida */
-    .welcome-text {
-      position: absolute;
-      text-align: center;
-      animation: fadeOut 1s ease 3s forwards;
-    }
-
-    .welcome-text h1 {
-      font-size: 80px;
-      color: #fff;
-      margin: 0;
-      text-shadow: 0 0 30px rgba(255, 255, 255, 0.8),
-                   0 0 60px rgba(255, 255, 255, 0.6),
-                   0 5px 15px rgba(0, 0, 0, 0.3);
-      font-weight: 800;
-      letter-spacing: 5px;
-    }
-
-    /* Animación de cada letra con colores diferentes */
-    .welcome-text h1 span {
-      display: inline-block;
-      opacity: 0;
-      animation: letterPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-    }
-
-    .welcome-text h1 span:nth-child(1) {
-      animation-delay: 0.1s;
-      color: #ff6b6b;
-    }
-    .welcome-text h1 span:nth-child(2) {
-      animation-delay: 0.2s;
-      color: #ffd93d;
-    }
-    .welcome-text h1 span:nth-child(3) {
-      animation-delay: 0.3s;
-      color: #6bcf7f;
-    }
-    .welcome-text h1 span:nth-child(4) {
-      animation-delay: 0.4s;
-      color: #4ecdc4;
-    }
-    .welcome-text h1 span:nth-child(5) {
-      animation-delay: 0.5s;
-      color: #45b7d1;
-    }
-    .welcome-text h1 span:nth-child(6) {
-      animation-delay: 0.6s;
-      color: #a55eea;
-    }
-    .welcome-text h1 span:nth-child(7) {
-      animation-delay: 0.7s;
-      color: #fc5c65;
-    }
-    .welcome-text h1 span:nth-child(8) {
-      animation-delay: 0.8s;
-      color: #fed330;
-    }
-    .welcome-text h1 span:nth-child(9) {
-      animation-delay: 0.9s;
-      color: #26de81;
-    }
-    .welcome-text h1 span:nth-child(10) {
-      animation-delay: 1s;
-      color: #fd79a8;
-    }
-
-    @keyframes letterPop {
-      0% {
-        opacity: 0;
-        transform: translateY(-100px) rotate(-180deg) scale(0);
-      }
-      60% {
-        transform: translateY(10px) rotate(10deg) scale(1.3);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) rotate(0) scale(1);
-      }
-    }
-
-    @keyframes fadeOut {
-      to {
-        opacity: 0;
-        transform: scale(1.5);
-        filter: blur(10px);
-        pointer-events: none;
-      }
-    }
-
-    /* Contenedor del login */
-    .login-container {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 3px solid rgba(255, 255, 255, 1);
-      padding: 50px 40px;
-      border-radius: 30px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3),
-                  0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-      width: 340px;
-      text-align: center;
-      opacity: 0;
-      animation: showLogin 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) 3.5s forwards;
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      padding: 20px;
       position: relative;
       overflow: hidden;
     }
 
-    /* Efecto de brillo animado en el fondo del login */
-    .login-container::before {
+    /* Efecto de fondo animado sutil */
+    body::before {
       content: '';
       position: absolute;
-      top: -50%;
-      left: -50%;
       width: 200%;
       height: 200%;
-      background: linear-gradient(
-        45deg,
-        transparent,
-        rgba(255, 107, 107, 0.1),
-        transparent,
-        rgba(69, 183, 209, 0.1),
-        transparent
-      );
-      animation: rotateBg 4s linear infinite;
-      z-index: 0;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      animation: backgroundMove 20s linear infinite;
     }
 
-    @keyframes rotateBg {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    @keyframes backgroundMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(50px, 50px); }
     }
 
-    .login-container > * {
+    /* Contenedor principal */
+    .auth-container {
       position: relative;
+      width: 100%;
+      max-width: 1000px;
+      height: 600px;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 16px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
       z-index: 1;
     }
 
-    @keyframes showLogin {
-      0% {
-        opacity: 0;
-        transform: translateY(-100px) scale(0.5) rotate(-10deg);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0) scale(1) rotate(0deg);
-      }
+    /* Contenedores de formularios */
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      padding: 60px 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      background: white;
     }
 
-    .login-container h2 {
-      margin-bottom: 30px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+    .login-container {
+      left: 0;
+      z-index: 2;
+    }
+
+    .register-container {
+      left: 0;
+      opacity: 0;
+      z-index: 1;
+    }
+
+    .auth-container.active .login-container {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .auth-container.active .register-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+    }
+
+    .form-header {
+      margin-bottom: 40px;
+    }
+
+    .form-header h2 {
       font-size: 32px;
-      font-weight: 800;
-      opacity: 0;
-      animation: fadeInDown 0.6s ease 4s forwards;
+      font-weight: 700;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+      letter-spacing: -0.5px;
     }
 
-    @keyframes fadeInDown {
-      0% {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .form-header p {
+      color: #6b7280;
+      font-size: 15px;
+      font-weight: 400;
     }
 
-    .login-container input {
-      width: 100%;
-      padding: 15px 20px;
-      margin: 12px 0;
-      border: 2px solid transparent;
-      border-radius: 15px;
-      outline: none;
-      background: linear-gradient(white, white) padding-box,
-                  linear-gradient(135deg, #667eea, #764ba2) border-box;
-      color: #333;
-      font-size: 16px;
-      transition: all 0.3s ease;
-      opacity: 0;
-      animation: slideInLeft 0.6s ease forwards;
-      box-sizing: border-box;
+    /* Grupos de input */
+    .input-wrapper {
+      margin-bottom: 24px;
+    }
+
+    .input-wrapper label {
+      display: block;
+      margin-bottom: 8px;
+      color: #374151;
+      font-size: 14px;
       font-weight: 500;
     }
 
-    .login-container input:nth-of-type(1) {
-      animation-delay: 4.2s;
+    .input-group {
+      position: relative;
     }
 
-    .login-container input:nth-of-type(2) {
-      animation-delay: 4.4s;
-    }
-
-    @keyframes slideInLeft {
-      0% {
-        opacity: 0;
-        transform: translateX(-50px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    .login-container input::placeholder {
-      color: #999;
-    }
-
-    .login-container input:focus {
-      background: linear-gradient(#f8f9ff, #f8f9ff) padding-box,
-                  linear-gradient(135deg, #667eea, #764ba2) border-box;
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-    }
-
-    .login-container button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 15px;
-      border: none;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
+    .input-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #9ca3af;
       font-size: 18px;
-      font-weight: 700;
-      border-radius: 15px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 15px;
+      color: #1f2937;
+      background: #ffffff;
+      transition: all 0.3s ease;
+      font-weight: 400;
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: #6366f1;
+      background: #fafbff;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+    }
+
+    .input-group input::placeholder {
+      color: #9ca3af;
+    }
+
+    /* Opciones adicionales */
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #6b7280;
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .forgot-link:hover {
+      color: #4f46e5;
+    }
+
+    /* Botones */
+    .btn-primary {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-      opacity: 0;
-      animation: bounceIn 0.8s ease 4.6s forwards;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
     }
 
-    @keyframes bounceIn {
-      0% {
-        opacity: 0;
-        transform: scale(0.3) translateY(50px);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-      70% {
-        transform: scale(0.95);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1) translateY(0);
-      }
-    }
-
-    .login-container button:hover {
-      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-      transform: translateY(-5px);
-      box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
-    }
-
-    .login-container button:active {
+    .btn-primary:hover {
       transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
     }
 
-    /* Partículas decorativas */
-    .particle {
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+
+    /* Separador */
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 24px 0;
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+
+    .divider span {
+      padding: 0 16px;
+    }
+
+    /* Botones sociales */
+    .social-buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn-social {
+      flex: 1;
+      padding: 12px;
+      border: 1.5px solid #e5e7eb;
+      background: white;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-social:hover {
+      background: #f9fafb;
+      border-color: #d1d5db;
+    }
+
+    /* Panel Overlay */
+    .overlay-container {
       position: absolute;
-      width: 10px;
-      height: 10px;
-      background: rgba(255, 255, 255, 0.5);
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      z-index: 100;
+    }
+
+    .auth-container.active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    .overlay {
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+      color: white;
+      position: relative;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .auth-container.active .overlay {
+      transform: translateX(50%);
+    }
+
+    .overlay-panel {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px 50px;
+      text-align: center;
+      top: 0;
+      height: 100%;
+      width: 50%;
+      transform: translateX(0);
+      transition: transform 0.7s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+
+    .auth-container.active .overlay-left {
+      transform: translateX(0);
+    }
+
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .auth-container.active .overlay-right {
+      transform: translateX(20%);
+    }
+
+    .overlay-panel h2 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px;
+    }
+
+    .overlay-panel p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 32px;
+      font-size: 15px;
+      line-height: 1.6;
+      max-width: 320px;
+    }
+
+    .overlay-icon {
+      width: 80px;
+      height: 80px;
+      background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
-      pointer-events: none;
-      animation: float 6s infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 32px;
+      backdrop-filter: blur(10px);
     }
 
-    .particle:nth-child(1) {
-      top: 10%;
-      left: 20%;
-      animation-delay: 0s;
+    .btn-ghost {
+      padding: 14px 40px;
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    .particle:nth-child(2) {
-      top: 60%;
-      left: 80%;
-      animation-delay: 2s;
+    .btn-ghost:hover {
+      background: white;
+      color: #6366f1;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
-    .particle:nth-child(3) {
-      top: 30%;
-      left: 70%;
-      animation-delay: 4s;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0) translateX(0);
-        opacity: 0;
+    /* Responsive */
+    @media (max-width: 968px) {
+      .auth-container {
+        flex-direction: column;
+        height: auto;
+        max-width: 450px;
       }
-      50% {
-        transform: translateY(-100px) translateX(50px);
+
+      .form-container,
+      .overlay-container {
+        width: 100%;
+        position: relative;
+      }
+
+      .overlay-container {
+        display: none;
+      }
+
+      .register-container {
+        position: relative;
+        transform: none;
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+      }
+
+      .auth-container.active .register-container {
         opacity: 1;
+        height: auto;
+      }
+
+      .login-container {
+        position: relative;
+      }
+
+      .auth-container.active .login-container {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
-  <!-- Partículas decorativas -->
-  <div class="particle"></div>
-  <div class="particle"></div>
-  <div class="particle"></div>
+  <div class="auth-container" id="authContainer">
+    <!-- Formulario de Login -->
+    <div class="form-container login-container">
+      <div class="form-header">
+        <h2>Iniciar Sesión</h2>
+        <p>Accede a tu cuenta para continuar</p>
+      </div>
 
-  <!-- Texto de bienvenida -->
-  <div class="welcome-text">
-    <h1>
-      <span>B</span><span>i</span><span>e</span><span>n</span><span>v</span><span>e</span><span>n</span><span>i</span><span>d</span><span>o</span>
-    </h1>
+      <div class="input-wrapper">
+        <label>Correo electrónico</label>
+        <div class="input-group">
+          <span class="input-icon">✉</span>
+          <input type="email" placeholder="tu@email.com" required>
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <label>Contraseña</label>
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" placeholder="Ingresa tu contraseña" required>
+        </div>
+      </div>
+
+      <div class="form-options">
+        <label class="remember-me">
+          <input type="checkbox">
+          <span>Recordarme</span>
+        </label>
+        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button class="btn-primary">Iniciar Sesión</button>
+
+      <div class="divider">
+        <span>o continúa con</span>
+      </div>
+
+      <div class="social-buttons">
+        <button class="btn-social">
+          <span>G</span> Google
+        </button>
+        <button class="btn-social">
+          <span>M</span> Microsoft
+        </button>
+      </div>
+    </div>
+
+    <!-- Formulario de Registro -->
+    <div class="form-container register-container">
+      <div class="form-header">
+        <h2>Crear Cuenta</h2>
+        <p>Completa el formulario para registrarte</p>
+      </div>
+
+      <div class="input-wrapper">
+        <label>Nombre completo</label>
+        <div class="input-group">
+          <span class="input-icon">👤</span>
+          <input type="text" placeholder="Juan Pérez" required>
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <label>Correo electrónico</label>
+        <div class="input-group">
+          <span class="input-icon">✉</span>
+          <input type="email" placeholder="tu@email.com" required>
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <label>Contraseña</label>
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" placeholder="Mínimo 8 caracteres" required>
+        </div>
+      </div>
+
+      <div class="input-wrapper">
+        <label>Confirmar contraseña</label>
+        <div class="input-group">
+          <span class="input-icon">🔒</span>
+          <input type="password" placeholder="Repite tu contraseña" required>
+        </div>
+      </div>
+
+      <button class="btn-primary">Crear Cuenta</button>
+    </div>
+
+    <!-- Panel Overlay -->
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <div class="overlay-icon">👋</div>
+          <h2>¡Bienvenido de vuelta!</h2>
+          <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
+          <button class="btn-ghost" id="signIn">Iniciar Sesión</button>
+        </div>
+
+        <div class="overlay-panel overlay-right">
+          <div class="overlay-icon">🚀</div>
+          <h2>¡Hola, Amigo!</h2>
+          <p>Ingresa tus datos personales y comienza tu viaje con nosotros</p>
+          <button class="btn-ghost" id="signUp">Registrarse</button>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <!-- Formulario de login -->
-  <div class="login-container">
-    <h2>Iniciar Sesión</h2>
-    <input type="text" placeholder="👤 Usuario">
-    <input type="password" placeholder="🔒 Contraseña">
-    <button>Entrar</button>
-  </div>
+  <script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('authContainer');
+
+    signUpButton.addEventListener('click', () => {
+      container.classList.add('active');
+    });
+
+    signInButton.addEventListener('click', () => {
+      container.classList.remove('active');
+    });
+  </script>
 </body>
 </html>
