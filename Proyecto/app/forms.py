@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models import fields
-from .models import Administrador, Estudiante
+from .models import Administrador, Estudiante, Evaluaciones
 
 class Login1(forms.Form):
     email = forms.EmailField(
@@ -31,6 +31,10 @@ class EstudianteForm(forms.ModelForm):
         model = Estudiante
         fields = ['nombre', 'apellido', 'correo', 'direccion', 'telefono']
 
+class EvaluacionesForm(forms.ModelForm):
+    class Meta:
+        model = Evaluaciones
+        fields = ['Materia', 'Periodo', 'Pendiente', 'archivo']
 
 
 

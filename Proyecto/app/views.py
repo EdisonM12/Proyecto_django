@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import Login1, EstudianteForm
-from .models import Estudiante
+from .forms import Login1, EstudianteForm, EvaluacionesForm
+from .models import Estudiante, Evaluaciones
 
 # LOGIN
 def home(request):
     form = Login1(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        return redirect("estudiantes_tabla")  # redirige al CRUD
+        return redirect("evaluaciones_tabla")  # redirige al CRUD
     return render(request, "app/login.html", {"form": form})
 
 
@@ -48,3 +48,42 @@ def eliminar_estudiante(request, id):
         estudiante.delete()
         return redirect("estudiantes_tabla")
     return render(request, "app/delete.html", {"estudiante": estudiante})
+
+
+
+
+
+#EVALUACIONES
+#CREAR EVALIUACIONES
+def list_evaluacion(request):
+    evalua = Evaluaciones.objects.all()
+    return render(request, "eval/list_eva.html", {"evaluaciones": evalua})
+
+def crear_evaluaciones(request):
+    if request.method == "POST":
+        form = EvaluacionesForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("evaluaciones_tabla")
+    else:
+        form = EvaluacionesForm()
+    return render(request, "eval/evaluaciones_form.html", {"form": form, "accion": "Crear"})
+
+def actualizar_Evaluacion(request, id):
+    evaluar1 = get_object_or_404(Evaluaciones, id=id)
+    if request.method == "POST":
+        form = EvaluacionesForm(request.POST, request.FILES, instance=evaluar1)
+        if form.is_valid():
+            form.save()
+            return redirect("evaluaciones_tabla")
+    else:
+        form = EvaluacionesForm(instance=evaluar1)
+    return render(request, "eval/evaluaciones_form.html", {"form": form, "accion": "Editar"})
+
+def eliminar_evalu(request, id):
+    eval = get_object_or_404(Evaluaciones, id=id)
+    if request.method == "POST":
+        eval.delete()
+        return redirect("estudiantes_tabla")
+    return render(request, "eval/deletefo.html", {"estudiante": eval})
+

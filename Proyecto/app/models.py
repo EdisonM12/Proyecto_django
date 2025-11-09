@@ -17,3 +17,10 @@ class Estudiante(models.Model):
     direccion = models.CharField(max_length=255)
     telefono = models.IntegerField(unique=True)
 
+class Evaluaciones(models.Model):
+    Materia = models.CharField(max_length=255)
+    Periodo = models.CharField(max_length=255)
+    Pendiente = models.BooleanField()
+    archivo = models.FileField(upload_to='pdfs/', null=True, blank=True)  # campo para PDF opcional
+
+
