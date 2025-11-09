@@ -1,0 +1,10 @@
+{% extends "curso/home_curso.html" %}
+{% block content %}
+<h1>Eliminar</h1>
+<p>¿Seguro que deseas eliminar a <strong>{{ profesor.nombre }}</strong>?</p>
+<form method="post">
+  {% csrf_token %}
+  <button class="btn btn-danger">Sí, eliminar</button>
+  <a class="btn btn-secondary" href="{% url 'app:listar_profesor' %}">Cancelar</a>
+</form>
+{% endblock %}
