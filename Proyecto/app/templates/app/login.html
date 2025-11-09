@@ -3,150 +3,203 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sistema de Autenticación</title>
-<link rel="stylesheet" href="{% static 'css/primero.css' %}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login Administrador</title>
+  <link rel="stylesheet" href="{% static 'css/primero.css' %}" />
+  <style>
+    /* Ocultar login inicialmente */
+    .login-container {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+      max-width: 420px;
+      margin: auto;
+    }
 
+    /* Mostrar login con animación */
+    .login-container.show {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Estilos para el mensaje inicial */
+    .welcome-message {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: #1e40af; /* Azul intenso */
+      text-align: center;
+      padding: 60px 20px;
+      border-radius: 16px;
+      background-color: #dbeafe; /* Azul muy claro */
+      box-shadow: 0 12px 30px rgba(30, 64, 175, 0.3);
+      max-width: 420px;
+      margin: 80px auto;
+      min-height: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 1;
+      transition: opacity 0.7s ease;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .welcome-message.fade-out {
+      opacity: 0;
+    }
+
+    body {
+      background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* Estilos mejorados para el login */
+    .title {
+      text-align: center;
+      font-size: 2.6rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: #1e3a8a; /* Azul oscuro */
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 1.15rem;
+      margin-bottom: 30px;
+      color: #4b5563; /* Gris oscuro */
+      font-weight: 500;
+    }
+
+    .input-wrapper {
+      margin-bottom: 22px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-wrapper label {
+      margin-bottom: 8px;
+      font-weight: 700;
+      color: #374151; /* Gris oscuro */
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .input-wrapper input {
+      padding: 15px 18px;
+      font-size: 16px;
+      border: 2px solid #9ca3af; /* Gris medio */
+      border-radius: 12px;
+      outline: none;
+      width: 100%;
+      background-color: #f9fafb;
+      font-weight: 500;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .input-wrapper input::placeholder {
+      color: #6b7280; /* Gris suave */
+    }
+
+    .input-wrapper input:focus {
+      border-color: #2563eb; /* Azul profesional */
+      box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
+      background-color: #ffffff;
+    }
+
+    .error-message {
+      margin-top: 6px;
+      font-size: 14px;
+      color: #dc2626; /* Rojo alerta */
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 18px;
+      background-color: #2563eb; /* Azul profesional */
+      color: white;
+      font-size: 18px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(37, 99, 235, 0.5);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background-color: #1e40af; /* Azul más oscuro */
+      box-shadow: 0 7px 25px rgba(30, 64, 175, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.97);
+      box-shadow: 0 3px 10px rgba(30, 64, 175, 0.7);
+    }
+  </style>
 </head>
 <body>
-  <!-- Texto de bienvenida -->
-  <div class="welcome-text" id="welcomeText">
-    <svg viewBox="0 0 800 150">
-      <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle">
-        BIENVENIDO
-      </text>
-    </svg>
+
+  <div class="welcome-message" id="welcomeMessage">
+    Bienvenido al Sistema Escolar
   </div>
 
-  <div class="auth-container" id="authContainer">
-    <!-- Formulario de Login -->
-    <div class="form-container login-container">
-      <div class="form-header">
-        <h2>Iniciar Sesión</h2>
-        <p>Accede a tu cuenta para continuar</p>
+  <div class="login-container" id="loginContainer">
+
+    <h1 class="title">Sistema Escolar</h1>
+    <p class="subtitle">Ingresa tus credenciales para continuar</p>
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="input-wrapper">
+        <label for="email">Correo electrónico</label>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <p class="error-message">{{ form.email.errors.0 }}</p>
+        {% endif %}
       </div>
 
       <div class="input-wrapper">
-        <label>Correo electrónico</label>
-        <div class="input-group">
-          <span class="input-icon">✉</span>
-          <input type="email" placeholder="tu@email.com" required>
-        </div>
+        <label for="password">Contraseña</label>
+        {{ form.password }}
+        {% if form.password.errors %}
+          <p class="error-message">{{ form.password.errors.0 }}</p>
+        {% endif %}
       </div>
 
-      <div class="input-wrapper">
-        <label>Contraseña</label>
-        <div class="input-group">
-          <span class="input-icon">🔒</span>
-          <input type="password" placeholder="Ingresa tu contraseña" required>
-        </div>
-      </div>
+      {% if form.non_field_errors %}
+        <p class="error-message">{{ form.non_field_errors.0 }}</p>
+      {% endif %}
 
-      <div class="form-options">
-        <label class="remember-me">
-          <input type="checkbox">
-          <span>Recordarme</span>
-        </label>
-        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
-      </div>
+      <button type="submit" class="btn-primary">Iniciar Sesión</button>
 
-      <button class="btn-primary">Iniciar Sesión</button>
+    </form>
 
-      <div class="divider">
-        <span>o continúa con</span>
-      </div>
-
-      <div class="social-buttons">
-        <button class="btn-social">
-          <span>G</span> Google
-        </button>
-        <button class="btn-social">
-          <span>M</span> Microsoft
-        </button>
-      </div>
-    </div>
-
-    <!-- Formulario de Registro -->
-    <div class="form-container register-container">
-      <div class="form-header">
-        <h2>Crear Cuenta</h2>
-        <p>Completa el formulario para registrarte</p>
-      </div>
-
-      <div class="input-wrapper">
-        <label>Nombre completo</label>
-        <div class="input-group">
-          <span class="input-icon">👤</span>
-          <input type="text" placeholder="Juan Pérez" required>
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <label>Correo electrónico</label>
-        <div class="input-group">
-          <span class="input-icon">✉</span>
-          <input type="email" placeholder="tu@email.com" required>
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <label>Contraseña</label>
-        <div class="input-group">
-          <span class="input-icon">🔒</span>
-          <input type="password" placeholder="Mínimo 8 caracteres" required>
-        </div>
-      </div>
-
-      <div class="input-wrapper">
-        <label>Confirmar contraseña</label>
-        <div class="input-group">
-          <span class="input-icon">🔒</span>
-          <input type="password" placeholder="Repite tu contraseña" required>
-        </div>
-      </div>
-
-      <button class="btn-primary">Crear Cuenta</button>
-    </div>
-
-    <!-- Panel Overlay -->
-    <div class="overlay-container">
-      <div class="overlay">
-        <div class="overlay-panel overlay-left">
-          <div class="overlay-icon">👋</div>
-          <h2>¡Bienvenido de vuelta!</h2>
-          <p>Para mantenerte conectado con nosotros, inicia sesión con tu información personal</p>
-          <button class="btn-ghost" id="signIn">Iniciar Sesión</button>
-        </div>
-
-        <div class="overlay-panel overlay-right">
-          <div class="overlay-icon">🚀</div>
-          <h2>¡Hola, Amigo!</h2>
-          <p>Ingresa tus datos personales y comienza tu viaje con nosotros</p>
-          <button class="btn-ghost" id="signUp">Registrarse</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <script>
-    const signUpButton = document.getElementById('signUp');
-    const signInButton = document.getElementById('signIn');
-    const container = document.getElementById('authContainer');
-    const welcomeText = document.getElementById('welcomeText');
+    document.addEventListener('DOMContentLoaded', function () {
+      const welcomeMessage = document.getElementById('welcomeMessage');
+      const loginContainer = document.getElementById('loginContainer');
 
-    signUpButton.addEventListener('click', () => {
-      container.classList.add('active');
+      setTimeout(() => {
+        welcomeMessage.classList.add('fade-out');
+
+        setTimeout(() => {
+          welcomeMessage.style.display = 'none';
+          loginContainer.classList.add('show');
+        }, 700);
+      }, 3000);
     });
-
-    signInButton.addEventListener('click', () => {
-      container.classList.remove('active');
-    });
-
-    // Desvanecer el texto de bienvenida después de que termine de dibujarse
-    setTimeout(() => {
-      welcomeText.classList.add('fade-out');
-    }, 3500);
   </script>
 </body>
 </html>
