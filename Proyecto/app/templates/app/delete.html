@@ -10,7 +10,7 @@
     <form method="post" style="text-align:center;">
         {% csrf_token %}
         <button type="submit">Sí, eliminar</button>
-        <a href="{% url 'estudiantes_tabla' %}">Cancelar</a>
+        <a href="{% url 'app:listar_estudiantes' %}">Cancelar</a>
     </form>
 </body>
 </html>

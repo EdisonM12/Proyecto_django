@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import Login1, EstudianteForm, EvaluacionesForm
-from .models import Estudiante, Evaluaciones
+from .forms import Login1, EstudianteForm, EvaluacionesForm, CalificacionForm
+from .models import Estudiante, Evaluaciones, Calificacion
 
 # LOGIN
 def home(request):
@@ -16,7 +16,7 @@ def crear_estudiante(request):
         form = EstudianteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("estudiantes_tabla")
+            return redirect("app:listar_estudiantes")
     else:
         form = EstudianteForm()
     return render(request, "app/estudiante_form.html", {"form": form, "accion": "Crear"})
@@ -35,7 +35,7 @@ def actualizar_estudiante(request, id):
         form = EstudianteForm(request.POST, instance=estudiante)
         if form.is_valid():
             form.save()
-            return redirect("estudiantes_tabla")
+            return redirect("app:listar_estudiantes")
     else:
         form = EstudianteForm(instance=estudiante)
     return render(request, "app/estudiante_form.html", {"form": form, "accion": "Editar"})
@@ -46,7 +46,7 @@ def eliminar_estudiante(request, id):
     estudiante = get_object_or_404(Estudiante, id=id)
     if request.method == "POST":
         estudiante.delete()
-        return redirect("estudiantes_tabla")
+        return redirect("app:listar_estudiantes")
     return render(request, "app/delete.html", {"estudiante": estudiante})
 
 
@@ -64,7 +64,7 @@ def crear_evaluaciones(request):
         form = EvaluacionesForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("evaluaciones_tabla")
+            return redirect("app:evaluaciones_tabla")
     else:
         form = EvaluacionesForm()
     return render(request, "eval/evaluaciones_form.html", {"form": form, "accion": "Crear"})
@@ -75,7 +75,7 @@ def actualizar_Evaluacion(request, id):
         form = EvaluacionesForm(request.POST, request.FILES, instance=evaluar1)
         if form.is_valid():
             form.save()
-            return redirect("evaluaciones_tabla")
+            return redirect("app:evaluaciones_tabla")
     else:
         form = EvaluacionesForm(instance=evaluar1)
     return render(request, "eval/evaluaciones_form.html", {"form": form, "accion": "Editar"})
@@ -84,6 +84,38 @@ def eliminar_evalu(request, id):
     eval = get_object_or_404(Evaluaciones, id=id)
     if request.method == "POST":
         eval.delete()
-        return redirect("estudiantes_tabla")
+        return redirect("app:evaluaciones_tabla")
     return render(request, "eval/deletefo.html", {"estudiante": eval})
 
+def listar_calificaciones(request):
+    calificaciones = Calificacion.objects.all()
+    return render(request, "calificacion/listar_calificaciones.html", {
+        "calificaciones": calificaciones
+    })
+
+
+def crear_calificacion(request):
+    form = CalificacionForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("app:listar_calificaciones")
+    return render(request, "calificacion/crear_calificacion.html", {"form": form})
+
+
+def editar_calificacion(request, id):
+    calificacion = get_object_or_404(Calificacion, id=id)
+    form = CalificacionForm(request.POST or None, instance=calificacion)
+    if form.is_valid():
+        form.save()
+        return redirect("app:listar_calificaciones")
+    return render(request, "calificacion/editar_calificacion.html", {"form": form})
+
+
+def eliminar_calificacion(request, id):
+    calificacion = get_object_or_404(Calificacion, id=id)
+    if request.method == "POST":
+        calificacion.delete()
+        return redirect("app:listar_calificaciones")
+    return render(request, "calificacion/eliminar_calificacion.html", {
+        "calificacion": calificacion
+    })
