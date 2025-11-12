@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instituto Académico Horizonte</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">📚</div>
+            <span class="logo-text">Instituto Horizonte</span>
+        </div>
+        <nav class="nav">
+            <div class="nav-item">
+                <a href="#estudiantes">Estudiantes</a>
+                <div class="dropdown">
+                    <a href="#perfiles">Perfiles</a>
+                    <a href="#matricula">Matrícula</a>
+                    <a href="#calendario">Calendario</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#evaluacion">Evaluación</a>
+                <div class="dropdown">
+                    <a href="#examenes">Exámenes</a>
+                    <a href="#tareas">Tareas</a>
+                    <a href="#proyectos">Proyectos</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#cursos">Cursos</a>
+                <div class="dropdown">
+                    <a href="#matematicas">Matemáticas</a>
+                    <a href="#ciencias">Ciencias</a>
+                    <a href="#lengua">Lengua</a>
+                    <a href="#historia">Historia</a>
+                </div>
+            </div>
+            <div class="nav-item">
+                <a href="#notas">Notas</a>
+                <div class="dropdown">
+                    <a href="#primer-trimestre">Primer Trimestre</a>
+                    <a href="#segundo-trimestre">Segundo Trimestre</a>
+                    <a href="#tercer-trimestre">Tercer Trimestre</a>
+                </div>
+            </div>
+            <div class="separator">|</div>
+            <a href="#cerrar" class="logout">Cerrar Sesión</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Educación para todos.</h1>
+            <p class="hero-subtitle">Miles de estudiantes. Aprendizaje sin límites.</p>
+            <button class="cta-button">ACCEDER AL PORTAL</button>
+        </div>
+        <div class="floating-circle circle-1"></div>
+        <div class="floating-circle circle-2"></div>
+        <div class="floating-circle circle-3"></div>
+    </section>
+
+    <!-- Video/Image Section -->
+    <section class="about-section">
+        <div class="container">
+            <div class="about-content">
+                <div class="media-container">
+                    <img src="{% static 'img/1.jpg'%}"
+                        alt="Instituto Horizonte">
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", () => {
+                        // Lista de imágenes que rotarán
+                        const images = [
+                            "{% static 'img/1.jpg'%}",
+                            "{% static 'img/2.jpg'%}",
+                            "{% static 'img/3.jpg'%}"
+                        ];
+
+                        const imgElement = document.querySelector(".media-container img");
+                        let index = 0;
+
+                        // Cambia la imagen cada 4 segundos
+                        setInterval(() => {
+                            index = (index + 1) % images.length;
+                            imgElement.style.opacity = 0; // Efecto de desvanecimiento
+
+                            setTimeout(() => {
+                                imgElement.src = images[index];
+                                imgElement.style.opacity = 1;
+                            }, 500); // Cambia la imagen después del fade-out
+                        }, 4000);
+                    });
+                </script>
+                <div class="description">
+                    <h2>Instituto Académico Horizonte</h2>
+                    <p>Fundado en 1985, el Instituto Académico Horizonte es una institución educativa comprometida con
+                        la excelencia académica y el desarrollo integral de nuestros estudiantes. Con más de 35 años de
+                        experiencia, nos hemos convertido en un referente en educación de calidad, formando generaciones
+                        de profesionales exitosos.</p>
+                    <p>Nuestro equipo de docentes altamente calificados utiliza metodologías innovadoras que combinan la
+                        enseñanza tradicional con las últimas tecnologías educativas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission and Vision -->
+    <section class="mission-vision">
+        <div class="container">
+            <div class="mv-grid">
+                <div class="mv-card">
+                    <div class="mv-icon">🎯</div>
+                    <h3>Misión</h3>
+                    <p>Formar estudiantes íntegros con excelencia académica, valores éticos y competencias para
+                        enfrentar los desafíos del mundo contemporáneo, promoviendo el pensamiento crítico, la
+                        creatividad y el compromiso social.</p>
+                </div>
+                <div class="mv-card">
+                    <div class="mv-icon">🌟</div>
+                    <h3>Visión</h3>
+                    <p>Ser reconocidos como la institución educativa líder en innovación pedagógica y excelencia
+                        académica, formando ciudadanos globales que contribuyan al desarrollo sostenible de la sociedad.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements -->
+    <section class="achievements">
+        <div class="container">
+            <h2 class="section-title">Nuestros Logros</h2>
+            <div class="achievements-grid">
+                <div class="achievement-card">
+                    <div class="achievement-number">98%</div>
+                    <div class="achievement-label">Tasa de Aprobación</div>
+                    <p>Excelencia académica comprobada año tras año</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-number">15+</div>
+                    <div class="achievement-label">Premios Nacionales</div>
+                    <p>Reconocimientos en olimpiadas académicas</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-number">3500+</div>
+                    <div class="achievement-label">Egresados Exitosos</div>
+                    <p>Profesionales destacados en diversas áreas</p>
+                </div>
+                <div class="achievement-card">
+                    <div class="achievement-number">2020</div>
+                    <div class="achievement-label">Certificación ISO</div>
+                    <p>Calidad educativa certificada internacionalmente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Instituto Académico Horizonte. Todos los derechos reservados a grupo 6.</p>
+        </div>
+    </footer>
+</body>
+
+</html>

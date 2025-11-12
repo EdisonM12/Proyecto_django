@@ -3,11 +3,20 @@ from .forms import Login1, EstudianteForm, EvaluacionesForm, CalificacionForm
 from .models import Estudiante, Evaluaciones, Calificacion
 
 # LOGIN
+#def home(request):
+ #   form = Login1(request.POST or None)
+  #  if request.method == "POST" and form.is_valid():
+   #     return redirect("evaluaciones_tabla")  # redirige al CRUD
+    #return render(request, "app/login.html", {"form": form})
+#def home(request):
+ #   form = Login1(request.POST or None)
+  #  if request.method == "POST" and form.is_valid():
+   #     return redirect("evaluaciones_tabla")  # redirige al CRUD
+    #return render(request, "app/login.html", {"form": form})
+
 def home(request):
-    form = Login1(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        return redirect("evaluaciones_tabla")  # redirige al CRUD
-    return render(request, "app/login.html", {"form": form})
+
+    return render(request, "profesor/index_profesor.html")
 
 
 # CREAR ESTUDIANTE
