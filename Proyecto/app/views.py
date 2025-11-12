@@ -4,10 +4,22 @@ from .models import Estudiante, Evaluaciones
 
 # LOGIN
 def home(request):
-    form = Login1(request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        return redirect("evaluaciones_tabla")  # redirige al CRUD
-    return render(request, "app/login.html", {"form": form})
+
+    return render(request, "app/Inicio.html")
+
+def Login_Admin(request):
+    form = Login1()
+    if request.method == "POST":
+        form = Login1(request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            return redirect("app:inicio")
+
+    return render(request, "app/login.html", {"form" : form })
+
+def home_page(request):
+    return render(request, "app/Home_admin.html")
 
 
 # CREAR ESTUDIANTE
