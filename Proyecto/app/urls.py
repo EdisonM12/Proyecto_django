@@ -13,5 +13,7 @@ urlpatterns = [
     path('evaluaciones/<int:id>/editar/', views.actualizar_Evaluacion, name='actualizar_evaluaciones'),  # editar estudiante
     path('evaluaciones/<int:id>/eliminar/', views.eliminar_evalu, name='eliminar_evaluaciones'),
 
+
+     path('Home/', views.home1, name='home1'),
 ]
 

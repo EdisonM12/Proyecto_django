@@ -6,199 +6,600 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Login Administrador</title>
-  <link rel="stylesheet" href="{% static 'css/primero.css' %}" />
   <style>
-    /* Ocultar login inicialmente */
-    .login-container {
-      display: none;
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-      max-width: 420px;
-      margin: auto;
-    }
-
-    /* Mostrar login con animación */
-    .login-container.show {
-      display: block;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Estilos para el mensaje inicial */
-    .welcome-message {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: #1e40af; /* Azul intenso */
-      text-align: center;
-      padding: 60px 20px;
-      border-radius: 16px;
-      background-color: #dbeafe; /* Azul muy claro */
-      box-shadow: 0 12px 30px rgba(30, 64, 175, 0.3);
-      max-width: 420px;
-      margin: 80px auto;
-      min-height: 150px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      opacity: 1;
-      transition: opacity 0.7s ease;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .welcome-message.fade-out {
-      opacity: 0;
+        * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
-      background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
       margin: 0;
     }
 
-    /* Estilos mejorados para el login */
-    .title {
+    /* Partículas de fondo */
+    .bg-particles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+    }
+
+    /* Contenedor principal */
+    .main-container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 460px;
+      padding: 20px;
+    }
+
+    /* Mensaje de bienvenida */
+    .welcome-message {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 70px 50px;
       text-align: center;
-      font-size: 2.6rem;
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    .welcome-message::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    }
+
+    .welcome-icon {
+      width: 90px;
+      height: 90px;
+      margin: 0 auto 25px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      opacity: 0;
+    }
+
+    .welcome-message h1 {
+      font-size: 3rem;
       font-weight: 800;
-      margin-bottom: 10px;
-      color: #1e3a8a; /* Azul oscuro */
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 15px;
+      opacity: 0;
+    }
+
+    .welcome-message p {
+      font-size: 1.2rem;
+      color: #64748b;
+      font-weight: 500;
+      opacity: 0;
+    }
+
+    /* Contenedor del login */
+    .login-container {
+      display: none;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border-radius: 28px;
+      padding: 50px 45px;
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    .login-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, #667eea, #764ba2, #f093fb, #667eea);
+      background-size: 300% 100%;
+    }
+
+    /* Encabezado del login */
+    .login-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .login-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 22px;
+      margin: 0 auto 25px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      opacity: 0;
+    }
+
+    .title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 8px;
+      opacity: 0;
     }
 
     .subtitle {
-      text-align: center;
-      font-size: 1.15rem;
-      margin-bottom: 30px;
-      color: #4b5563; /* Gris oscuro */
+      font-size: 1.05rem;
+      color: #64748b;
       font-weight: 500;
+      opacity: 0;
     }
 
+    /* Formulario */
     .input-wrapper {
-      margin-bottom: 22px;
-      display: flex;
-      flex-direction: column;
+      margin-bottom: 28px;
+      opacity: 0;
     }
 
     .input-wrapper label {
-      margin-bottom: 8px;
-      font-weight: 700;
-      color: #374151; /* Gris oscuro */
-      font-size: 1rem;
-      letter-spacing: 0.02em;
-    }
-
-    .input-wrapper input {
-      padding: 15px 18px;
-      font-size: 16px;
-      border: 2px solid #9ca3af; /* Gris medio */
-      border-radius: 12px;
-      outline: none;
-      width: 100%;
-      background-color: #f9fafb;
-      font-weight: 500;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .input-wrapper input::placeholder {
-      color: #6b7280; /* Gris suave */
-    }
-
-    .input-wrapper input:focus {
-      border-color: #2563eb; /* Azul profesional */
-      box-shadow: 0 0 10px rgba(37, 99, 235, 0.5);
-      background-color: #ffffff;
-    }
-
-    .error-message {
-      margin-top: 6px;
-      font-size: 14px;
-      color: #dc2626; /* Rojo alerta */
-      font-weight: 700;
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 600;
+      color: #334155;
+      font-size: 0.95rem;
       letter-spacing: 0.01em;
     }
 
+    .input-field {
+      position: relative;
+    }
+
+    .input-field input,
+    .input-field input[type="email"],
+    .input-field input[type="password"] {
+      width: 100%;
+      padding: 16px 20px 16px 50px !important;
+      font-size: 16px !important;
+      border: 2px solid #e2e8f0 !important;
+      border-radius: 14px !important;
+      outline: none;
+      background-color: #f8fafc !important;
+      font-weight: 500;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      color: #1e293b !important;
+    }
+
+    .input-field input::placeholder {
+      color: #94a3b8 !important;
+    }
+
+    .input-field input:focus {
+      border-color: #667eea !important;
+      background-color: #ffffff !important;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1) !important;
+      transform: translateY(-2px);
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.3rem;
+      color: #94a3b8;
+      transition: color 0.3s;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .input-field input:focus ~ .input-icon {
+      color: #667eea;
+    }
+
+    .error-message {
+      margin-top: 8px;
+      font-size: 14px;
+      color: #ef4444;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .error-message::before {
+      content: '⚠️';
+    }
+
+    /* Botón */
     .btn-primary {
       width: 100%;
       padding: 18px;
-      background-color: #2563eb; /* Azul profesional */
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       border: none;
       border-radius: 14px;
       cursor: pointer;
-      box-shadow: 0 5px 20px rgba(37, 99, 235, 0.5);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
     }
 
     .btn-primary:hover {
-      background-color: #1e40af; /* Azul más oscuro */
-      box-shadow: 0 7px 25px rgba(30, 64, 175, 0.6);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+    }
+
+    .btn-primary:hover::before {
+      left: 100%;
     }
 
     .btn-primary:active {
-      transform: scale(0.97);
-      box-shadow: 0 3px 10px rgba(30, 64, 175, 0.7);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.45);
+    }
+
+    /* Animación de carga en el botón */
+    .btn-primary.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      right: 20px;
+      top: 50%;
+      margin-top: -10px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Footer */
+    .login-footer {
+      margin-top: 30px;
+      text-align: center;
+      opacity: 0;
+    }
+
+    .login-footer a {
+      color: #667eea;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .login-footer a:hover {
+      color: #764ba2;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      .welcome-message, .login-container {
+        padding: 50px 30px;
+      }
+
+      .welcome-message h1, .title {
+        font-size: 2.2rem;
+      }
+
+      .login-icon, .welcome-icon {
+        width: 70px;
+        height: 70px;
+        font-size: 2rem;
+      }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+
 </head>
 <body>
+  <!-- Partículas de fondo -->
+  <div class="bg-particles" id="particles"></div>
 
-  <div class="welcome-message" id="welcomeMessage">
-    Bienvenido al Sistema Escolar
-  </div>
+  <div class="main-container">
+    <!-- Mensaje de bienvenida -->
+    <div class="welcome-message" id="welcomeMessage">
+      <div class="welcome-icon">🎓</div>
+      <h1>Bienvenido</h1>
+      <p>Sistema Escolar Administrador</p>
+    </div>
 
-  <div class="login-container" id="loginContainer">
-
-    <h1 class="title">Sistema Escolar</h1>
-    <p class="subtitle">Ingresa tus credenciales para continuar</p>
-
-    <form method="POST">
-      {% csrf_token %}
-
-      <div class="input-wrapper">
-        <label for="email">Correo electrónico</label>
-        {{ form.email }}
-        {% if form.email.errors %}
-          <p class="error-message">{{ form.email.errors.0 }}</p>
-        {% endif %}
+    <!-- Contenedor del login -->
+    <div class="login-container" id="loginContainer">
+      <div class="login-header">
+        <div class="login-icon">🔐</div>
+        <h1 class="title">Iniciar Sesión</h1>
+        <p class="subtitle">Ingresa tus credenciales para continuar</p>
       </div>
 
-      <div class="input-wrapper">
-        <label for="password">Contraseña</label>
-        {{ form.password }}
-        {% if form.password.errors %}
-          <p class="error-message">{{ form.password.errors.0 }}</p>
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-wrapper" data-input="1">
+          <label for="{{ form.email.id_for_label }}">Correo electrónico</label>
+          <div class="input-field">
+            {{ form.email }}
+            <span class="input-icon">📧</span>
+          </div>
+          {% if form.email.errors %}
+            <p class="error-message">{{ form.email.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        <div class="input-wrapper" data-input="2">
+          <label for="{{ form.password.id_for_label }}">Contraseña</label>
+          <div class="input-field">
+            {{ form.password }}
+            <span class="input-icon">🔒</span>
+          </div>
+          {% if form.password.errors %}
+            <p class="error-message">{{ form.password.errors.0 }}</p>
+          {% endif %}
+        </div>
+
+        {% if form.non_field_errors %}
+          <div class="input-wrapper">
+            <p class="error-message">{{ form.non_field_errors.0 }}</p>
+          </div>
         {% endif %}
+
+        <button type="submit" class="btn-primary" id="submitBtn">
+          Iniciar Sesión
+        </button>
+      </form>
+
+      <div class="login-footer">
+        <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
-
-      {% if form.non_field_errors %}
-        <p class="error-message">{{ form.non_field_errors.0 }}</p>
-      {% endif %}
-
-      <button type="submit" class="btn-primary">Iniciar Sesión</button>
-
-    </form>
-
+    </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const welcomeMessage = document.getElementById('welcomeMessage');
-      const loginContainer = document.getElementById('loginContainer');
+    // Crear partículas de fondo
+    const particlesContainer = document.getElementById('particles');
+    for (let i = 0; i < 50; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particlesContainer.appendChild(particle);
+    }
 
-      setTimeout(() => {
-        welcomeMessage.classList.add('fade-out');
+    // Animar partículas
+    anime({
+      targets: '.particle',
+      translateX: () => anime.random(-100, 100),
+      translateY: () => anime.random(-100, 100),
+      scale: [
+        { value: 0.5, duration: 1000 },
+        { value: 1.5, duration: 1000 }
+      ],
+      opacity: [
+        { value: 0.3, duration: 1000 },
+        { value: 0.8, duration: 1000 }
+      ],
+      duration: 4000,
+      easing: 'easeInOutQuad',
+      direction: 'alternate',
+      loop: true,
+      delay: anime.stagger(100)
+    });
 
-        setTimeout(() => {
-          welcomeMessage.style.display = 'none';
-          loginContainer.classList.add('show');
-        }, 700);
-      }, 3000);
+    // Animación de entrada del mensaje de bienvenida
+    const welcomeTimeline = anime.timeline({
+      easing: 'easeOutExpo'
+    });
+
+    welcomeTimeline
+      .add({
+        targets: '#welcomeMessage',
+        opacity: [0, 1],
+        scale: [0.8, 1],
+        duration: 800
+      })
+      .add({
+        targets: '.welcome-icon',
+        opacity: [0, 1],
+        scale: [0, 1],
+        rotate: [180, 0],
+        duration: 600
+      }, '-=400')
+      .add({
+        targets: '#welcomeMessage h1',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 500
+      }, '-=200')
+      .add({
+        targets: '#welcomeMessage p',
+        opacity: [0, 1],
+        translateY: [20, 0],
+        duration: 500
+      }, '-=300')
+      .add({
+        targets: '#welcomeMessage::before',
+        left: ['0%', '100%'],
+        duration: 1000,
+        easing: 'easeInOutQuad'
+      }, '-=800');
+
+    // Transición de bienvenida a login después de 3 segundos
+    setTimeout(() => {
+      // Animación de salida del mensaje de bienvenida
+      anime({
+        targets: '#welcomeMessage',
+        opacity: [1, 0],
+        scale: [1, 0.9],
+        translateY: [0, -30],
+        duration: 600,
+        easing: 'easeInExpo',
+        complete: () => {
+          document.getElementById('welcomeMessage').style.display = 'none';
+          document.getElementById('loginContainer').style.display = 'block';
+
+          // Animación de entrada del login
+          const loginTimeline = anime.timeline({
+            easing: 'easeOutExpo'
+          });
+
+          loginTimeline
+            .add({
+              targets: '#loginContainer',
+              opacity: [0, 1],
+              scale: [0.9, 1],
+              duration: 800
+            })
+            .add({
+              targets: '#loginContainer::before',
+              width: ['0%', '100%'],
+              duration: 1500,
+              easing: 'easeInOutQuad'
+            }, '-=800')
+            .add({
+              targets: '.login-icon',
+              opacity: [0, 1],
+              scale: [0, 1],
+              rotate: [-180, 0],
+              duration: 600
+            }, '-=1000')
+            .add({
+              targets: '.title',
+              opacity: [0, 1],
+              translateY: [30, 0],
+              duration: 500
+            }, '-=400')
+            .add({
+              targets: '.subtitle',
+              opacity: [0, 1],
+              translateY: [30, 0],
+              duration: 500
+            }, '-=300')
+            .add({
+              targets: '.input-wrapper',
+              opacity: [0, 1],
+              translateX: [-50, 0],
+              duration: 600,
+              delay: anime.stagger(100)
+            }, '-=200')
+            .add({
+              targets: '.btn-primary',
+              opacity: [0, 1],
+              scale: [0.9, 1],
+              duration: 500
+            }, '-=300')
+            .add({
+              targets: '.login-footer',
+              opacity: [0, 1],
+              translateY: [20, 0],
+              duration: 500
+            }, '-=200');
+
+          // Animar el gradiente del top border
+          anime({
+            targets: document.querySelector('#loginContainer'),
+            backgroundPosition: ['0% 0%', '300% 0%'],
+            duration: 3000,
+            easing: 'linear',
+            loop: true,
+            update: function(anim) {
+              const container = document.querySelector('#loginContainer');
+              if (container) {
+                const progress = anim.progress;
+                container.style.setProperty('--bg-position', progress + '%');
+              }
+            }
+          });
+        }
+      });
+    }, 3000);
+
+    // Animación al hacer focus en los inputs
+    const inputs = document.querySelectorAll('.input-field input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', (e) => {
+        anime({
+          targets: e.target.parentElement,
+          scale: [1, 1.02],
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      });
+
+      input.addEventListener('blur', (e) => {
+        anime({
+          targets: e.target.parentElement,
+          scale: [1.02, 1],
+          duration: 300,
+          easing: 'easeOutQuad'
+        });
+      });
+    });
+
+    // Animación del botón al hacer submit (Django manejará el envío real)
+    document.querySelector('form').addEventListener('submit', (e) => {
+      const btn = document.getElementById('submitBtn');
+      btn.classList.add('loading');
+
+      // Animar el botón
+      anime({
+        targets: btn,
+        scale: [1, 0.98, 1],
+        duration: 300,
+        easing: 'easeInOutQuad'
+      });
     });
   </script>
 </body>

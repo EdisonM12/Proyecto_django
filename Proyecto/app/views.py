@@ -6,7 +6,7 @@ from .models import Estudiante, Evaluaciones
 def home(request):
     form = Login1(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        return redirect("evaluaciones_tabla")  # redirige al CRUD
+        return redirect("home1")  # redirige al CRUD
     return render(request, "app/login.html", {"form": form})
 
 
@@ -86,4 +86,7 @@ def eliminar_evalu(request, id):
         eval.delete()
         return redirect("estudiantes_tabla")
     return render(request, "eval/deletefo.html", {"estudiante": eval})
+
+def home1(request):
+    return render(request, "app/Home_admin.html")
 
