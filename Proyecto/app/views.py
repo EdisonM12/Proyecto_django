@@ -6,7 +6,7 @@ from .models import Estudiante, Evaluaciones
 def home(request):
     form = Login1(request.POST or None)
     if request.method == "POST" and form.is_valid():
-        return redirect("home1")  # redirige al CRUD
+        return redirect("evaluaciones_tabla")  # redirige al CRUD
     return render(request, "app/login.html", {"form": form})
 
 
@@ -87,6 +87,35 @@ def eliminar_evalu(request, id):
         return redirect("estudiantes_tabla")
     return render(request, "eval/deletefo.html", {"estudiante": eval})
 
-def home1(request):
-    return render(request, "app/Home_admin.html")
+def listar_calificaciones(request):
+    calificaciones = Calificacion.objects.all()
+    return render(request, "calificacion/listar_calificaciones.html", {
+        "calificaciones": calificaciones
+    })
 
+
+def crear_calificacion(request):
+    form = CalificacionForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect("app:listar_calificaciones")
+    return render(request, "calificacion/crear_calificacion.html", {"form": form})
+
+
+def editar_calificacion(request, id):
+    calificacion = get_object_or_404(Calificacion, id=id)
+    form = CalificacionForm(request.POST or None, instance=calificacion)
+    if form.is_valid():
+        form.save()
+        return redirect("app:listar_calificaciones")
+    return render(request, "calificacion/editar_calificacion.html", {"form": form})
+
+
+def eliminar_calificacion(request, id):
+    calificacion = get_object_or_404(Calificacion, id=id)
+    if request.method == "POST":
+        calificacion.delete()
+        return redirect("app:listar_calificaciones")
+    return render(request, "calificacion/eliminar_calificacion.html", {
+        "calificacion": calificacion
+    })

@@ -16,7 +16,7 @@
 <body>
     <h2 style="text-align:center;">Lista de Evaluaciones</h2>
     <div style="text-align:center; margin-bottom:10px;">
-        <a href="{% url 'crear_evaluaciones' %}" class="button create">Crear Nueva</a>
+        <a href="{% url 'app:crear_evaluaciones' %}" class="button create">Crear Nueva</a>
     </div>
     <table>
         <thead>
@@ -34,9 +34,9 @@
             {% for ev in evaluaciones %}
             <tr>
                 <td>{{ ev.id }}</td>
-                <td>{{ ev.Materia }}</td>
-                <td>{{ ev.Periodo }}</td>
-                <td>{{ ev.Pendiente }}</td>
+                <td>{{ ev.materia }}</td>
+                <td>{{ ev.periodo }}</td>
+                <td>{{ ev.pendiente }}</td>
                   <td>
                      {% if ev.archivo %}
                        <a href="{{ ev.archivo.url }}" target="_blank">Ver PDF</a>
@@ -45,8 +45,8 @@
                       {% endif %}
                      </td>
                 <td>
-                    <a href="{% url 'actualizar_evaluaciones' ev.id %}" class="button edit">Editar</a>
-                    <a href="{% url 'eliminar_evaluaciones' ev.id %}" class="button delete">Eliminar</a>
+                    <a href="{% url 'app:actualizar_evaluaciones' ev.id %}" class="button edit">Editar</a>
+                    <a href="{% url 'app:eliminar_evaluaciones' ev.id %}" class="button delete">Eliminar</a>
                 </td>
             </tr>
             {% empty %}
