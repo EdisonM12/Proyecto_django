@@ -85,11 +85,14 @@ WSGI_APPLICATION = 'Proyecto.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Escuela',       # Ejemplo: proyecto_academico
-        'USER': 'postgres',     # Ejemplo: postgres
-        'PASSWORD': '0350319000',       # Ejemplo: 1234
-        'HOST': 'localhost',               # o la IP del servidor si está en remoto
-        'PORT': '5432',                    # puerto por defecto de PostgreSQL
+        'NAME': 'postgres',
+        'USER': 'postgres.qizpqqmfhzkcrlkfuxon',
+        'PASSWORD': '0350319000',
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',
+        'PORT': '5432',
+        'OPTIONS': {
+            'sslmode': 'require'
+        }
     }
 }
 

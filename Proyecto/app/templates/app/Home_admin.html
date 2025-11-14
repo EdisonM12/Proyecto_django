@@ -691,12 +691,12 @@
                                 <span>Estudiantes</span>
                                 <i class="fa-solid fa-chevron-down"></i>
                             </summary>
-                            <div class="menu-desplegable">
-                                <a href="#" class="item-desplegable">
+                            <div class="menu-desplegable" ">
+                                <a href="#" class="item-desplegable" id="lista" data-url="{% url 'app:listar_estudiantes'%}">
                                     <i class="fa-solid fa-list"></i>
                                     <span>Lista de Estudiantes</span>
                                 </a>
-                                <a href="#" class="item-desplegable">
+                                <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:crear_estudiante'%}">
                                     <i class="fa-solid fa-user-plus"></i>
                                     <span>Agregar Estudiante</span>
                                 </a>
@@ -779,6 +779,16 @@
     </section>
 
     <script>
+
+        document.getElementById('lista').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('crear').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+
+
+
         // Alternador de menú móvil
         const alternadorMovil = document.getElementById('alternadorMovil');
         const menuNav = document.getElementById('menuNav');
@@ -787,6 +797,8 @@
             alternadorMovil.classList.toggle('activo');
             menuNav.classList.toggle('activo');
         });
+
+        document.getElementById('')
 
         // Cerrar menú al hacer clic fuera
         document.addEventListener('click', (e) => {
