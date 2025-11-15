@@ -1,12 +1,16 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion
-from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm
+from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia
+from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm
 
 
 # LOGIN
 def home(request):
 
     return render(request, "app/Inicio.html")
+
+def pag_profesor(request):
+
+    return render(request, "profesor/index_profesor.html")
 
 def Login_Admin(request):
     form = Login1()
@@ -252,3 +256,42 @@ def eliminar_calificacion(request, id):
     return render(request, "calificacion/eliminar_calificacion.html", {
         "calificacion": calificacion
     })
+
+
+#CRUD DE MATERIAS
+
+# LISTAR todas las materias
+def lista_materias(request):
+    materias = Materia.objects.all()
+    return render(request, 'app/materia_list.html', {'materias': materias})
+
+# CREAR una nueva materia
+def crear_materia(request):
+    if request.method == 'POST':
+        form = MateriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_materias')
+    else:
+        form = MateriaForm()
+    return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Crear'})
+
+# EDITAR una materia existente
+def editar_materia(request, pk):
+    materia = get_object_or_404(Materia, pk=pk)
+    if request.method == 'POST':
+        form = MateriaForm(request.POST, instance=materia)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_materias')
+    else:
+        form = MateriaForm(instance=materia)
+    return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Editar'})
+
+# ELIMINAR una materia
+def eliminar_materia(request, pk):
+    materia = get_object_or_404(Materia, pk=pk)
+    if request.method == 'POST':
+        materia.delete()
+        return redirect('lista_materias')
+    return render(request, 'app/delete_materia.html', {'materia': materia})

@@ -739,10 +739,61 @@
                             </div>
                         </details>
                     </li>
-                    <li><a href="#" class="enlace-nav">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Cursos</span>
-                    </a></li>
+                    <li>
+                        <details class="desplegable">
+                            <summary class="boton-desplegable">
+                                <i class="bi bi-award-fill"></i>
+                                <span>Materia</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </summary>
+                            <div class="menu-desplegable" >
+                                <a href="#" class="item-desplegable" id="lista3" data-url="{% url 'app:lista_materias'%}">
+                                    <i class="fa-solid fa-list"></i>
+                                    <span>Lista de Materia</span>
+                                </a>
+                                <a class="item-desplegable" href="#" id="crear3" data-url="{% url 'app:crear_materia'%}">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>Agregar Materia</span>
+                                </a>
+                                <a href="#" class="item-desplegable">
+                                    <i class="fa-solid fa-chart-simple"></i>
+                                    <span>Editar Materia</span>
+                                </a>
+                                <a href="#" class="item-desplegable">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                    <span>Eliminar Materia</span>
+                                </a>
+                            </div>
+                        </details>
+
+                    </li>
+                    <li>
+                        <details class="desplegable">
+                            <summary class="boton-desplegable">
+                                <i class="bi bi-award-fill"></i>
+                                <span>Cursos</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </summary>
+                            <div class="menu-desplegable" >
+                                <a href="#" class="item-desplegable" id="lista2" data-url="{% url 'app:listar_cursos'%}">
+                                    <i class="fa-solid fa-list"></i>
+                                    <span>Lista de Cursos</span>
+                                </a>
+                                <a class="item-desplegable" href="#" id="crear2" data-url="{% url 'app:crear_curso'%}">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>Agregar Cursos</span>
+                                </a>
+                                <a href="#" class="item-desplegable">
+                                    <i class="fa-solid fa-chart-simple"></i>
+                                    <span>Editar Cursos</span>
+                                </a>
+                                <a href="#" class="item-desplegable">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                    <span>Eliminar cursos</span>
+                                </a>
+                            </div>
+                        </details>
+                    </li>
                     <li>
                         <button class="boton-eliminar">
                             <svg viewBox="0 0 448 512">
@@ -816,6 +867,19 @@
         document.getElementById('crear1').onclick = function (){
         window.location.href = this.dataset.url
         }
+        document.getElementById('crear2').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('lista2').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('crear3').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('lista3').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+
         document.getElementById('lista1_profesor').onclick = function (){
         window.location.href = this.dataset.url
         }

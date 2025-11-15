@@ -1,12 +1,12 @@
 from django import forms
-from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion
+from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia
 import re
 from datetime import date
 
 class CursoForm(forms.ModelForm):
     class Meta:
         model = Curso
-        fields = ["codigo","nombre","descripcion","profesor"]
+        fields = ["codigo","nombre","descripcion","materia"]
 
     def clean(self):
         cleaned = super().clean()
@@ -59,7 +59,7 @@ class ProfesorForm(forms.ModelForm):
     )
     class Meta:
         model = Profesor
-        fields = ["nombre","apellido","cedula","correo","fecha_nacimiento", "materia"]
+        fields = ["nombre","apellido","cedula","correo","fecha_nacimiento"]
     def clean_nombre(self):
         nombre = self.cleaned_data["nombre"].strip()
         if len(nombre) == 0:
@@ -174,7 +174,7 @@ class Login1(forms.Form):
 class EstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante
-        fields = ['nombre', 'apellido', 'correo', 'direccion', 'telefono']
+        fields = ['nombre', 'apellido', 'correo', 'direccion', 'telefono', 'curso']
 
     def clean_correo(self):
         correo = self.cleaned_data.get("correo")
@@ -204,7 +204,7 @@ class EstudianteForm(forms.ModelForm):
 class EvaluacionesForm(forms.ModelForm):
     class Meta:
         model = Evaluaciones
-        fields = ['materia', 'periodo', 'pendiente', 'archivo']
+        fields = ['materia', 'periodo', 'pendiente', 'archivo', 'curso']
 
     def clean_materia(self):
         materia = self.cleaned_data.get("materia")
@@ -268,3 +268,12 @@ class CalificacionForm(forms.ModelForm):
                 )
 
         return cleaned_data
+
+class MateriaForm(forms.ModelForm):
+    class Meta:
+        model = Materia
+        fields = ['nombre', 'profesor']
+        widgets = {
+            'nombre': forms.TextInput(attrs={'class': 'form-control'}),
+            'profesor': forms.Select(attrs={'class': 'form-control'}),
+        }

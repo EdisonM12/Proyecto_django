@@ -2,54 +2,542 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Estudiantes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        table { width: 90%; margin: auto; border-collapse: collapse; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: center; }
-        th { background-color: #f4f4f4; }
-        a.button { padding: 5px 10px; color: white; text-decoration: none; border-radius: 3px; }
-        a.button.create { background-color: #4CAF50; }
-        a.button.edit { background-color: #2196F3; }
-        a.button.delete { background-color: #f44336; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primario: #6366f1;
+            --primario-oscuro: #4f46e5;
+            --secundario: #8b5cf6;
+            --acento: #ec4899;
+            --oscuro: #0f172a;
+            --oscuro-claro: #1e293b;
+            --gris: #64748b;
+            --gris-claro: #cbd5e1;
+            --fondo: #f8fafc;
+            --blanco: #ffffff;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--fondo);
+            color: var(--oscuro);
+            line-height: 1.6;
+        }
+
+        /* Barra de navegación */
+        .barra-navegacion {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+            z-index: 1000;
+            animation: deslizarAbajo 0.5s ease-out;
+        }
+
+        @keyframes deslizarAbajo {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .contenedor {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .contenido-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--oscuro);
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .icono-logo {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primario), var(--secundario));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .menu-nav {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            list-style: none;
+        }
+
+        .enlace-nav {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            color: var(--gris);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .enlace-nav:hover {
+            color: white;
+            background: linear-gradient(135deg, var(--primario), var(--secundario));
+        }
+
+        .enlace-nav.activo {
+            color: white;
+            background: linear-gradient(135deg, var(--primario), var(--secundario));
+        }
+
+        /* Sección principal */
+        .seccion-principal {
+            padding-top: 120px;
+            padding-bottom: 4rem;
+            min-height: 100vh;
+        }
+
+        .encabezado-pagina {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: aparecerArriba 0.6s ease-out;
+        }
+
+        @keyframes aparecerArriba {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .titulo-pagina {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--oscuro), var(--primario));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitulo-pagina {
+            color: var(--gris);
+            font-size: 1.125rem;
+        }
+
+        /* Barra de acciones */
+        .barra-acciones {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .buscador {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: white;
+            padding: 0.75rem 1.25rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .buscador i {
+            color: var(--gris);
+        }
+
+        .buscador input {
+            border: none;
+            outline: none;
+            flex: 1;
+            font-size: 1rem;
+            color: var(--oscuro);
+        }
+
+        .boton {
+            padding: 0.875rem 1.75rem;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .boton-primario {
+            background: linear-gradient(135deg, var(--primario), var(--secundario));
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .boton-primario:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Contenedor de la tabla */
+        .contenedor-tabla {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            animation: aparecerArriba 0.8s ease-out;
+        }
+
+        /* Tabla */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--primario), var(--secundario));
+            color: white;
+        }
+
+        thead th {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--gris-claro);
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(139, 92, 246, 0.05));
+            transform: scale(1.01);
+        }
+
+        tbody td {
+            padding: 1.25rem 1.5rem;
+            color: var(--oscuro);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        /* Botones de acción */
+        .acciones {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .boton-accion {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .boton-editar {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .boton-editar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+
+        .boton-eliminar {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .boton-eliminar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+        }
+
+        /* Estado vacío */
+        .estado-vacio {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .icono-vacio {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .icono-vacio i {
+            font-size: 3rem;
+            color: var(--primario);
+        }
+
+        .estado-vacio h3 {
+            font-size: 1.5rem;
+            color: var(--oscuro);
+            margin-bottom: 0.5rem;
+        }
+
+        .estado-vacio p {
+            color: var(--gris);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Badge de contador */
+        .contador-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 50px;
+            color: var(--primario);
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .titulo-pagina {
+                font-size: 2rem;
+            }
+
+            .barra-acciones {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .buscador {
+                max-width: 100%;
+            }
+
+            table {
+                font-size: 0.875rem;
+            }
+
+            thead th,
+            tbody td {
+                padding: 1rem;
+            }
+
+            .acciones {
+                flex-direction: column;
+            }
+
+            .boton-accion {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .contenedor {
+                padding: 0 1rem;
+            }
+
+            .contenedor-tabla {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">Lista de Estudiantes</h2>
-    <div style="text-align:center; margin-bottom:10px;">
-        <a href="{% url 'app:crear_estudiante' %}" class="button create">Crear Nuevo</a>
-    </div>
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for estudiante in estudiantes %}
-            <tr>
-                <td>{{ estudiante.id }}</td>
-                <td>{{ estudiante.nombre }}</td>
-                <td>{{ estudiante.apellido }}</td>
-                <td>{{ estudiante.correo }}</td>
-                <td>{{ estudiante.direccion }}</td>
-                <td>{{ estudiante.telefono }}</td>
-                <td>
-                    <a href="{% url 'app:actualizar_estudiante' estudiante.id %}" class="button edit">Editar</a>
-                    <a href="{% url 'app:eliminar_estudiante' estudiante.id %}" class="button delete">Eliminar</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="7">No hay estudiantes</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <!-- Barra de navegación -->
+    <nav class="barra-navegacion">
+        <div class="contenedor">
+            <div class="contenido-nav">
+                <a href="#" class="logo">
+                    <div class="icono-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <span>Sistema Escolar</span>
+                </a>
+                <ul class="menu-nav">
+                    <li><a href="#" class="enlace-nav"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#" class="enlace-nav activo"><i class="fas fa-user-graduate"></i> Estudiantes</a></li>
+                    <li><a href="#" class="enlace-nav"><i class="fas fa-chalkboard-teacher"></i> Profesores</a></li>
+                    <li><a href="#" class="enlace-nav"><i class="fas fa-book"></i> Cursos</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sección principal -->
+    <section class="seccion-principal">
+        <div class="contenedor">
+            <!-- Encabezado -->
+            <div class="encabezado-pagina">
+                <h1 class="titulo-pagina">Gestión de Estudiantes</h1>
+                <p class="subtitulo-pagina">Administra y visualiza todos los estudiantes registrados</p>
+            </div>
+
+            <!-- Barra de acciones -->
+            <div class="barra-acciones">
+                <div class="buscador">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Buscar estudiante..." id="inputBuscar">
+                </div>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span class="contador-badge">
+                        <i class="fas fa-users"></i>
+                        <span id="totalEstudiantes">5</span> estudiantes
+                    </span>
+                    <a href="{% url 'app:crear_estudiante' %}" class="boton boton-primario">
+                        <i class="fas fa-plus"></i>
+                        Crear Nuevo
+                    </a>
+                </div>
+            </div>
+
+            <!-- Tabla de estudiantes -->
+            <div class="contenedor-tabla">
+                <table id="tablaEstudiantes">
+                    <thead>
+                        <tr>
+                            <th><i class="fas fa-hashtag"></i> ID</th>
+                            <th><i class="fas fa-user"></i> Nombre</th>
+                            <th><i class="fas fa-user"></i> Apellido</th>
+                            <th><i class="fas fa-envelope"></i> Correo</th>
+                            <th><i class="fas fa-map-marker-alt"></i> Dirección</th>
+                            <th><i class="fas fa-phone"></i> Teléfono</th>
+                            <th><i class="fas fa-cog"></i> Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for estudiante in estudiantes %}
+                        <tr>
+                            <td><strong>{{ estudiante.id }}</strong></td>
+                            <td>{{ estudiante.nombre }}</td>
+                            <td>{{ estudiante.apellido }}</td>
+                            <td>{{ estudiante.correo }}</td>
+                            <td>{{ estudiante.direccion }}</td>
+                            <td>{{ estudiante.telefono }}</td>
+                            <td>
+                                <div class="acciones">
+                                    <a href="{% url 'app:actualizar_estudiante' estudiante.id %}" class="boton-accion boton-editar">
+                                        <i class="fas fa-edit"></i> Editar
+                                    </a>
+                                    <a href="{% url 'app:eliminar_estudiante' estudiante.id %}" class="boton-accion boton-eliminar" onclick="return confirm('¿Estás seguro de eliminar este estudiante?')">
+                                        <i class="fas fa-trash"></i> Eliminar
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7">
+                                <div class="estado-vacio">
+                                    <div class="icono-vacio">
+                                        <i class="fas fa-user-graduate"></i>
+                                    </div>
+                                    <h3>No hay estudiantes registrados</h3>
+                                    <p>Comienza agregando tu primer estudiante al sistema</p>
+                                    <a href="{% url 'app:crear_estudiante' %}" class="boton boton-primario">
+                                        <i class="fas fa-plus"></i>
+                                        Crear Primer Estudiante
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Funcionalidad de búsqueda
+        document.getElementById('inputBuscar').addEventListener('keyup', function() {
+            const filtro = this.value.toLowerCase();
+            const filas = document.querySelectorAll('#tablaEstudiantes tbody tr');
+            let contador = 0;
+
+            filas.forEach(fila => {
+                const texto = fila.textContent.toLowerCase();
+                if (texto.includes(filtro)) {
+                    fila.style.display = '';
+                    contador++;
+                } else {
+                    fila.style.display = 'none';
+                }
+            });
+
+            // Actualizar contador
+            document.getElementById('totalEstudiantes').textContent = contador;
+        });
+
+        // Contar estudiantes iniciales
+        document.addEventListener('DOMContentLoaded', function() {
+            const filas = document.querySelectorAll('#tablaEstudiantes tbody tr');
+            const filasConDatos = Array.from(filas).filter(fila => !fila.querySelector('.estado-vacio'));
+            document.getElementById('totalEstudiantes').textContent = filasConDatos.length;
+        });
+    </script>
 </body>
-    </html>
+</html>

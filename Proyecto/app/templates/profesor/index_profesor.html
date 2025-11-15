@@ -20,7 +20,7 @@
             <div class="nav-item">
                 <a href="#estudiantes">Estudiantes</a>
                 <div class="dropdown">
-                    <a href="#perfiles">Perfiles</a>
+                    <a href="#perfiles" data-url="{% url 'app:listar_estudiantes' %}">Listar estudiantes</a>
                     <a href="#matricula">Matrícula</a>
                     <a href="#calendario">Calendario</a>
                 </div>
@@ -28,15 +28,16 @@
             <div class="nav-item">
                 <a href="#evaluacion">Evaluación</a>
                 <div class="dropdown">
-                    <a href="#examenes">Exámenes</a>
-                    <a href="#tareas">Tareas</a>
-                    <a href="#proyectos">Proyectos</a>
+                    <a href="#evaluaciones" data-url="{% url 'app:crear_evaluaciones' %}">Crear evaluaciones</a>
+                    <a href="#tareas" data-url="{% url 'app:evaluaciones_tabla' %}">Listar evaluaciones</a>
+                    <a href="#proyectos-editar" data-url="{% url 'app:evaluaciones_tabla' %}">Editar evaluaciones</a>
+                    <a href="#proyectos-eliminar" data-url="{% url 'app:evaluaciones_tabla' %}">Eliminar evaluaciones</a>
                 </div>
             </div>
             <div class="nav-item">
                 <a href="#cursos">Cursos</a>
                 <div class="dropdown">
-                    <a href="#matematicas">Matemáticas</a>
+                    <a href="#matematicas" data-url="{% url 'app:listar_cursos' %}">Listar Cursos</a>
                     <a href="#ciencias">Ciencias</a>
                     <a href="#lengua">Lengua</a>
                     <a href="#historia">Historia</a>
@@ -45,9 +46,10 @@
             <div class="nav-item">
                 <a href="#notas">Notas</a>
                 <div class="dropdown">
-                    <a href="#primer-trimestre">Primer Trimestre</a>
-                    <a href="#segundo-trimestre">Segundo Trimestre</a>
-                    <a href="#tercer-trimestre">Tercer Trimestre</a>
+                    <a href="#agregar-notas" data-url="{% url 'app:crear_calificacion' %}">Agregar notas</a>
+                    <a href="#listar-notas" data-url="{% url 'app:listar_calificaciones' %}">Listar notas</a>
+                    <a href="#editar-notas" data-url="{% url 'app:listar_calificaciones' %}">Editar notas</a>
+                    <a href="#eliminar-notas" data-url="{% url 'app:listar_calificaciones' %}">Eliminar notas</a>
                 </div>
             </div>
             <div class="separator">|</div>
@@ -76,30 +78,6 @@
                     <img src="{% static 'img/1.jpg'%}"
                         alt="Instituto Horizonte">
                 </div>
-                <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        // Lista de imágenes que rotarán
-                        const images = [
-                            "{% static 'img/1.jpg'%}",
-                            "{% static 'img/2.jpg'%}",
-                            "{% static 'img/3.jpg'%}"
-                        ];
-
-                        const imgElement = document.querySelector(".media-container img");
-                        let index = 0;
-
-                        // Cambia la imagen cada 4 segundos
-                        setInterval(() => {
-                            index = (index + 1) % images.length;
-                            imgElement.style.opacity = 0; // Efecto de desvanecimiento
-
-                            setTimeout(() => {
-                                imgElement.src = images[index];
-                                imgElement.style.opacity = 1;
-                            }, 500); // Cambia la imagen después del fade-out
-                        }, 4000);
-                    });
-                </script>
                 <div class="description">
                     <h2>Instituto Académico Horizonte</h2>
                     <p>Fundado en 1985, el Instituto Académico Horizonte es una institución educativa comprometida con
@@ -170,6 +148,230 @@
             <p>&copy; 2025 Instituto Académico Horizonte. Todos los derechos reservados a grupo 6.</p>
         </div>
     </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Rotación de imágenes
+        document.addEventListener("DOMContentLoaded", () => {
+            // Lista de imágenes que rotarán
+            const images = [
+                "{% static 'img/1.jpg'%}",
+                "{% static 'img/2.jpg'%}",
+                "{% static 'img/3.jpg'%}"
+            ];
+
+            const imgElement = document.querySelector(".media-container img");
+
+            if (imgElement) {
+                let index = 0;
+
+                // Cambia la imagen cada 4 segundos
+                setInterval(() => {
+                    index = (index + 1) % images.length;
+                    imgElement.style.opacity = 0; // Efecto de desvanecimiento
+
+                    setTimeout(() => {
+                        imgElement.src = images[index];
+                        imgElement.style.opacity = 1;
+                    }, 500); // Cambia la imagen después del fade-out
+                }, 4000);
+            }
+        });
+    </script>
+
+    <script>
+        // Funcionalidad para menús dinámicos (Notas, Evaluaciones, Estudiantes)
+        document.addEventListener("DOMContentLoaded", () => {
+            // Seleccionar todos los enlaces con data-url
+            const dynamicLinks = document.querySelectorAll('a[data-url]');
+
+            dynamicLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevenir navegación por defecto
+
+                    const url = link.getAttribute('data-url');
+                    const accion = link.textContent.trim();
+
+                    // Mostrar indicador de carga
+                    mostrarCargando();
+
+                    // Realizar petición AJAX
+                    fetch(url)
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Error en la petición');
+                            }
+                            return response.text();
+                        })
+                        .then(html => {
+                            // Reemplazar el contenido
+                            actualizarContenido(html, accion);
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            mostrarError('No se pudo cargar el contenido. Por favor, intente nuevamente.');
+                        })
+                        .finally(() => {
+                            ocultarCargando();
+                        });
+                });
+            });
+
+            // Función para mostrar indicador de carga
+            function mostrarCargando() {
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.opacity = '0.5';
+                }
+
+                // Crear overlay de carga si no existe
+                if (!document.getElementById('loading-overlay')) {
+                    const overlay = document.createElement('div');
+                    overlay.id = 'loading-overlay';
+                    overlay.innerHTML = `
+                        <div style="
+                            background: white;
+                            padding: 30px 50px;
+                            border-radius: 10px;
+                            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                        ">
+                            <div style="
+                                border: 4px solid #f3f3f3;
+                                border-top: 4px solid #3498db;
+                                border-radius: 50%;
+                                width: 50px;
+                                height: 50px;
+                                animation: spin 1s linear infinite;
+                                margin: 0 auto 20px;
+                            "></div>
+                            <div style="color: #333; font-size: 18px;">Cargando...</div>
+                        </div>
+                    `;
+                    overlay.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(0,0,0,0.7);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 9999;
+                    `;
+                    document.body.appendChild(overlay);
+
+                    // Agregar animación de spinner
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        @keyframes spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+            }
+
+            // Función para ocultar indicador de carga
+            function ocultarCargando() {
+                const hero = document.querySelector('.hero');
+                if (hero) {
+                    hero.style.opacity = '1';
+                }
+
+                const overlay = document.getElementById('loading-overlay');
+                if (overlay) {
+                    overlay.remove();
+                }
+            }
+
+            // Función para actualizar el contenido
+            function actualizarContenido(html, accion) {
+                // Buscar o crear área de contenido dinámico
+                let contentArea = document.getElementById('dynamic-content');
+
+                if (!contentArea) {
+                    // Crear área de contenido después del hero
+                    contentArea = document.createElement('section');
+                    contentArea.id = 'dynamic-content';
+                    contentArea.className = 'dynamic-content-section';
+                    contentArea.style.cssText = `
+                        padding: 60px 20px;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        min-height: 400px;
+                    `;
+
+                    const hero = document.querySelector('.hero');
+                    hero.parentNode.insertBefore(contentArea, hero.nextSibling);
+                }
+
+                // Actualizar contenido con título
+                contentArea.innerHTML = `
+                    <div class="container">
+                        <h2 style="
+                            margin-bottom: 30px;
+                            color: #2c3e50;
+                            font-size: 32px;
+                            font-weight: 600;
+                            border-bottom: 3px solid #3498db;
+                            padding-bottom: 15px;
+                            display: inline-block;
+                        ">${accion}</h2>
+                        <div class="content-wrapper" style="
+                            background: white;
+                            padding: 30px;
+                            border-radius: 10px;
+                            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                        ">
+                            ${html}
+                        </div>
+                    </div>
+                `;
+
+                // Scroll suave al contenido
+                contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            // Función para mostrar errores
+            function mostrarError(mensaje) {
+                let contentArea = document.getElementById('dynamic-content');
+
+                if (!contentArea) {
+                    contentArea = document.createElement('section');
+                    contentArea.id = 'dynamic-content';
+                    contentArea.className = 'dynamic-content-section';
+                    contentArea.style.cssText = `
+                        padding: 60px 20px;
+                        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+                        min-height: 400px;
+                    `;
+                    const hero = document.querySelector('.hero');
+                    hero.parentNode.insertBefore(contentArea, hero.nextSibling);
+                }
+
+                contentArea.innerHTML = `
+                    <div class="container">
+                        <div style="
+                            background: #fff5f5;
+                            border: 2px solid #e74c3c;
+                            padding: 30px;
+                            border-radius: 10px;
+                            color: #c0392b;
+                            text-align: center;
+                            box-shadow: 0 2px 10px rgba(231, 76, 60, 0.2);
+                        ">
+                            <div style="font-size: 48px; margin-bottom: 15px;">⚠️</div>
+                            <h3 style="margin-bottom: 10px; font-size: 24px;">Error</h3>
+                            <p style="font-size: 16px;">${mensaje}</p>
+                        </div>
+                    </div>
+                `;
+
+                contentArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    </script>
 </body>
 
 </html>

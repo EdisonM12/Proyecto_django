@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <h1>Eliminar Materia</h1>
+   <p>¿Seguro que deseas eliminar la materia "{{ materia.nombre }}"?</p>
+   <form method="post">
+       {% csrf_token %}
+      <button type="submit">Sí, eliminar</button>
+   </form>
+    <a href="{% url 'app:lista_materias' %}">Cancelar</a>
+
+</body>
+</html>
