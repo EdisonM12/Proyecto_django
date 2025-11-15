@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 from django.db import models
-
+from django.contrib.auth.hashers import make_password, check_password
 # Create your models here.
 class Administrador(models.Model):
     email = models.EmailField(unique=True)
@@ -13,6 +13,15 @@ class Administrador(models.Model):
 
 # Estudiante, Evaluación, Calificación
 
+class LoginProfesor(models.Model):
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
 
 
 
@@ -22,6 +31,8 @@ class Profesor(models.Model):
     cedula= models.CharField(max_length=100, unique=True)
     correo= models.EmailField(max_length=100, unique=True)
     fecha_nacimiento= models.DateField()
+    login = models.OneToOneField(LoginProfesor, on_delete=models.CASCADE, null=True, blank=True)
+
 
     def str(self):
         return self.nombre
@@ -46,6 +57,17 @@ class Curso(models.Model):
         return f"{self.codigo} - {self.nombre}"
 
 
+
+class LoginEstudiante(models.Model):
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+    def set_password(self, raw_password):
+        self.password = make_password(raw_password)
+
+    def check_password(self, raw_password):
+        return check_password(raw_password, self.password)
+
+
 class Estudiante(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
@@ -53,6 +75,7 @@ class Estudiante(models.Model):
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(unique=True)
     curso = models.ForeignKey(Curso , on_delete=models.PROTECT, null=True, blank=True)
+    datos = models.OneToOneField(Materia, on_delete=models.PROTECT, null=True, blank=True)
 
     def _str_(self):
         return f"{self.nombre} {self.apellido}"
