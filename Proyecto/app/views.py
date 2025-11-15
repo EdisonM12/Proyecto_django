@@ -1,9 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2
+from django.contrib.auth import logout
 
 
 # LOGIN
+def cerrar_sesion(request):
+    logout(request)  
+    return redirect('app:home')
 def home(request):
 
     return render(request, "app/Inicio.html")
@@ -212,7 +216,7 @@ def crear_evaluaciones(request):
         form = EvaluacionesForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("evaluaciones_tabla")
+            return redirect("app:evaluaciones_tabla")
     else:
         form = EvaluacionesForm()
     return render(request, "eval/evaluaciones_form.html", {"form": form, "accion": "Crear"})
@@ -223,7 +227,7 @@ def actualizar_Evaluacion(request, id):
         form = EvaluacionesForm(request.POST, request.FILES, instance=evaluar1)
         if form.is_valid():
             form.save()
-            return redirect("evaluaciones_tabla")
+            return redirect("app:evaluaciones_tabla")
     else:
         form = EvaluacionesForm(instance=evaluar1)
     return render(request, "eval/evaluaciones_form.html", {"form": form, "accion": "Editar"})
@@ -232,7 +236,7 @@ def eliminar_evalu(request, id):
     eval = get_object_or_404(Evaluaciones, id=id)
     if request.method == "POST":
         eval.delete()
-        return redirect("estudiantes_tabla")
+        return redirect("app:estudiantes_tabla")
     return render(request, "eval/deletefo.html", {"estudiante": eval})
 
 def listar_calificaciones(request):

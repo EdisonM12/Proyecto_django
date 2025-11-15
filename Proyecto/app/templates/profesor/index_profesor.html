@@ -21,8 +21,7 @@
                 <a href="#estudiantes">Estudiantes</a>
                 <div class="dropdown">
                     <a href="#perfiles" data-url="{% url 'app:listar_estudiantes' %}">Listar estudiantes</a>
-                    <a href="#matricula">Matrícula</a>
-                    <a href="#calendario">Calendario</a>
+
                 </div>
             </div>
             <div class="nav-item">
@@ -38,9 +37,6 @@
                 <a href="#cursos">Cursos</a>
                 <div class="dropdown">
                     <a href="#matematicas" data-url="{% url 'app:listar_cursos' %}">Listar Cursos</a>
-                    <a href="#ciencias">Ciencias</a>
-                    <a href="#lengua">Lengua</a>
-                    <a href="#historia">Historia</a>
                 </div>
             </div>
             <div class="nav-item">
@@ -53,7 +49,8 @@
                 </div>
             </div>
             <div class="separator">|</div>
-            <a href="#cerrar" class="logout">Cerrar Sesión</a>
+            <a href="{% url 'app:logout' %}">Cerrar Sesión</a>
+
         </nav>
     </header>
 
