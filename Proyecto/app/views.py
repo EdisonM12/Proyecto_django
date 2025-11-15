@@ -37,7 +37,7 @@ def crear_estudiante(request):
         form = EstudianteForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("estudiantes_tabla")
+            return redirect("app:listar_estudiantes")
     else:
         form = EstudianteForm()
     return render(request, "app/estudiante_form.html", {"form": form, "accion": "Crear"})
@@ -172,7 +172,7 @@ def actualizar_estudiante(request, id):
         form = EstudianteForm(request.POST, instance=estudiante)
         if form.is_valid():
             form.save()
-            return redirect("estudiantes_tabla")
+            return redirect("app:listar_estudiantes")
     else:
         form = EstudianteForm(instance=estudiante)
     return render(request, "app/estudiante_form.html", {"form": form, "accion": "Editar"})
@@ -183,7 +183,7 @@ def eliminar_estudiante(request, id):
     estudiante = get_object_or_404(Estudiante, id=id)
     if request.method == "POST":
         estudiante.delete()
-        return redirect("estudiantes_tabla")
+        return redirect("app:estudiantes_tabla")
     return render(request, "app/delete.html", {"estudiante": estudiante})
 
 
@@ -271,7 +271,7 @@ def crear_materia(request):
         form = MateriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_materias')
+            return redirect('app:lista_materias')
     else:
         form = MateriaForm()
     return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Crear'})
@@ -283,7 +283,7 @@ def editar_materia(request, pk):
         form = MateriaForm(request.POST, instance=materia)
         if form.is_valid():
             form.save()
-            return redirect('lista_materias')
+            return redirect('app:lista_materias')
     else:
         form = MateriaForm(instance=materia)
     return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Editar'})
@@ -293,5 +293,5 @@ def eliminar_materia(request, pk):
     materia = get_object_or_404(Materia, pk=pk)
     if request.method == 'POST':
         materia.delete()
-        return redirect('lista_materias')
+        return redirect('app:lista_materias')
     return render(request, 'app/delete_materia.html', {'materia': materia})
