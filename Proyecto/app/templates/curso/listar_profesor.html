@@ -2,16 +2,25 @@
 {% block content %}
 <h1 class="mb-3">Profesores</h1>
 
+<tr>
+
+        <a class="btn btn-sm btn-primary" href="{% url 'app:inicio' %}">Volver</a>
+
+
+  </tr>
+
+
 <table class="table table-striped">
 
 
   <thead>
-  <tr>
+  <!--<tr>
 
         <a class="btn btn-sm btn-primary" href="{% url 'app:crear_profesor' %}">Nuevo</a>
 
 
   </tr>
+-->
 
     <tr><th>nombre</th><th>apellido</th><th>cedula</th><th>correo</th><th>fecha_nacimiento</th><th>materia</th></tr>
   </thead>

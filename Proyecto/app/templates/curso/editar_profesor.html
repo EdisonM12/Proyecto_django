@@ -5,6 +5,6 @@
   {% csrf_token %}
   {{ form.as_p }}
   <button class="btn btn-primary">Actualizar</button>
-  <a class="btn btn-secondary" href="{% url 'app:listar_profesor' %}">Volver</a>
+  <a class="btn btn-secondary" href="{% url 'app:inicio' %}">Volver</a>
 </form>
 {% endblock %}

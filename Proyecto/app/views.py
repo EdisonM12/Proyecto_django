@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm
 
+
 # LOGIN
 def home(request):
 
@@ -18,8 +19,12 @@ def Login_Admin(request):
 
     return render(request, "app/login.html", {"form" : form })
 
+#def home_page(request):
+    #return render(request, "app/Home_admin.html")
 def home_page(request):
-    return render(request, "app/Home_admin.html")
+    profesores = Profesor.objects.all()  # Trae todos los profesores
+    return render(request, "app/Home_admin.html", {"profesores": profesores})
+
 
 
 # CREAR ESTUDIANTE
@@ -86,41 +91,76 @@ def eliminar_curso(request, id):
     })
 #profesor
 
+# views.py
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Profesor
+from .forms import ProfesorForm
+
+# LISTAR PROFESORES
 def listar_profesor(request):
     profesores = Profesor.objects.all()
-    return render(request, "curso/listar_profesor.html", {"profesores": profesores})
+    context = {
+        "profesores": profesores,
+        "mostrar_crear": True,
+        "mostrar_editar": True,
+        "mostrar_eliminar": True,
+    }
+    return render(request, "curso/listar_profesor.html", context)
+
+
+# CREAR PROFESOR
 def crear_profesor(request):
     form = ProfesorForm()
-
     if request.method == "POST":
         form = ProfesorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('app:listar_profesor')
+            return redirect('app:inicio')
 
-    return render(request, 'curso/crear_profesor.html', {'form': form})
+    context = {
+        "form": form,
+        "accion": "Crear",
+        "mostrar_crear": False,
+        "mostrar_editar": False,
+        "mostrar_eliminar": False,
+    }
+    return render(request, 'curso/crear_profesor.html', context)
+
+
+# EDITAR PROFESOR
 def editar_profesor(request, id):
     profesor = get_object_or_404(Profesor, id=id)
     form = ProfesorForm(request.POST or None, instance=profesor)
-
     if form.is_valid():
         form.save()
-        return redirect("app:listar_profesor")
+        return redirect("app:inicio")
 
-    return render(request, "curso/editar_profesor.html", {
+    context = {
         "form": form,
-        "profesor": profesor
-    })
+        "profesor": profesor,
+        "accion": "Editar",
+        "mostrar_crear": False,
+        "mostrar_editar": True,  # Solo mostrar el botón de editar
+        "mostrar_eliminar": False,
+    }
+    return render(request, "curso/editar_profesor.html", context)
+
+
+# ELIMINAR PROFESOR
 def eliminar_profesor(request, id):
     profesor = get_object_or_404(Profesor, id=id)
-
     if request.method == "POST":
         profesor.delete()
-        return redirect("app:listar_profesor")
+        return redirect("app:inicio")
 
-    return render(request, "curso/eliminar_profesor.html", {
-        "profesor": profesor
-    })
+    context = {
+        "profesor": profesor,
+        "mostrar_crear": False,
+        "mostrar_editar": False,
+        "mostrar_eliminar": True,  # Solo mostrar eliminar
+    }
+    return render(request, "curso/eliminar_profesor.html", context)
+
 # ACTUALIZAR ESTUDIANTE
 def actualizar_estudiante(request, id):
     estudiante = get_object_or_404(Estudiante, id=id)
