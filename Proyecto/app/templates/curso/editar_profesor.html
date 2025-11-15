@@ -1,0 +1,10 @@
+{% extends "curso/home_curso.html" %}
+{% block content %}
+<h1>Editar: {{ profesor.nombre }}</h1>
+<form method="post" class="card card-body">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary">Actualizar</button>
+  <a class="btn btn-secondary" href="{% url 'app:listar_profesor' %}">Volver</a>
+</form>
+{% endblock %}

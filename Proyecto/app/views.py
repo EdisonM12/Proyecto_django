@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import Login1, EstudianteForm, EvaluacionesForm
-from .models import Estudiante, Evaluaciones
+from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia
+from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm
 
 # LOGIN
 def home(request):
@@ -40,6 +40,87 @@ def listar_estudiantes(request):
     return render(request, "app/estudiantes_tablas.html", {"estudiantes": estudiantes})
 
 
+# Create your views here.
+#def login(request):
+    #return render(request, 'app/login.html')
+
+#def login(request):
+   # return render(request, 'curso/home_curso.html')
+
+def crear_curso(request):
+    form = CursoForm()
+
+    if request.method == "POST":
+        form = CursoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('app:listar_cursos')
+
+    return render(request, 'curso/crear_curso.html', {'form': form})
+
+def listar_cursos(request):
+    cursos = Curso.objects.all()
+    return render(request, "curso/listar_cursos.html", {"cursos": cursos})
+
+def editar_curso(request, id):
+    curso = get_object_or_404(Curso, id=id)
+    form = CursoForm(request.POST or None, instance=curso)
+
+    if form.is_valid():
+        form.save()
+        return redirect("app:listar_cursos")
+
+    return render(request, "curso/editar_curso.html", {
+        "form": form,
+        "curso": curso
+    })
+def eliminar_curso(request, id):
+    cursos = get_object_or_404(Curso, id=id)
+
+    if request.method == "POST":
+        cursos.delete()
+        return redirect("app:listar_cursos")
+
+    return render(request, "curso/eliminar_curso.html", {
+        "curso": cursos
+    })
+#profesor
+
+def listar_profesor(request):
+    profesores = Profesor.objects.all()
+    return render(request, "curso/listar_profesor.html", {"profesores": profesores})
+def crear_profesor(request):
+    form = ProfesorForm()
+
+    if request.method == "POST":
+        form = ProfesorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('app:listar_profesor')
+
+    return render(request, 'curso/crear_profesor.html', {'form': form})
+def editar_profesor(request, id):
+    profesor = get_object_or_404(Profesor, id=id)
+    form = ProfesorForm(request.POST or None, instance=profesor)
+
+    if form.is_valid():
+        form.save()
+        return redirect("app:listar_profesor")
+
+    return render(request, "curso/editar_profesor.html", {
+        "form": form,
+        "profesor": profesor
+    })
+def eliminar_profesor(request, id):
+    profesor = get_object_or_404(Profesor, id=id)
+
+    if request.method == "POST":
+        profesor.delete()
+        return redirect("app:listar_profesor")
+
+    return render(request, "curso/eliminar_profesor.html", {
+        "profesor": profesor
+    })
 # ACTUALIZAR ESTUDIANTE
 def actualizar_estudiante(request, id):
     estudiante = get_object_or_404(Estudiante, id=id)
@@ -131,3 +212,42 @@ def eliminar_calificacion(request, id):
     return render(request, "calificacion/eliminar_calificacion.html", {
         "calificacion": calificacion
     })
+
+
+#CRUD DE MATERIAS
+
+# LISTAR todas las materias
+def lista_materias(request):
+    materias = Materia.objects.all()
+    return render(request, 'app/materia_list.html', {'materias': materias})
+
+# CREAR una nueva materia
+def crear_materia(request):
+    if request.method == 'POST':
+        form = MateriaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_materias')
+    else:
+        form = MateriaForm()
+    return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Crear'})
+
+# EDITAR una materia existente
+def editar_materia(request, pk):
+    materia = get_object_or_404(Materia, pk=pk)
+    if request.method == 'POST':
+        form = MateriaForm(request.POST, instance=materia)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_materias')
+    else:
+        form = MateriaForm(instance=materia)
+    return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Editar'})
+
+# ELIMINAR una materia
+def eliminar_materia(request, pk):
+    materia = get_object_or_404(Materia, pk=pk)
+    if request.method == 'POST':
+        materia.delete()
+        return redirect('lista_materias')
+    return render(request, 'app/delete_materia.html', {'materia': materia})

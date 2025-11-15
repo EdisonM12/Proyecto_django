@@ -73,29 +73,17 @@ WSGI_APPLICATION = 'Proyecto.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-#DATABASES = {
- #   'default': {
-  #      'ENGINE': 'django.db.backends.postgresql',
-   #     'NAME': 'Escuela',           # Nombre de tu base
-    #   'PASSWORD': '0350319000', # La contraseña
-     #   'HOST': 'localhost',         # Normalmente siempre este
-      #  'PORT': '5432',              # Puerto por defecto
-    #}
-#}
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres.qizpqqmfhzkcrlkfuxon',
-        'PASSWORD': '0350319000',
-        'HOST': 'aws-1-us-east-2.pooler.supabase.com',
-        'PORT': '5432',
-        'OPTIONS': {
-            'sslmode': 'require'
-        }
+        'NAME': 'postgres',       # Ejemplo: proyecto_academico
+        'USER': 'postgres.qizpqqmfhzkcrlkfuxon',     # Ejemplo: postgres
+        'PASSWORD': '0350319000',       # Ejemplo: 1234
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',               # o la IP del servidor si está en remoto
+        'PORT': '5432',                    # puerto por defecto de PostgreSQL
+        'OPTIONS': { 'sslmode': 'require' }
     }
 }
-
 
 
 # Password validation

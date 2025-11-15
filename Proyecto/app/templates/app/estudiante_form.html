@@ -2,296 +2,370 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ accion }} Estudiante</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <style>
         * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-body {
-    background: linear-gradient(135deg, rgba(20, 20, 60, 0.85), rgba(50, 0, 90, 0.85)),
-                url('https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=1920&q=80');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    animation: fadeIn 1.5s ease-in-out;
-    color: #e5e7eb;
-}
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
 
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
+        .container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 450px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
 
-.container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 25px;
-}
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-header {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(12px);
-    padding: 35px;
-    border-radius: 20px;
-    margin-bottom: 35px;
-    box-shadow: 0 0 30px rgba(140, 90, 255, 0.3);
-    animation: slideDown 0.9s ease-out;
-}
+        .header h2 {
+            font-size: 28px;
+            color: #2d3748;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
 
-@keyframes slideDown {
-    from { transform: translateY(-30px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
+        .header .subtitle {
+            color: #718096;
+            font-size: 14px;
+        }
 
-header h1 {
-    font-size: 2.4em;
-    font-weight: 700;
-    margin-bottom: 10px;
-    color: #fff;
-}
+        .form-group {
+            margin-bottom: 25px;
+            opacity: 0;
+        }
 
-header p {
-    font-size: 1.2em;
-    opacity: 0.9;
-}
+        .form-group label {
+            display: block;
+            color: #4a5568;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
 
-.nav-bar {
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(10px);
-    padding: 15px 20px;
-    border-radius: 15px;
-    display: flex;
-    gap: 15px;
-    margin-bottom: 35px;
-    flex-wrap: wrap;
-    box-shadow: 0 0 20px rgba(120, 80, 255, 0.2);
-    animation: fadeIn 1.2s ease-out;
-}
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #2d3748;
+            transition: all 0.3s ease;
+            background: #f7fafc;
+        }
 
-.nav-bar button {
-    background: rgba(255, 255, 255, 0.1);
-    color: #d1d5db;
-    padding: 12px 25px;
-    border: 2px solid transparent;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: 0.35s ease;
-    font-size: 1em;
-}
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
 
-.nav-bar button:hover {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border-color: #a78bfa;
-    transform: translateY(-4px) scale(1.03);
-    box-shadow: 0 10px 25px rgba(140, 90, 255, 0.4);
-    color: white;
-}
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
 
-.nav-bar button.active {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    color: white;
-    border-color: #818cf8;
-}
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 35px;
+            opacity: 0;
+        }
 
-.dashboard {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 25px;
-    margin-bottom: 35px;
-}
+        .btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
 
-.card {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(10px);
-    padding: 25px;
-    border-radius: 18px;
-    color: #fff;
-    box-shadow: 0 0 20px rgba(140, 90, 255, 0.18);
-    transition: all 0.35s ease;
-    animation: fadeInUp 1s ease;
-}
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
 
-.card:hover {
-    transform: translateY(-8px) scale(1.03);
-    box-shadow: 0 0 35px rgba(160, 100, 255, 0.45);
-}
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
 
-.card.students { border-left: 5px solid #6366f1; }
-.card.courses { border-left: 5px solid #8b5cf6; }
-.card.grades { border-left: 5px solid #06b6d4; }
-.card.attendance { border-left: 5px solid #10b981; }
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
 
-.card-title {
-    font-size: 1.1em;
-    color: #cbd5e1;
-}
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
 
-.card-icon {
-    font-size: 1.8em;
-}
+        .modal.show {
+            display: flex;
+        }
 
-.card-value {
-    font-size: 2.6em;
-    font-weight: 700;
-    margin: 10px 0;
-}
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 400px;
+            transform: scale(0);
+        }
 
-.card-subtitle {
-    font-size: 0.95em;
-    color: #a7f3d0;
-}
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+        }
 
-.content-section {
-    background: rgba(255, 255, 255, 0.12);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 0 20px rgba(110, 70, 255, 0.25);
-    animation: fadeIn 1.3s ease-out;
-}
+        .modal-content h2 {
+            color: #2d3748;
+            margin-bottom: 12px;
+            font-size: 24px;
+        }
 
-.section-title {
-    font-size: 1.6em;
-    color: #fff;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
+        .modal-content p {
+            color: #718096;
+            margin-bottom: 25px;
+        }
 
-.search-bar {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-}
+        .modal-close {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
 
-.search-bar input {
-    flex: 1;
-    min-width: 250px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    border: 2px solid rgba(255, 255, 255, 0.25);
-    background: rgba(255, 255, 255, 0.13);
-    color: white;
-    transition: 0.3s;
-}
+        .modal-close:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
 
-.search-bar input:focus {
-    outline: none;
-    border-color: #a78bfa;
-    box-shadow: 0 0 12px rgba(150, 100, 255, 0.4);
-}
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 25px;
+            }
 
-.btn {
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
-    border: none;
-    padding: 12px 25px;
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    transition: 0.35s ease;
-}
-
-.btn:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 18px rgba(160, 100, 255, 0.5);
-}
-
-.table-container {
-    overflow-x: auto;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    color: #e2e8f0;
-}
-
-thead {
-    background: rgba(255, 255, 255, 0.15);
-}
-
-th, td {
-    padding: 15px;
-    text-align: left;
-}
-
-tbody tr {
-    transition: 0.25s;
-}
-
-tbody tr:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.badge {
-    padding: 6px 14px;
-    border-radius: 12px;
-    font-size: 0.85em;
-    font-weight: 600;
-}
-
-.badge.active {
-    background: #22c55e33;
-    color: #22c55e;
-}
-
-.badge.pending {
-    background: #facc1533;
-    color: #facc15;
-}
-
-@media (max-width: 768px) {
-    .nav-bar { flex-direction: column; }
-    .nav-bar button { width: 100%; }
-}
+            .btn-group {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">{{ accion }} Estudiante</h2>
-    <form method="post" style="width:300px; margin:auto;">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" id="abrir">{{ accion }}</button>
-    </form>
-    <div id="mimodal">
-        <span id="close">
-            &times;
-        </span>
-        <h2>
-            Estudiante guardado exitosamente
-        </h2>
+    <div class="container">
+        <div class="header">
+            <h2>{{ accion }} Estudiante</h2>
+            <p class="subtitle">Completa la información del estudiante</p>
+        </div>
+
+        <form method="post" id="studentForm">
+            {% csrf_token %}
+
+            <!-- Reemplaza estos campos con {{ form.as_p }} si lo prefieres -->
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="form-group">
+                <label for="apellido">Apellido</label>
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+
+            <div class="form-group">
+                <label for="correo">Correo Electrónico</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion">
+            </div>
+
+            <div class="form-group">
+                <label for="telefono">Teléfono</label>
+                <input type="tel" id="telefono" name="telefono">
+            </div>
+
+            <div class="form-group">
+                <label for="curso">Curso</label>
+                <select id="curso" name="curso" required>
+                    <option value="">Selecciona un curso</option>
+                    <option value="1">Curso 1</option>
+                    <option value="2">Curso 2</option>
+                    <option value="3">Curso 3</option>
+                </select>
+            </div>
+
+            <div class="btn-group">
+                <a href="{% url 'app:listar_estudiantes' %}" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">{{ accion }}</button>
+            </div>
+        </form>
     </div>
-    <div style="text-align:center; margin-top:10px;">
-        <a href="{% url 'app:listar_estudiantes' %}">Volver a la lista</a>
+
+    <!-- Modal de éxito -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">✓</div>
+            <h2>¡Éxito!</h2>
+            <p>Estudiante guardado correctamente</p>
+            <button class="modal-close" onclick="closeModal()">Aceptar</button>
+        </div>
     </div>
+
+    <script>
+        // Animación de entrada del contenedor
+        anime({
+            targets: '.container',
+            translateY: [50, 0],
+            opacity: [0, 1],
+            duration: 800,
+            easing: 'easeOutExpo'
+        });
+
+        // Animación de los campos del formulario
+        anime({
+            targets: '.form-group',
+            translateX: [-30, 0],
+            opacity: [0, 1],
+            duration: 600,
+            delay: anime.stagger(100, {start: 300}),
+            easing: 'easeOutExpo'
+        });
+
+        // Animación de los botones
+        anime({
+            targets: '.btn-group',
+            translateY: [20, 0],
+            opacity: [0, 1],
+            duration: 600,
+            delay: 800,
+            easing: 'easeOutExpo'
+        });
+
+        // Manejo del formulario y modal
+        const form = document.getElementById('studentForm');
+        const modal = document.getElementById('successModal');
+
+        // Simulación de envío exitoso (elimina esto en producción)
+        // form.addEventListener('submit', function(e) {
+        //     e.preventDefault();
+        //     showModal();
+        // });
+
+        function showModal() {
+            modal.classList.add('show');
+            anime({
+                targets: '.modal-content',
+                scale: [0, 1],
+                duration: 500,
+                easing: 'easeOutElastic(1, .6)'
+            });
+
+            anime({
+                targets: '.modal-icon',
+                scale: [0, 1],
+                rotate: [0, 360],
+                duration: 800,
+                delay: 200,
+                easing: 'easeOutExpo'
+            });
+        }
+
+        function closeModal() {
+            anime({
+                targets: '.modal-content',
+                scale: [1, 0],
+                duration: 300,
+                easing: 'easeInExpo',
+                complete: function() {
+                    modal.classList.remove('show');
+                    // Redirigir después de cerrar el modal
+                    window.location.href = "{% url 'app:listar_estudiantes' %}";
+                }
+            });
+        }
+
+        // Animación de hover en los inputs
+        document.querySelectorAll('input, select, textarea').forEach(input => {
+            input.addEventListener('focus', function() {
+                anime({
+                    targets: this,
+                    scale: [1, 1.02],
+                    duration: 300,
+                    easing: 'easeOutExpo'
+                });
+            });
+
+            input.addEventListener('blur', function() {
+                anime({
+                    targets: this,
+                    scale: [1.02, 1],
+                    duration: 300,
+                    easing: 'easeOutExpo'
+                });
+            });
+        });
+    </script>
 </body>
-<script>
-    const modal = document.getElementById("mimodal");
-    const btn = document.getElementById("abrir");
-    const cerrar = document.getElementsByClassName("cerrar")[0];
-
-    modal.onclick = function(){
-    modal.style.display = "block";
-    }
-    btn.onclick = function(){
-    modal.style.display = "none";
-    }
-    window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-
-
-</script>
 </html>
