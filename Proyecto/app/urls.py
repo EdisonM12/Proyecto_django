@@ -3,7 +3,7 @@ from . import views
 
 app_name = "app"
 urlpatterns = [
-    path('profesor/', views.pag_profesor, name='pag_profesor'),
+    path('profesor/', views.pag_profesor, name='profesor'),
     path("listar_cursos/", views.listar_cursos, name="listar_cursos"),
     path("crear_curso/", views.crear_curso, name="crear_curso"),
     path("editar_curso/<int:id>/", views.editar_curso, name="editar_curso"),
@@ -18,6 +18,7 @@ urlpatterns = [
     #ADMINISTRADOR LOGIN Y OPCIONES
    path('login/', views.Login_Admin, name='opciones'),
     path('Inicio/', views.home_page, name= 'inicio'),
+    path('login_profe/', views.Login_profesor, name='Login_profesor'),
 
 
 

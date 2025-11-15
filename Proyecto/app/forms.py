@@ -1,5 +1,5 @@
 from django import forms
-from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia
+from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia, LoginProfesor
 import re
 from datetime import date
 
@@ -170,6 +170,23 @@ class Login1(forms.Form):
             raise forms.ValidationError("Correo o contraseña incorrectos")
 
         return cleaned
+class Login2(forms.Form):
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={'class': 'input-group input', 'placeholder': 'Correo electrónico'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'input-group input', 'placeholder': 'Contraseña'})
+    )
+
+    def clean(self):
+        cleaned = super().clean()
+        email = cleaned.get("email")
+        password = cleaned.get("password")
+
+        # Validar si existe un admin con ese email y contraseña
+        if not LoginProfesor.objects.filter(email=email, password=password).exists():
+            raise forms.ValidationError("Correo o contraseña incorrectos")
 
 class EstudianteForm(forms.ModelForm):
     class Meta:
@@ -185,21 +202,21 @@ class EstudianteForm(forms.ModelForm):
             raise forms.ValidationError("Este correo ya está registrado.")
         return correo
 
-        def clean_telefono(self):
-            telefono = str(self.cleaned_data.get("telefono"))
+    def clean_telefono(self):
+        telefono = str(self.cleaned_data.get("telefono"))
 
-            if not telefono.isdigit():
-                raise forms.ValidationError("El teléfono debe tener solo números.")
-            if len(telefono) != 10:
-                raise forms.ValidationError("El teléfono debe tener exactamente 10 dígitos.")
+        if not telefono.isdigit():
+            raise forms.ValidationError("El teléfono debe tener solo números.")
+        if len(telefono) != 10:
+            raise forms.ValidationError("El teléfono debe tener exactamente 10 dígitos.")
 
-            qs = Estudiante.objects.filter(telefono=telefono)
-            if self.instance.pk:
-                qs = qs.exclude(pk=self.instance.pk)
-            if qs.exists():
-                raise forms.ValidationError("Este teléfono ya está registrado.")
+        qs = Estudiante.objects.filter(telefono=telefono)
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError("Este teléfono ya está registrado.")
 
-            return telefono
+        return telefono
 
 class EvaluacionesForm(forms.ModelForm):
     class Meta:

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia
-from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm
+from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor
+from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2
 
 
 # LOGIN
@@ -22,6 +22,17 @@ def Login_Admin(request):
             return redirect("app:inicio")
 
     return render(request, "app/login.html", {"form" : form })
+
+def Login_profesor(request):
+    form = Login2()
+    if request.method == "POST":
+        form = Login2(request.POST)
+        if form.is_valid():
+            usuario = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            return redirect("app:profesor")
+
+    return render(request, "profesor/login_profesor.html", {"form" : form })
 
 #def home_page(request):
     #return render(request, "app/Home_admin.html")
