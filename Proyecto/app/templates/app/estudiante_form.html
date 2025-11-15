@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ accion }} Estudiante</title>
+</head>
+<body>
+    <h2 style="text-align:center;">{{ accion }} Estudiante</h2>
+    <form method="post" style="width:300px; margin:auto;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" id="abrir">{{ accion }}</button>
+    </form>
+    <div id="mimodal">
+        <span id="close">
+            &times;
+        </span>
+        <h2>
+            Estudiante guardado exitosamente
+        </h2>
+    </div>
+    <div style="text-align:center; margin-top:10px;">
+        <a href="{% url 'app:listar_estudiantes' %}">Volver a la lista</a>
+    </div>
+</body>
+<script>
+    const modal = document.getElementById("mimodal");
+    const btn = document.getElementById("abrir");
+    const cerrar = document.getElementsByClassName("cerrar")[0];
+
+    modal.onclick = function(){
+    modal.style.display = "block";
+    }
+    btn.onclick = function(){
+    modal.style.display = "none";
+    }
+    window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+
+
+</script>
+</html>
