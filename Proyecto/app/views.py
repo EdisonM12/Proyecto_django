@@ -6,7 +6,7 @@ from django.contrib.auth import logout
 
 # LOGIN
 def cerrar_sesion(request):
-    logout(request)  
+    logout(request)
     return redirect('app:home')
 def home(request):
 
@@ -111,21 +111,12 @@ def eliminar_curso(request, id):
 #profesor
 
 # views.py
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Profesor
-from .forms import ProfesorForm
+
 
 # LISTAR PROFESORES
-def listar_profesor(request):
+def listar_profesores(request):
     profesores = Profesor.objects.all()
-    context = {
-        "profesores": profesores,
-        "mostrar_crear": True,
-        "mostrar_editar": True,
-        "mostrar_eliminar": True,
-    }
-    return render(request, "curso/listar_profesor.html", context)
-
+    return render(request, "curso/listar_profesor.html", {"profesores": profesores})
 
 # CREAR PROFESOR
 def crear_profesor(request):
@@ -134,51 +125,33 @@ def crear_profesor(request):
         form = ProfesorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('app:inicio')
-
-    context = {
-        "form": form,
-        "accion": "Crear",
-        "mostrar_crear": False,
-        "mostrar_editar": False,
-        "mostrar_eliminar": False,
-    }
-    return render(request, 'curso/crear_profesor.html', context)
-
+            return redirect("app:listar_profesor")
+    return render(request, "curso/crear_profesor.html", {"form": form})
 
 # EDITAR PROFESOR
-def editar_profesor(request, id):
+def editar_profesor(request):
+    profesores = Profesor.objects.all()
+    return render(request, "curso/editar_profesor.html", {"profesores": profesores})
+
+def editar_profesor_detalle(request, id):
     profesor = get_object_or_404(Profesor, id=id)
     form = ProfesorForm(request.POST or None, instance=profesor)
     if form.is_valid():
         form.save()
-        return redirect("app:inicio")
-
-    context = {
-        "form": form,
-        "profesor": profesor,
-        "accion": "Editar",
-        "mostrar_crear": False,
-        "mostrar_editar": True,  # Solo mostrar el botón de editar
-        "mostrar_eliminar": False,
-    }
-    return render(request, "curso/editar_profesor.html", context)
-
+        return redirect("app:editar_profesor")  # vuelve a la lista de edición
+    return render(request, "curso/editar_profesor_detalle.html", {"form": form, "profesor": profesor})
 
 # ELIMINAR PROFESOR
-def eliminar_profesor(request, id):
+def eliminar_profesor(request):
+    profesores = Profesor.objects.all()
+    return render(request, "curso/eliminar_profesor.html", {"profesores": profesores})
+def eliminar_profesor_detalle(request, id):
     profesor = get_object_or_404(Profesor, id=id)
     if request.method == "POST":
         profesor.delete()
-        return redirect("app:inicio")
+        return redirect("app:eliminar_profesor")  # vuelve a la lista de eliminar
+    return render(request, "curso/eliminar_profesor_detalle.html", {"profesor": profesor})
 
-    context = {
-        "profesor": profesor,
-        "mostrar_crear": False,
-        "mostrar_editar": False,
-        "mostrar_eliminar": True,  # Solo mostrar eliminar
-    }
-    return render(request, "curso/eliminar_profesor.html", context)
 
 # ACTUALIZAR ESTUDIANTE
 def actualizar_estudiante(request, id):
