@@ -1,5 +1,6 @@
 from django import forms
-from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia, LoginProfesor
+from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia, LoginProfesor, LoginEstudiante, Estudiantes_pendientes
+
 import re
 from datetime import date
 
@@ -149,6 +150,26 @@ class ProfesorForm(forms.ModelForm):
             raise forms.ValidationError("El campo materia no puede estar vacío.")
         return materia
     #************************************************
+class Login3(forms.Form):
+    email = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Ej: 202410230',
+            'style': 'width: 100%; padding: 14px 18px; border: 1px solid rgba(156, 39, 176, 0.4); border-radius: 10px; background-color: rgba(255, 255, 255, 0.08); color: #f0f0f0; font-size: 1em;'
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'input-group input', 'placeholder': 'Contraseña'})
+
+    )
+    def clean(self):
+        cleaned= super().clean()
+        email =cleaned.get("email")
+        password = cleaned.get("password")
+        if not LoginEstudiante.objects.filter(email=email, password=password).exists():
+            raise forms.ValidationError("Correo o contraseña incorrectos")
+
+        return cleaned
 
 class Login1(forms.Form):
     email = forms.EmailField(
@@ -187,11 +208,38 @@ class Login2(forms.Form):
         # Validar si existe un admin con ese email y contraseña
         if not LoginProfesor.objects.filter(email=email, password=password).exists():
             raise forms.ValidationError("Correo o contraseña incorrectos")
+        return cleaned
+
+
+
+
+#ESTUDIANTES PENDIENTES
+class PendientesForm(forms.ModelForm):
+        """Formulario de registro de estudiante pendiente"""
+        password = forms.CharField(
+            widget=forms.PasswordInput(attrs={
+                'placeholder': 'Crea una contraseña segura'
+            }),
+            label="Contraseña"
+        )
+
+        class Meta:
+            model = Estudiantes_pendientes
+            fields = ['nombre', 'apellido', 'email', 'direccion', 'telefono']
+            widgets = {
+                'nombre': forms.TextInput(attrs={'placeholder': 'Tu nombre'}),
+                'apellido': forms.TextInput(attrs={'placeholder': 'Tu apellido'}),
+                'email': forms.EmailInput(attrs={'placeholder': 'correo@ejemplo.com'}),
+                'direccion': forms.TextInput(attrs={'placeholder': 'Tu dirección'}),
+                'telefono': forms.TextInput(attrs={'placeholder': '0999999999'}),
+            }
+
+
 
 class EstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante
-        fields = ['nombre', 'apellido', 'correo', 'direccion', 'telefono', 'curso']
+        fields = ['nombre', 'apellido', 'direccion', 'telefono', 'curso', 'contraseñas']
 
     def clean_correo(self):
         correo = self.cleaned_data.get("correo")

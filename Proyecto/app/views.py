@@ -1,13 +1,131 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor
-from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2
+from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor, Estudiantes_pendientes, LoginEstudiante
+from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2, Login3, PendientesForm
 from django.contrib.auth import logout
+from django.contrib.auth.hashers import make_password, check_password
 
 
+# views.py
+def login_estudiante(request):
+    """Login y Registro en una misma vista"""
+
+    if request.method == "POST":
+        form_type = request.POST.get('form_type', 'login')
+
+        if form_type == 'registro':
+            # Formulario de REGISTRO con prefijo
+            form_registro = PendientesForm(request.POST, prefix='registro')
+
+            if form_registro.is_valid():
+                pendiente = form_registro.save(commit=False)
+                pendiente.estado = 'PENDIENTE'
+                pendiente.password = make_password(form_registro.cleaned_data['password'])
+                pendiente.save()
+
+                return redirect('app:login_estudiante')
+
+        else:
+            # Formulario de LOGIN con prefijo
+            form_login = Login3(request.POST, prefix='login')
+
+            if form_login.is_valid():
+                email = form_login.cleaned_data['email']
+                password = form_login.cleaned_data['password']
+
+                try:
+                    usuario = LoginEstudiante.objects.get(email=email)
+
+                    if usuario.check_password(password):
+                        request.session['estudiante_email'] = email
+
+                        try:
+                            estudiante = Estudiante.objects.get(contraseñas=usuario)
+                            request.session['estudiante_id'] = estudiante.id
+                            request.session['estudiante_nombre'] = estudiante.nombre
+                        except Estudiante.DoesNotExist:
+                            pass
+
+                        return redirect('app:estudiante_home')
+
+                except LoginEstudiante.DoesNotExist:
+                    pass
+
+    # Crear formularios vacíos CON PREFIJOS
+    form_login = Login3(prefix='login')
+    form_registro = PendientesForm(prefix='registro')
+
+    return render(request, 'estudiante/estudiante_index.html', {
+        'form_login': form_login,
+        'form_registro': form_registro
+    })
+def ver_pendientes(request):
+    persona = Estudiantes_pendientes.objects.filter(estado="PENDIENTE")
+    return render(request, 'estudiante/pendiente.html', {"pendiente":persona})
+
+
+def registrar_pendiente(request):
+    if request.method == "POST":
+        # 1. Crear credenciales
+
+        # 2. Crear pendiente
+        Estudiantes_pendientes.objects.create(
+            nombre=request.POST['nombre'],
+            apellido=request.POST['apellido'],
+            direccion=request.POST['direccion'],
+            telefono=request.POST['telefono'],
+            email = request.POST['email'],
+            password= make_password(request.Post['password']),
+            estado = "PENDIENTE"
+        )
+
+        return redirect("app:Estudiante_login")
+
+    return render(request, "estudiante/estudiante_index.html")
+
+
+
+def aceptar_pendiente(request, id):
+    pendiente = Estudiantes_pendientes.objects.get(id=id)
+    cursos = Curso.objects.all()
+    materias = Materia.objects.all()
+
+    if request.method == "POST":
+        curso = Curso.objects.get(id=request.POST['curso'])
+        materia = Materia.objects.get(id=request.POST['materia'])
+        login = LoginEstudiante.objects.create(
+            email= pendiente.email,
+            password = pendiente.password,
+        )
+
+        Estudiante.objects.create(
+            nombre=pendiente.nombre,
+            apellido=pendiente.apellido,
+            direccion=pendiente.direccion,
+            telefono=pendiente.telefono,
+            curso=curso,
+            datos=materia,
+            contraseñas=login
+        )
+
+        pendiente.delete()
+        return redirect("app:listar_estudiantes")
+    return render(request, "estudiante/aceptar.html", {
+        "pendiente": pendiente,
+        "cursos": cursos,
+        "materias": materias
+    })
+
+
+
+
+def home_estudiante(request):
+    return render(request, 'estudiante/home_estudiante.html')
 # LOGIN
 def cerrar_sesion(request):
     logout(request)  
     return redirect('app:home')
+
+
 def home(request):
 
     return render(request, "app/Inicio.html")
@@ -111,9 +229,6 @@ def eliminar_curso(request, id):
 #profesor
 
 # views.py
-from django.shortcuts import render, redirect, get_object_or_404
-from .models import Profesor
-from .forms import ProfesorForm
 
 # LISTAR PROFESORES
 def listar_profesor(request):

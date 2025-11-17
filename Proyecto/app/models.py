@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib import messages
 # Create your models here.
 from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
@@ -63,19 +63,30 @@ class LoginEstudiante(models.Model):
     password = models.CharField(max_length=255)
     def set_password(self, raw_password):
         self.password = make_password(raw_password)
+        self.save()
 
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
+
+class Estudiantes_pendientes(models.Model):
+    nombre = models.CharField(max_length=255)
+    apellido = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+    direccion = models.CharField(max_length=255)
+    telefono = models.CharField(unique=True)
+    estado = models.CharField(max_length=20, default="PENDIENTE")
+    password = models.CharField(max_length=255, null=True, blank=True)
+
 
 
 class Estudiante(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
-    correo = models.EmailField(unique=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(unique=True)
     curso = models.ForeignKey(Curso , on_delete=models.PROTECT, null=True, blank=True)
-    datos = models.OneToOneField(Materia, on_delete=models.PROTECT, null=True, blank=True)
+    datos = models.ForeignKey(Materia, on_delete=models.PROTECT, null=True, blank=True)
+    contraseñas= models.OneToOneField(LoginEstudiante, on_delete=models.PROTECT, null=True, blank=True)
 
     def _str_(self):
         return f"{self.nombre} {self.apellido}"

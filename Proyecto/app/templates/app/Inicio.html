@@ -121,7 +121,7 @@
     </div>
 
     <div>
-        <button class="card-btn">
+        <button class="card-btn" id="estudiante" onclick="location.href='{% url 'app:Estudiante_login' %}'">
             <i class="bi bi-mortarboard-fill"></i>
             <span class="titulo">Estudiante</span>
             <span class="descripcion">Consulta tus materias, notas y tareas</span>
@@ -131,6 +131,8 @@
 
 <script>
     // Animación para el título
+
+
     anime({
         targets: 'h1',
         translateY: [-40, 0],
