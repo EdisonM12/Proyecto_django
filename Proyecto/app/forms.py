@@ -239,6 +239,31 @@ class PendientesForm(forms.ModelForm):
 class EstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante
+        fields = ['nombre', 'apellido', 'direccion', 'telefono', 'cedula' ]
+
+    def clean_cedula(self):
+        cedula = self.cleaned_data.get('cedula')
+
+
+        if len(cedula) != 10:
+            raise forms.ValidationError("La cédula debe tener exactamente 10 dígitos.")
+
+
+        if not cedula.isdigit():
+            raise forms.ValidationError("La cédula debe contener solo números.")
+
+
+        coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2]
+        total = 0
+        for i in range(9):
+            val = int(cedula[i]) * coeficientes[i]
+            if val >= 10:
+                val -= 9
+            total += val
+        modulo = total % 10
+        verificador = 0 if modulo == 0 else 10 - modulo
+        if verificador != int(cedula[9]):
+            raise forms.ValidationError("Cédula inválida.")
         fields = ['nombre', 'apellido', 'direccion', 'telefono', 'curso', 'contraseñas']
 
     def clean_correo(self):

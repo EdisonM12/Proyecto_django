@@ -1,0 +1,61 @@
+/* eliminar_profesor_detalle.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 500px;
+    margin: 50px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #dc3545; /* rojo de peligro */
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    color: #555555;
+}
+
+button.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+button.btn-danger:hover {
+    background-color: #c82333;
+}
+
+a.btn-secondary {
+    display: inline-block;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+a.btn-secondary:hover {
+    background-color: #5a6268;
+}
