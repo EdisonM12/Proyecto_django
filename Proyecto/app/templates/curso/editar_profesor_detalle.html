@@ -1,0 +1,14 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/editar_profesor_detalle.css' %}">
+
+{% block content %}
+<div class="container">
+    <h1>Editar Profesor: {{ profesor.nombre }}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'app:editar_profesor' %}" class="btn btn-secondary">Volver</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django import forms
-from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia
+from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia, LoginProfesor, LoginEstudiante, Estudiantes_pendientes
+
 import re
 from datetime import date
 
@@ -149,6 +150,26 @@ class ProfesorForm(forms.ModelForm):
             raise forms.ValidationError("El campo materia no puede estar vacío.")
         return materia
     #************************************************
+class Login3(forms.Form):
+    email = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Ej: 202410230',
+            'style': 'width: 100%; padding: 14px 18px; border: 1px solid rgba(156, 39, 176, 0.4); border-radius: 10px; background-color: rgba(255, 255, 255, 0.08); color: #f0f0f0; font-size: 1em;'
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'input-group input', 'placeholder': 'Contraseña'})
+
+    )
+    def clean(self):
+        cleaned= super().clean()
+        email =cleaned.get("email")
+        password = cleaned.get("password")
+        if not LoginEstudiante.objects.filter(email=email, password=password).exists():
+            raise forms.ValidationError("Correo o contraseña incorrectos")
+
+        return cleaned
 
 class Login1(forms.Form):
     email = forms.EmailField(
@@ -170,11 +191,80 @@ class Login1(forms.Form):
             raise forms.ValidationError("Correo o contraseña incorrectos")
 
         return cleaned
+class Login2(forms.Form):
+    email = forms.EmailField(
+        required=True,
+        widget=forms.EmailInput(attrs={'class': 'input-group input', 'placeholder': 'Correo electrónico'})
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={'class': 'input-group input', 'placeholder': 'Contraseña'})
+    )
+
+    def clean(self):
+        cleaned = super().clean()
+        email = cleaned.get("email")
+        password = cleaned.get("password")
+
+        # Validar si existe un admin con ese email y contraseña
+        if not LoginProfesor.objects.filter(email=email, password=password).exists():
+            raise forms.ValidationError("Correo o contraseña incorrectos")
+        return cleaned
+
+
+
+
+#ESTUDIANTES PENDIENTES
+class PendientesForm(forms.ModelForm):
+        """Formulario de registro de estudiante pendiente"""
+        password = forms.CharField(
+            widget=forms.PasswordInput(attrs={
+                'placeholder': 'Crea una contraseña segura'
+            }),
+            label="Contraseña"
+        )
+
+        class Meta:
+            model = Estudiantes_pendientes
+            fields = ['nombre', 'apellido', 'email', 'direccion', 'telefono']
+            widgets = {
+                'nombre': forms.TextInput(attrs={'placeholder': 'Tu nombre'}),
+                'apellido': forms.TextInput(attrs={'placeholder': 'Tu apellido'}),
+                'email': forms.EmailInput(attrs={'placeholder': 'correo@ejemplo.com'}),
+                'direccion': forms.TextInput(attrs={'placeholder': 'Tu dirección'}),
+                'telefono': forms.TextInput(attrs={'placeholder': '0999999999'}),
+            }
+
+
 
 class EstudianteForm(forms.ModelForm):
     class Meta:
         model = Estudiante
-        fields = ['nombre', 'apellido', 'correo', 'direccion', 'telefono', 'curso']
+        fields = ['nombre', 'apellido', 'direccion', 'telefono', 'cedula' ]
+
+    def clean_cedula(self):
+        cedula = self.cleaned_data.get('cedula')
+
+
+        if len(cedula) != 10:
+            raise forms.ValidationError("La cédula debe tener exactamente 10 dígitos.")
+
+
+        if not cedula.isdigit():
+            raise forms.ValidationError("La cédula debe contener solo números.")
+
+
+        coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2]
+        total = 0
+        for i in range(9):
+            val = int(cedula[i]) * coeficientes[i]
+            if val >= 10:
+                val -= 9
+            total += val
+        modulo = total % 10
+        verificador = 0 if modulo == 0 else 10 - modulo
+        if verificador != int(cedula[9]):
+            raise forms.ValidationError("Cédula inválida.")
+        fields = ['nombre', 'apellido', 'direccion', 'telefono', 'curso', 'contraseñas']
 
     def clean_correo(self):
         correo = self.cleaned_data.get("correo")
@@ -185,21 +275,21 @@ class EstudianteForm(forms.ModelForm):
             raise forms.ValidationError("Este correo ya está registrado.")
         return correo
 
-        def clean_telefono(self):
-            telefono = str(self.cleaned_data.get("telefono"))
+    def clean_telefono(self):
+        telefono = str(self.cleaned_data.get("telefono"))
 
-            if not telefono.isdigit():
-                raise forms.ValidationError("El teléfono debe tener solo números.")
-            if len(telefono) != 10:
-                raise forms.ValidationError("El teléfono debe tener exactamente 10 dígitos.")
+        if not telefono.isdigit():
+            raise forms.ValidationError("El teléfono debe tener solo números.")
+        if len(telefono) != 10:
+            raise forms.ValidationError("El teléfono debe tener exactamente 10 dígitos.")
 
-            qs = Estudiante.objects.filter(telefono=telefono)
-            if self.instance.pk:
-                qs = qs.exclude(pk=self.instance.pk)
-            if qs.exists():
-                raise forms.ValidationError("Este teléfono ya está registrado.")
+        qs = Estudiante.objects.filter(telefono=telefono)
+        if self.instance.pk:
+            qs = qs.exclude(pk=self.instance.pk)
+        if qs.exists():
+            raise forms.ValidationError("Este teléfono ya está registrado.")
 
-            return telefono
+        return telefono
 
 class EvaluacionesForm(forms.ModelForm):
     class Meta:

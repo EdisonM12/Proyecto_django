@@ -320,245 +320,120 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-icon">
-                <i class="fas fa-user-graduate"></i>
-            </div>
-            <h2>{{ accion }} Estudiante</h2>
-            <p class="subtitle">Completa la información del estudiante</p>
+<div class="container">
+    <h2><i class="fas fa-user-graduate"></i> {{ accion }} Estudiante</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-content">
+            {{ form.as_p }}
         </div>
 
-        <form method="post" id="studentForm">
-            {% csrf_token %}
+        <div class="btn-group">
+            <a href="{% url 'app:listar_estudiantes' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Cancelar
+            </a>
 
-            <!-- Mostrar errores no relacionados con campos específicos -->
-            {% if form.non_field_errors %}
-                <div class="alert-error">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <div>
-                        {% for error in form.non_field_errors %}
-                            {{ error }}
-                        {% endfor %}
-                    </div>
-                </div>
-            {% endif %}
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="{{ form.nombre.id_for_label }}">
-                        <i class="fas fa-user"></i>
-                        Nombre
-                    </label>
-                    {{ form.nombre }}
-                    {% if form.nombre.errors %}
-                        <ul class="errorlist">
-                            {% for error in form.nombre.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.apellido.id_for_label }}">
-                        <i class="fas fa-user"></i>
-                        Apellido
-                    </label>
-                    {{ form.apellido }}
-                    {% if form.apellido.errors %}
-                        <ul class="errorlist">
-                            {% for error in form.apellido.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="form-group full-width">
-                <label for="{{ form.correo.id_for_label }}">
-                    <i class="fas fa-envelope"></i>
-                    Correo Electrónico
-                </label>
-                {{ form.correo }}
-                {% if form.correo.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.correo.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-
-            <div class="form-group full-width">
-                <label for="{{ form.direccion.id_for_label }}">
-                    <i class="fas fa-map-marker-alt"></i>
-                    Dirección
-                </label>
-                {{ form.direccion }}
-                {% if form.direccion.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.direccion.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="{{ form.telefono.id_for_label }}">
-                        <i class="fas fa-phone"></i>
-                        Teléfono
-                    </label>
-                    {{ form.telefono }}
-                    {% if form.telefono.errors %}
-                        <ul class="errorlist">
-                            {% for error in form.telefono.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-
-                <div class="form-group">
-                    <label for="{{ form.curso.id_for_label }}">
-                        <i class="fas fa-book"></i>
-                        Curso
-                    </label>
-                    {{ form.curso }}
-                    {% if form.curso.errors %}
-                        <ul class="errorlist">
-                            {% for error in form.curso.errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-
-            <div class="btn-group">
-                <a href="{% url 'app:listar_estudiantes' %}" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i>
-                    Cancelar
-                </a>
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-save"></i>
-                    {{ accion }}
-                </button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Modal de éxito -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <div class="modal-icon">
-                <i class="fas fa-check"></i>
-            </div>
-            <h2>¡Éxito!</h2>
-            <p>Estudiante guardado correctamente</p>
-            <button class="modal-close" onclick="closeModal()">
-                <i class="fas fa-check-circle"></i>
-                Aceptar
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> {{ accion }}
             </button>
         </div>
-    </div>
+    </form>
+</div>
 
-    <script>
-        // Animación de entrada del contenedor
+<script>
+    // Animación de entrada del contenedor
+    anime({
+        targets: '.container',
+        translateY: [50, 0],
+        opacity: [0, 1],
+        duration: 800,
+        easing: 'easeOutExpo'
+    });
+
+    // Animación del icono del header
+    anime({
+        targets: '.header-icon',
+        scale: [0, 1],
+        rotate: [0, 360],
+        duration: 1000,
+        delay: 200,
+        easing: 'easeOutElastic(1, .6)'
+    });
+
+    // Animación de los campos del formulario
+    anime({
+        targets: '.form-group',
+        translateX: [-30, 0],
+        opacity: [0, 1],
+        duration: 600,
+        delay: anime.stagger(80, {start: 400}),
+        easing: 'easeOutExpo'
+    });
+
+    // Animación de los botones
+    anime({
+        targets: '.btn-group',
+        translateY: [20, 0],
+        opacity: [0, 1],
+        duration: 600,
+        delay: 900,
+        easing: 'easeOutExpo'
+    });
+
+    // Añadir clase error a inputs con errores
+    document.querySelectorAll('.errorlist').forEach(function (errorList) {
+        const input = errorList.previousElementSibling;
+        if (input && (input.tagName === 'INPUT' || input.tagName === 'SELECT' || input.tagName === 'TEXTAREA')) {
+            input.classList.add('error');
+        }
+    });
+
+    // Animación de errores si existen
+    if (document.querySelectorAll('.errorlist').length > 0 || document.querySelectorAll('.alert-error').length > 0) {
         anime({
-            targets: '.container',
-            translateY: [50, 0],
+            targets: '.errorlist, .alert-error',
+            translateX: [-20, 0],
             opacity: [0, 1],
-            duration: 800,
+            duration: 400,
+            delay: anime.stagger(100),
             easing: 'easeOutExpo'
         });
+    }
 
-        // Animación del icono del header
+    function closeModal() {
         anime({
-            targets: '.header-icon',
-            scale: [0, 1],
-            rotate: [0, 360],
-            duration: 1000,
-            delay: 200,
-            easing: 'easeOutElastic(1, .6)'
-        });
-
-        // Animación de los campos del formulario
-        anime({
-            targets: '.form-group',
-            translateX: [-30, 0],
-            opacity: [0, 1],
-            duration: 600,
-            delay: anime.stagger(80, {start: 400}),
-            easing: 'easeOutExpo'
-        });
-
-        // Animación de los botones
-        anime({
-            targets: '.btn-group',
-            translateY: [20, 0],
-            opacity: [0, 1],
-            duration: 600,
-            delay: 900,
-            easing: 'easeOutExpo'
-        });
-
-        // Añadir clase error a inputs con errores
-        document.querySelectorAll('.errorlist').forEach(function(errorList) {
-            const input = errorList.previousElementSibling;
-            if (input && (input.tagName === 'INPUT' || input.tagName === 'SELECT' || input.tagName === 'TEXTAREA')) {
-                input.classList.add('error');
+            targets: '.modal-content',
+            scale: [1, 0],
+            duration: 300,
+            easing: 'easeInExpo',
+            complete: function () {
+                document.getElementById('successModal').classList.remove('show');
+                window.location.href = "{% url 'app:listar_estudiantes' %}";
             }
         });
+    }
 
-        // Animación de errores si existen
-        if (document.querySelectorAll('.errorlist').length > 0 || document.querySelectorAll('.alert-error').length > 0) {
+    // Animación sutil en focus de inputs
+    document.querySelectorAll('input, select, textarea').forEach(input => {
+        input.addEventListener('focus', function () {
             anime({
-                targets: '.errorlist, .alert-error',
-                translateX: [-20, 0],
-                opacity: [0, 1],
-                duration: 400,
-                delay: anime.stagger(100),
-                easing: 'easeOutExpo'
-            });
-        }
-
-        function closeModal() {
-            anime({
-                targets: '.modal-content',
-                scale: [1, 0],
-                duration: 300,
-                easing: 'easeInExpo',
-                complete: function() {
-                    document.getElementById('successModal').classList.remove('show');
-                    window.location.href = "{% url 'app:listar_estudiantes' %}";
-                }
-            });
-        }
-
-        // Animación sutil en focus de inputs
-        document.querySelectorAll('input, select, textarea').forEach(input => {
-            input.addEventListener('focus', function() {
-                anime({
-                    targets: this,
-                    scale: [1, 1.02],
-                    duration: 200,
-                    easing: 'easeOutQuad'
-                });
-            });
-
-            input.addEventListener('blur', function() {
-                anime({
-                    targets: this,
-                    scale: [1.02, 1],
-                    duration: 200,
-                    easing: 'easeOutQuad'
-                });
+                targets: this,
+                scale: [1, 1.02],
+                duration: 200,
+                easing: 'easeOutQuad'
             });
         });
-    </script>
+
+        input.addEventListener('blur', function () {
+            anime({
+                targets: this,
+                scale: [1.02, 1],
+                duration: 200,
+                easing: 'easeOutQuad'
+            });
+        });
+    });
+</script>
 </body>
 </html>
