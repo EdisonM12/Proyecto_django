@@ -701,13 +701,14 @@
                                     <i class="fa-solid fa-user-plus"></i>
                                     <span>Agregar Estudiante</span>
                                 </a>
-                                <a href="#" class="item-desplegable">
-                                    <i class="fa-solid fa-chart-simple"></i>
-                                    <span>Calificaciones</span>
+                                <a href="#" class="item-desplegable" id="editar1" data-url="{% url 'app:editar_estudiantes'%}">
+                                    <i class="bi bi-pencil-square"></i>
+                                    <span>Editar Estudiantes</span>
                                 </a>
-                                <a href="#" class="item-desplegable">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                    <span>Asistencia</span>
+
+                                <a href="#" class="item-desplegable" id="eliminar1" data-url="{% url 'app:eliminar_estudiantes'%}">
+                                    <i class="bi bi-trash"></i>
+                                    <span>Eliminar Estudiantes</span>
                                 </a>
                             </div>
                         </details>
@@ -884,6 +885,12 @@
         window.location.href = this.dataset.url
         }
         document.getElementById('lista1_eliminar').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('editar1').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('eliminar1').onclick = function (){
         window.location.href = this.dataset.url
         }
 

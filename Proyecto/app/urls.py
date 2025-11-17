@@ -32,10 +32,19 @@ urlpatterns = [
 
 
 
-    path('estudiantes/', views.listar_estudiantes, name='listar_estudiantes'),
+
     path('estudiante/nuevo/', views.crear_estudiante, name='crear_estudiante'),
-    path('estudiante/<int:id>/editar/', views.actualizar_estudiante, name='actualizar_estudiante'),
-    path('estudiante/<int:id>/eliminar/', views.eliminar_estudiante, name='eliminar_estudiante'),
+
+    path("estudiantes/listar/", views.listar_estudiantes, name="listar_estudiantes"),
+
+
+    path("estudiantes/editar/", views.editar_estudiantes, name="editar_estudiantes"),
+    path("estudiantes/editar/<int:id>/", views.editar_estudiantes_detalle, name="editar_estudiantes_detalle"),
+
+
+    path("estudiantes/eliminar/", views.eliminar_estudiantes, name="eliminar_estudiantes"),
+    path("estudiantes/eliminar/<int:id>/", views.eliminar_estudiantes_detalle, name="eliminar_estudiantes_detalle"),
+
 
     path('evaluacione/', views.list_evaluacion, name= 'evaluaciones_tabla' ),
     path('evaluaciones/nuevo/', views.crear_evaluaciones, name='crear_evaluaciones'),

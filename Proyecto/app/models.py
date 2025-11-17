@@ -74,6 +74,7 @@ class Estudiante(models.Model):
     correo = models.EmailField(unique=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(unique=True)
+    cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
     curso = models.ForeignKey(Curso , on_delete=models.PROTECT, null=True, blank=True)
     datos = models.OneToOneField(Materia, on_delete=models.PROTECT, null=True, blank=True)
 

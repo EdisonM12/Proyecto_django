@@ -60,8 +60,43 @@ def crear_estudiante(request):
 
 # LISTAR ESTUDIANTES
 def listar_estudiantes(request):
-    estudiantes = Estudiante.objects.all()  # <- usar el modelo, no el form
-    return render(request, "app/estudiantes_tablas.html", {"estudiantes": estudiantes})
+    estudiantes = Estudiante.objects.all()
+    return render(request, "app/listar_estudiantes.html", {
+        "estudiantes": estudiantes
+    })
+def editar_estudiantes(request):
+    estudiantes = Estudiante.objects.all()
+    return render(request, "app/editar_estudiantes.html", {
+        "estudiantes": estudiantes
+    })
+def editar_estudiantes_detalle(request, id):
+    estudiante = get_object_or_404(Estudiante, id=id)
+    form = EstudianteForm(request.POST or None, instance=estudiante)
+
+    if form.is_valid():
+        form.save()
+        return redirect("app:editar_estudiantes")
+
+    return render(request, "app/editar_estudiantes_detalle.html", {
+        "form": form,
+        "estudiante": estudiante
+    })
+def eliminar_estudiantes(request):
+    estudiantes = Estudiante.objects.all()
+    return render(request, "app/eliminar_estudiantes.html", {
+        "estudiantes": estudiantes
+    })
+def eliminar_estudiantes_detalle(request, id):
+    estudiante = get_object_or_404(Estudiante, id=id)
+
+    if request.method == "POST":
+        estudiante.delete()
+        return redirect("app:eliminar_estudiantes")
+
+    return render(request, "app/eliminar_estudiantes_detalle.html", {
+        "estudiante": estudiante
+    })
+
 
 
 # Create your views here.
@@ -151,31 +186,6 @@ def eliminar_profesor_detalle(request, id):
         profesor.delete()
         return redirect("app:eliminar_profesor")  # vuelve a la lista de eliminar
     return render(request, "curso/eliminar_profesor_detalle.html", {"profesor": profesor})
-
-
-# ACTUALIZAR ESTUDIANTE
-def actualizar_estudiante(request, id):
-    estudiante = get_object_or_404(Estudiante, id=id)
-    if request.method == "POST":
-        form = EstudianteForm(request.POST, instance=estudiante)
-        if form.is_valid():
-            form.save()
-            return redirect("app:listar_estudiantes")
-    else:
-        form = EstudianteForm(instance=estudiante)
-    return render(request, "app/estudiante_form.html", {"form": form, "accion": "Editar"})
-
-
-# ELIMINAR ESTUDIANTE
-def eliminar_estudiante(request, id):
-    estudiante = get_object_or_404(Estudiante, id=id)
-    if request.method == "POST":
-        estudiante.delete()
-        return redirect("app:estudiantes_tabla")
-    return render(request, "app/delete.html", {"estudiante": estudiante})
-
-
-
 
 
 #EVALUACIONES

@@ -1,0 +1,38 @@
+
+{% load static %}
+
+{% block content %}
+
+<div class="seccion-principal">
+
+    <div class="encabezado-pagina">
+        <h1 class="titulo-pagina">
+            Eliminar Estudiante: {{ estudiante.nombre }} {{ estudiante.apellido }}
+        </h1>
+        <p class="subtitulo-pagina">Esta acción no se puede deshacer</p>
+    </div>
+
+    <div class="contenedor-tabla" style="padding: 2rem; text-align:center;">
+
+        <p style="font-size:1.25rem; margin-bottom: 2rem;">
+            ¿Seguro que deseas eliminar a este estudiante?
+        </p>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <button type="submit" class="boton-accion boton-eliminar"
+                    style="font-size:1rem; padding:0.75rem 2rem;">
+                <i class="fas fa-trash"></i> Eliminar
+            </button>
+
+            <a href="{% url 'app:eliminar_estudiantes' %}"
+               class="boton-accion boton-editar" style="padding:0.75rem 2rem;">
+                Cancelar
+            </a>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
