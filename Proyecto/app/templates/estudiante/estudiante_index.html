@@ -217,7 +217,6 @@
             <label>Contraseña:</label>
             {{ form_login.password }}
             {{ form_login.password.errors }}
-
             <button type="submit">
                 <i class="fas fa-sign-in-alt"></i> Ingresar
             </button>
@@ -257,11 +256,17 @@
             {{ form_registro.telefono }}
             {{ form_registro.telefono.errors }}
 
+             <label>Cedula</label>
+            {{form_registro.cedula }}
+            {{form_registro.cedula.errors}}
+
             <label>Contraseña (mínimo 6 caracteres):</label>
             {{ form_registro.password }}
             {{ form_registro.password.errors }}
 
+
             <button type="submit">
+
                 <i class="fas fa-paper-plane"></i> Enviar Registro
             </button>
         </form>

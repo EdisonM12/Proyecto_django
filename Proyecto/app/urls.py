@@ -26,7 +26,7 @@ urlpatterns = [
    path('login/', views.Login_Admin, name='opciones'),
     path('Inicio/', views.home_page, name= 'inicio'),
     path('login_profe/', views.Login_profesor, name='Login_profesor'),
-    path('profesores/', views.home_estudiante, name='Estudiante_home'),
+    path('Estudiante_home/', views.home_estudiante, name='Estudiante_home'),
 
 
 

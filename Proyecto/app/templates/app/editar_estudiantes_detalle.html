@@ -21,7 +21,7 @@
                 <i class="fas fa-save"></i> Guardar
             </button>
 
-            <a href="{% url 'app:editar_estudiantes' %}"
+            <a href="{% url 'app:editar_estudiantes' e.token %}"
                class="boton boton-accion boton-eliminar" style="background: var(--gris);">
                 Cancelar
             </a>
@@ -29,5 +29,9 @@
     </div>
 
 </div>
+
+<script>
+
+</script>
 
 {% endblock %}
