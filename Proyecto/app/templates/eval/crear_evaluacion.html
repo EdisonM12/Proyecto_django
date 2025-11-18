@@ -1,0 +1,13 @@
+
+
+{% block content %}
+    <h1>Crear Evaluación</h1>
+
+    <form method="post" action="{% url 'app:crear_evaluacion' %}">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a class="btn btn-secondary" href="{% url 'app:profesor' %}">Cancelar</a>
+    </form>
+{% endblock %}

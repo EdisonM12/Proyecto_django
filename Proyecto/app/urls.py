@@ -19,7 +19,7 @@ urlpatterns = [
     path("profesores/eliminar/", views.eliminar_profesor, name="eliminar_profesor"),
     path("profesores/<int:id>/editar/", views.editar_profesor_detalle, name="editar_profesor_detalle"),
     path("profesores/<int:id>/eliminar/", views.eliminar_profesor_detalle, name="eliminar_profesor_detalle"),
-    path('', views.home, name='home'),  # página de login
+    path('', views.home, name='home'),
 
 
     #ADMINISTRADOR LOGIN Y OPCIONES
@@ -49,10 +49,17 @@ urlpatterns = [
     path("estudiantes/eliminar/<int:id>/", views.eliminar_estudiantes_detalle, name="eliminar_estudiantes_detalle"),
 
 
-    path('evaluacione/', views.list_evaluacion, name= 'evaluaciones_tabla' ),
-    path('evaluaciones/nuevo/', views.crear_evaluaciones, name='crear_evaluaciones'),
-    path('evaluaciones/<int:id>/editar/', views.actualizar_Evaluacion, name='actualizar_evaluaciones'),
-    path('evaluaciones/<int:id>/eliminar/', views.eliminar_evalu, name='eliminar_evaluaciones'),
+    #evaluaciones
+    path("evaluaciones/", views.listar_evaluacion, name="listar_evaluacion"),
+    path("evaluaciones/nuevo/", views.crear_evaluacion, name="crear_evaluacion"),
+    path("evaluaciones/editar/", views.editar_evaluacion, name="editar_evaluacion"),
+    path("evaluaciones/eliminar/", views.eliminar_evaluacion, name="eliminar_evaluacion"),
+    path("evaluaciones/<int:id>/editar/", views.editar_evaluacion_detalle, name="editar_evaluacion_detalle"),
+    path("evaluaciones/<int:id>/eliminar/", views.eliminar_evaluacion_detalle, name="eliminar_evaluacion_detalle"),
+
+
+
+    #**********************************************
 
     path("listar_calificaciones/", views.listar_calificaciones, name="listar_calificaciones"),
     path("crear_calificacion/", views.crear_calificacion, name="crear_calificacion"),

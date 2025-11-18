@@ -15,9 +15,7 @@
 </head>
 <body>
     <h2 style="text-align:center;">Lista de Evaluaciones</h2>
-    <div style="text-align:center; margin-bottom:10px;">
-        <a href="{% url 'app:crear_evaluaciones' %}" class="button create">Crear Nueva</a>
-    </div>
+
     <table>
         <thead>
             <tr>
@@ -45,8 +43,8 @@
                       {% endif %}
                      </td>
                 <td>
-                    <a href="{% url 'app:actualizar_evaluaciones' ev.id %}" class="button edit">Editar</a>
-                    <a href="{% url 'app:eliminar_evaluaciones' ev.id %}" class="button delete">Eliminar</a>
+                    <a href="{% url 'app:eliminar_evaluacion_detalle' ev.id %}" class="button edit">eliminar</a>
+
                 </td>
             </tr>
             {% empty %}

@@ -90,7 +90,7 @@ class Estudiante(models.Model):
     datos = models.ForeignKey(Materia, on_delete=models.PROTECT, null=True, blank=True)
     contraseñas= models.OneToOneField(LoginEstudiante, on_delete=models.PROTECT, null=True, blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
 
@@ -101,7 +101,7 @@ class Evaluaciones(models.Model):
     archivo = models.FileField(upload_to='pdfs/', null=True, blank=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, null=True, blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.materia} - {self.periodo}"
 
 
@@ -114,6 +114,6 @@ class Calificacion(models.Model):
     class Meta:
         unique_together = ("estudiante", "evaluacion")
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.estudiante} - {self.evaluacion} = {self.nota}"
 
