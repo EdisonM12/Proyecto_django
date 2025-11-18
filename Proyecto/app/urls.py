@@ -61,10 +61,12 @@ urlpatterns = [
 
     #**********************************************
 
-    path("listar_calificaciones/", views.listar_calificaciones, name="listar_calificaciones"),
-    path("crear_calificacion/", views.crear_calificacion, name="crear_calificacion"),
-    path("editar_calificacion/<int:id>/", views.editar_calificacion, name="editar_calificacion"),
-    path("eliminar_calificacion/<int:id>/", views.eliminar_calificacion, name="eliminar_calificacion"),
+    path("calificacion/", views.listar_calificacion, name="listar_calificacion"),
+    path("calificacion/nuevo/", views.crear_calificacion, name="crear_calificacion"),
+    path("calificacion/editar/", views.editar_calificacion, name="editar_calificacion"),
+    path("calificacion/eliminar/", views.eliminar_calificacion, name="eliminar_calificacion"),
+    path("calificacion/<int:id>/editar/", views.editar_calificacion_detalle, name="editar_calificacion_detalle"),
+    path("calificacion/<int:id>/eliminar/", views.eliminar_calificacion_detalle, name="eliminar_calificacion_detalle"),
 
 #MATERIA
     path('materias/', views.lista_materias, name='lista_materias'),

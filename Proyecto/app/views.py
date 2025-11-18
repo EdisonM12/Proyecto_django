@@ -353,41 +353,10 @@ def eliminar_evaluacion_detalle(request, id):
         return redirect("app:eliminar_evaluacion")  # vuelve a la lista de eliminar
     return render(request, "eval/eliminar_evaluacion_detalle.html", {"evaluaciones": evaluaciones})
 
-#CREAR EVALIUACIONES
-#def list_evaluacion(request):
- #   evalua = Evaluaciones.objects.all()
-  #  return render(request, "eval/listar_evaluacion.html", {"evaluaciones": evalua})
 
-#def crear_evaluaciones(request):
- #   if request.method == "POST":
-  #      form = EvaluacionesForm(request.POST, request.FILES)
-   #     if form.is_valid():
-    #        form.save()
-     #       return redirect("app:evaluaciones_tabla")
-    #else:
-     #   form = EvaluacionesForm()
-    #return render(request, "eval/crear_evaluacion.html", {"form": form, "accion": "Crear"})
 
-#def actualizar_Evaluacion(request, id):
-    #evaluar1 = get_object_or_404(Evaluaciones, id=id)
-   # if request.method == "POST":
-       # form = EvaluacionesForm(request.POST, request.FILES, instance=evaluar1)
-       # if form.is_valid():
-         #   form.save()
-          #  return redirect("app:evaluaciones_tabla")
-    #else:
-      #  form = EvaluacionesForm(instance=evaluar1)
-    #return render(request, "eval/crear_evaluacion.html", {"form": form, "accion": "Editar"})
-
-#def eliminar_evalu(request, id):
-   # eval = get_object_or_404(Evaluaciones, id=id)
-   # if request.method == "POST":
-      #  eval.delete()
-       # return redirect("app:estudiantes_tabla")
-   # return render(request, "eval/deletefo.html", {"estudiante": eval})
-
-def listar_calificaciones(request):
-    calificaciones = Calificacion.objects.all()
+def listar_calificacion(request):
+    calificaciones = Calificacion.objects.all()  # Trae todos los registros
     return render(request, "calificacion/listar_calificaciones.html", {
         "calificaciones": calificaciones
     })
@@ -395,29 +364,67 @@ def listar_calificaciones(request):
 
 def crear_calificacion(request):
     form = CalificacionForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect("app:listar_calificaciones")
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+
+            return redirect("app:listar_calificacion")
+
     return render(request, "calificacion/crear_calificacion.html", {"form": form})
 
 
-def editar_calificacion(request, id):
+
+
+
+
+
+
+
+# EDITAR PROFESOR
+def editar_calificacion(request):
+    calificaciones = Calificacion.objects.all()
+    return render(request, "calificacion/editar_calificacion.html", {"calificaciones": calificaciones})
+
+def editar_calificacion_detalle(request, id):
     calificacion = get_object_or_404(Calificacion, id=id)
     form = CalificacionForm(request.POST or None, instance=calificacion)
     if form.is_valid():
         form.save()
-        return redirect("app:listar_calificaciones")
-    return render(request, "calificacion/editar_calificacion.html", {"form": form})
+        return redirect("app:editar_calificacion")  # vuelve a la lista de edición
+    return render(request, "calificacion/editar_calificacion_detalle.html", {"form": form, "calificacion": calificacion})
 
-
-def eliminar_calificacion(request, id):
-    calificacion = get_object_or_404(Calificacion, id=id)
+# ELIMINAR PROFESOR
+def eliminar_calificacion(request):
+    calificaciones = Calificacion.objects.all()
+    return render(request, "calificacion/eliminar_calificacion.html", {"calificaciones": calificaciones})
+def eliminar_calificacion_detalle(request, id):
+    calificaciones = get_object_or_404(Calificacion, id=id)
     if request.method == "POST":
-        calificacion.delete()
-        return redirect("app:listar_calificaciones")
-    return render(request, "calificacion/eliminar_calificacion.html", {
-        "calificacion": calificacion
-    })
+        calificaciones.delete()
+        return redirect("app:eliminar_calificacion")  # vuelve a la lista de eliminar
+    return render(request, "calificacion/eliminar_calificacion_detalle.html", {"calificaciones": calificaciones})
+
+
+
+
+
+#def editar_calificacion(request, id):
+   # calificacion = get_object_or_404(Calificacion, id=id)
+   # form = CalificacionForm(request.POST or None, instance=calificacion)
+   # if form.is_valid():
+      #  form.save()
+    #   return redirect("app:listar_calificaciones")
+   # return render(request, "calificacion/editar_calificacion.html", {"form": form})
+
+
+#def eliminar_calificacion(request, id):
+    #calificacion = get_object_or_404(Calificacion, id=id)
+    #if request.method == "POST":
+      #  calificacion.delete()
+     #   return redirect("app:listar_calificaciones")
+    #return render(request, "calificacion/eliminar_calificacion.html", {
+     #   "calificacion": calificacion
+    #})
 
 
 #CRUD DE MATERIAS
