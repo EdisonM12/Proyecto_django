@@ -27,28 +27,19 @@ def login_estudiante(request):
         else:
             # Formulario de LOGIN con prefijo
             form_login = Login3(request.POST, prefix='login')
-
             if form_login.is_valid():
                 email = form_login.cleaned_data['email']
                 password = form_login.cleaned_data['password']
 
                 try:
                     usuario = LoginEstudiante.objects.get(email=email)
-
                     if check_password(password, usuario.password):
                         request.session['estudiante_email'] = email
-
-                        try:
-                            estudiante = Estudiante.objects.get(contraseñas=usuario)
-                            request.session['estudiante_id'] = estudiante.id
-                            request.session['estudiante_nombre'] = estudiante.nombre
-                        except Estudiante.DoesNotExist:
-                            pass
-
                         return redirect('app:Estudiante_home')
-
+                    else:
+                        form_login.add_error('password', 'Contraseña incorrecta')
                 except LoginEstudiante.DoesNotExist:
-                    pass
+                    form_login.add_error('email', 'Usuario no encontrado')
 
     # Crear formularios vacíos CON PREFIJOS
     form_login = Login3(prefix='login')
@@ -58,6 +49,8 @@ def login_estudiante(request):
         'form_login': form_login,
         'form_registro': form_registro
     })
+
+
 def ver_pendientes(request):
     persona = Estudiantes_pendientes.objects.filter(estado="PENDIENTE")
     return render(request, 'estudiante/pendiente.html', {"pendiente":persona})

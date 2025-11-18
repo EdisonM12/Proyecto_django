@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib import messages
-# Create your models here.
-from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
-# Create your models here.
+
+
+
 class Administrador(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
@@ -31,6 +31,7 @@ class Profesor(models.Model):
     cedula= models.CharField(max_length=100, unique=True)
     correo= models.EmailField(max_length=100, unique=True)
     fecha_nacimiento= models.DateField()
+
     login = models.OneToOneField(LoginProfesor, on_delete=models.CASCADE, null=True, blank=True)
 
 

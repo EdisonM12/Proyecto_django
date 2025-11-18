@@ -162,14 +162,7 @@ class Login3(forms.Form):
         widget=forms.PasswordInput(attrs={'class': 'input-group input', 'placeholder': 'Contraseña'})
 
     )
-    def clean(self):
-        cleaned= super().clean()
-        email =cleaned.get("email")
-        password = cleaned.get("password")
-        if not LoginEstudiante.objects.filter(email=email, password=password).exists():
-            raise forms.ValidationError("Correo o contraseña incorrectos")
 
-        return cleaned
 
 class Login1(forms.Form):
     email = forms.EmailField(
