@@ -8,6 +8,8 @@ urlpatterns = [
 
     path('logout/', views.cerrar_sesion, name='logout'),
     path('login_Estudiante/', views.login_estudiante, name='Estudiante_login'),
+    path('validar-correo/', views.validar_correo, name='validar_correo'),
+
     path('profesor/', views.pag_profesor, name='profesor'),
     path("listar_cursos/", views.listar_cursos, name="listar_cursos"),
     path("crear_curso/", views.crear_curso, name="crear_curso"),

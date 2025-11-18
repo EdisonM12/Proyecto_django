@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor, Estudiantes_pendientes, LoginEstudiante
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2, Login3, PendientesForm
@@ -7,6 +7,10 @@ from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password, check_password
 from .utils.decorador import encrypt, decrypt
 
+def validar_correo(request):
+    email = request.GET.get('email')
+    existe = Estudiante.objects.filter(email=email).exists() or LoginEstudiante.objects.filter(email=email).exists()
+    return JsonResponse({'existe': existe})
 
 # views.py
 def login_estudiante(request):
@@ -23,8 +27,10 @@ def login_estudiante(request):
                 pendiente.estado = 'PENDIENTE'
                 pendiente.password = make_password(form_registro.cleaned_data['password'])
                 pendiente.save()
-
+                messages.success(request, 'El estudiante ha creado correctamente')
                 return redirect('app:Estudiante_login')
+            else:
+                messages.error(request, "corriga los enunciados correspondientes")
 
         else:
             # Formulario de LOGIN con prefijo
@@ -177,9 +183,7 @@ def crear_estudiante(request):
 # LISTAR ESTUDIANTES
 def listar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
-    for e in estudiantes:
-        e.token = encrypt(str(e.id))
-
+    
     return render(request, "app/listar_estudiantes.html", {
         "estudiantes": estudiantes
     })

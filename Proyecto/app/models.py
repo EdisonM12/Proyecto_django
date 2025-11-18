@@ -75,7 +75,7 @@ class LoginEstudiante(models.Model):
 class Estudiantes_pendientes(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,  null=True , blank=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(unique=True, blank= True, null=True )
     cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
