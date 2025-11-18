@@ -183,7 +183,7 @@ def crear_estudiante(request):
 # LISTAR ESTUDIANTES
 def listar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
-    
+
     return render(request, "app/listar_estudiantes.html", {
         "estudiantes": estudiantes
     })
