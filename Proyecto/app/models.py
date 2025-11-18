@@ -30,7 +30,9 @@ class Profesor(models.Model):
     apellido= models.CharField(max_length=100)
     cedula= models.CharField(max_length=100, unique=True)
     correo= models.EmailField(max_length=100, unique=True)
-    fecha_nacimiento= models.DateField()
+    fecha_nacimiento= models.DateField(),
+
+
 
     login = models.OneToOneField(LoginProfesor, on_delete=models.CASCADE, null=True, blank=True)
 
@@ -53,6 +55,7 @@ class Curso(models.Model):
     nombre = models.CharField(max_length=120)
     descripcion = models.CharField(max_length=120)
     materia = models.ManyToManyField(Materia, related_name='cursos')
+
 
     def __str__(self):
         return f"{self.codigo} - {self.nombre}"

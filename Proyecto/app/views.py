@@ -1,9 +1,11 @@
 from django.contrib import messages
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor, Estudiantes_pendientes, LoginEstudiante
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2, Login3, PendientesForm
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password, check_password
+from .utils.decorador import encrypt, decrypt
 
 
 # views.py
@@ -175,16 +177,29 @@ def crear_estudiante(request):
 # LISTAR ESTUDIANTES
 def listar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
+    for e in estudiantes:
+        e.token = encrypt(str(e.id))
+
     return render(request, "app/listar_estudiantes.html", {
         "estudiantes": estudiantes
     })
+
+
+
 def editar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
     return render(request, "app/editar_estudiantes.html", {
         "estudiantes": estudiantes
     })
-def editar_estudiantes_detalle(request, id):
-    estudiante = get_object_or_404(Estudiante, id=id)
+
+
+def editar_estudiantes_detalle(request, token):
+    try:
+        estudiante_id = decrypt(token)
+    except:
+        return HttpResponse("Token inválido o manipulado", status=400)
+
+    estudiante = get_object_or_404(Estudiante, id=estudiante_id)
     form = EstudianteForm(request.POST or None, instance=estudiante)
 
     if form.is_valid():
@@ -195,6 +210,9 @@ def editar_estudiantes_detalle(request, id):
         "form": form,
         "estudiante": estudiante
     })
+
+
+
 def eliminar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
     return render(request, "app/eliminar_estudiantes.html", {

@@ -42,7 +42,7 @@ urlpatterns = [
 
 
     path("estudiantes/editar/", views.editar_estudiantes, name="editar_estudiantes"),
-    path("estudiantes/editar/<int:id>/", views.editar_estudiantes_detalle, name="editar_estudiantes_detalle"),
+    path("estudiantes/editar/<str:token>/", views.editar_estudiantes_detalle, name="editar_estudiantes_detalle"),
 
 
     path("estudiantes/eliminar/", views.eliminar_estudiantes, name="eliminar_estudiantes"),
