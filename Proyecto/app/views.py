@@ -193,13 +193,9 @@ def editar_estudiantes(request):
     })
 
 
-def editar_estudiantes_detalle(request, token):
-    try:
-        estudiante_id = decrypt(token)
-    except:
-        return HttpResponse("Token inválido o manipulado", status=400)
+def editar_estudiantes_detalle(request):
 
-    estudiante = get_object_or_404(Estudiante, id=estudiante_id)
+    estudiante = get_object_or_404(Estudiante, id=id)
     form = EstudianteForm(request.POST or None, instance=estudiante)
 
     if form.is_valid():
