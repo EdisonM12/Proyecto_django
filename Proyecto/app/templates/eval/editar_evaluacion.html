@@ -3,58 +3,389 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Evaluaciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
-        table { width: 80%; margin: auto; border-collapse: collapse; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: center; }
-        th { background-color: #f4f4f4; }
-        a.button { padding: 5px 10px; color: white; text-decoration: none; border-radius: 3px; }
-        a.button.create { background-color: #4CAF50; }
-        a.button.edit { background-color: #2196F3; }
-        a.button.delete { background-color: #f44336; }
+        /* Variables */
+        :root {
+            --color-primario: #6366f1;
+            --color-primario-hover: #4f46e5;
+            --color-secundario: #8b5cf6;
+            --color-exito: #10b981;
+            --color-info: #3b82f6;
+            --color-peligro: #ef4444;
+            --color-fondo: #f1f5f9;
+            --color-blanco: #ffffff;
+            --color-texto: #1e293b;
+            --color-texto-claro: #64748b;
+            --color-borde: #e2e8f0;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            color: var(--color-texto);
+        }
+
+        /* Contenedor principal */
+        .contenedor-principal {
+            max-width: 1400px;
+            margin: 0 auto;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Encabezado */
+        .encabezado {
+            background: var(--color-blanco);
+            padding: 2.5rem;
+            border-radius: 20px 20px 0 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .icono-encabezado {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitulo {
+            color: var(--color-texto-claro);
+            font-size: 1.1rem;
+        }
+
+        /* Tabla */
+        .contenedor-tabla {
+            background: var(--color-blanco);
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+        }
+
+        thead th {
+            padding: 1.25rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--color-blanco);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid var(--color-borde);
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: linear-gradient(90deg, rgba(99, 102, 241, 0.05), transparent);
+            transform: scale(1.005);
+        }
+
+        tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        tbody td {
+            padding: 1.25rem 1.5rem;
+            color: var(--color-texto);
+            font-size: 0.95rem;
+        }
+
+        tbody td:first-child {
+            font-weight: 700;
+            color: var(--color-primario);
+            font-size: 1rem;
+        }
+
+        /* Badges */
+        .badge-pendiente {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-pendiente.si {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--color-peligro);
+        }
+
+        .badge-pendiente.no {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--color-exito);
+        }
+
+        /* Enlaces y botones */
+        .link-pdf {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: linear-gradient(135deg, var(--color-primario), var(--color-primario-hover));
+            color: var(--color-blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+        }
+
+        .link-pdf:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .sin-pdf {
+            color: var(--color-texto-claro);
+            font-style: italic;
+            font-size: 0.875rem;
+        }
+
+        /* Botones de acción */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            color: var(--color-blanco);
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button.edit {
+            background: linear-gradient(135deg, var(--color-info), #2563eb);
+            box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+        }
+
+        .button.edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+
+        .button.delete {
+            background: linear-gradient(135deg, var(--color-peligro), #dc2626);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        .button.delete:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+        }
+
+        .button.create {
+            background: linear-gradient(135deg, var(--color-exito), #059669);
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+        }
+
+        .button.create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Estado vacío */
+        .estado-vacio {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .icono-vacio {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 1.5rem;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .icono-vacio i {
+            font-size: 3rem;
+            color: var(--color-primario);
+        }
+
+        .estado-vacio h3 {
+            font-size: 1.5rem;
+            color: var(--color-texto);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .estado-vacio p {
+            color: var(--color-texto-claro);
+            font-size: 1rem;
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .contenedor-tabla {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 900px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .encabezado {
+                padding: 1.5rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+
+            thead th,
+            tbody td {
+                padding: 1rem;
+                font-size: 0.875rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">Lista de Evaluaciones</h2>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Materia</th>
-                <th>Periodo</th>
-                <th>Pendiente</th>
-                <th>Archivo</th>
+<div class="contenedor-principal">
+    <div class="encabezado">
+        <div class="icono-encabezado">📋</div>
+        <h2>Lista de Evaluaciones</h2>
+        <p class="subtitulo">Gestiona y edita todas las evaluaciones del sistema</p>
+    </div>
 
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ev in evaluaciones %}
-            <tr>
-                <td>{{ ev.id }}</td>
-                <td>{{ ev.materia }}</td>
-                <td>{{ ev.periodo }}</td>
-                <td>{{ ev.pendiente }}</td>
-                  <td>
-                     {% if ev.archivo %}
-                       <a href="{{ ev.archivo.url }}" target="_blank">Ver PDF</a>
-                     {% else %}
-                           Sin PDF
-                      {% endif %}
-                     </td>
-                <td>
-                    <a href="{% url 'app:editar_evaluacion_detalle' ev.id|sign %}" class="button edit">Editar</a>
+    <div class="contenedor-tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Materia</th>
+                    <th>Periodo</th>
+                    <th>Pendiente</th>
+                    <th>Archivo</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ev in evaluaciones %}
+                <tr>
+                    <td>#{{ ev.id }}</td>
+                    <td>{{ ev.materia }}</td>
+                    <td>{{ ev.periodo }}</td>
+                    <td>
+                        {% if ev.pendiente %}
+                            <span class="badge-pendiente si">
+                                <i class="fas fa-clock"></i> Sí
+                            </span>
+                        {% else %}
+                            <span class="badge-pendiente no">
+                                <i class="fas fa-check-circle"></i> No
+                            </span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if ev.archivo %}
+                            <a href="{{ ev.archivo.url }}" target="_blank" class="link-pdf">
+                                <i class="fas fa-file-pdf"></i> Ver PDF
+                            </a>
+                        {% else %}
+                            <span class="sin-pdf">Sin archivo</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'app:editar_evaluacion_detalle' ev.id|sign %}" class="button edit">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6">
+                        <div class="estado-vacio">
+                            <div class="icono-vacio">
+                                <i class="fas fa-clipboard-list"></i>
+                            </div>
+                            <h3>No hay evaluaciones</h3>
+                            <p>Aún no se han registrado evaluaciones en el sistema.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">No hay evaluaciones</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
 </body>
 </html>
-
