@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Estudiante</title>
+    <style>
+        /* ===== CSS ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: #222;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #004080;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 1.6em;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #ffcc00;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 80, 0.7), rgba(0, 0, 80, 0.7)),
+                url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1500&q=80') center/cover;
+            color: white;
+            text-align: center;
+            padding: 140px 20px;
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-text {
+            max-width: 700px;
+            margin: 0 auto;
+            animation: slideUp 1.5s ease;
+        }
+
+        .hero-text h2 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-text p {
+            font-size: 1.2em;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            background-color: #ffcc00;
+            color: #004080;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #ffaa00;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 204, 0, 0.4);
+        }
+
+        .cards {
+            padding: 80px 20px;
+            text-align: center;
+            background-color: #f9fafc;
+            animation: fadeIn 1s ease;
+        }
+
+        .cards h2 {
+            font-size: 2.2em;
+            margin-bottom: 50px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .cards h2::after {
+            content: "";
+            position: absolute;
+            width: 50%;
+            height: 4px;
+            bottom: -10px;
+            left: 25%;
+            background-color: #ffcc00;
+            border-radius: 2px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        .card:nth-child(1) { animation-delay: 0.3s; }
+        .card:nth-child(2) { animation-delay: 0.5s; }
+        .card:nth-child(3) { animation-delay: 0.7s; }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 10px 20px rgba(0, 64, 128, 0.2);
+        }
+
+        .card h3 {
+            color: #004080;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .card a {
+            color: #004080;
+            font-weight: bold;
+            text-decoration: none;
+            position: relative;
+        }
+
+        .card a::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: #004080;
+            transition: width 0.3s ease;
+        }
+
+        .card a:hover::after {
+            width: 100%;
+        }
+
+        footer {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            font-size: 0.95em;
+            letter-spacing: 0.5px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header>
+        <h1>Bienvenido</h1>
+        <nav>
+            <ul>
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Materias</a></li>
+                <li><a href="#">Tareas</a></li>
+                <li><a href="#">Perfil</a></li>
+                <li><a href="#" class="btn">Ir a Estudiante</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-text">
+            <h2>Tu espacio de estudio personalizado</h2>
+            <p>Organiza tus materias, tareas y proyectos en un solo lugar.</p>
+            <a href="#" class="btn">Ver mis materias</a>
+        </div>
+    </section>
+
+    <section class="cards">
+        <h2>Mis Materias</h2>
+        <div class="card-container">
+            <div class="card">
+                <h3>Matemáticas</h3>
+                <p>Aprende álgebra, geometría y cálculo.</p>
+                <a href="#">Ver más</a>
+            </div>
+            <div class="card">
+                <h3>Lengua</h3>
+                <p>Mejora tu ortografía y redacción.</p>
+                <a href="#">Ver más</a>
+            </div>
+            <div class="card">
+                <h3>Historia</h3>
+                <p>Explora los hechos que cambiaron el mundo.</p>
+                <a href="#">Ver más</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Portal del Estudiante | Todos los derechos reservados</p>
+    </footer>
+
+</body>
+</html>

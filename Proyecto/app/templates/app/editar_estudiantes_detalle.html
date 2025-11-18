@@ -1,0 +1,150 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Editar Estudiante</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(12px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: url('https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1500&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.seccion-principal {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+    animation: fadeIn 0.7s ease-out;
+}
+
+.titulo-pagina {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1c1c1c;
+}
+
+.subtitulo-pagina {
+    font-size: 16px;
+    color: #555;
+}
+
+form {
+    animation: fadeIn 0.6s ease-out;
+    font-size: 16px;
+}
+
+form p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 18px;
+    font-weight: 600;
+    color: #333;
+}
+
+form input,
+form select,
+form textarea {
+    margin-top: 6px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 2px solid #d9dce3;
+    background: #f5f6fa;
+    font-size: 15px;
+    outline: none;
+    transition: 0.25s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #4f46e5;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+.boton {
+    padding: 12px 18px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.25s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+.boton-primario {
+    background: #4f46e5;
+    color: white;
+}
+
+.boton-primario:hover {
+    background: #3b35c2;
+    transform: scale(1.05);
+}
+
+.boton-eliminar {
+    background: #d1d5db;
+    color: #1f2937;
+}
+
+.boton-eliminar:hover {
+    background: #bfc2c7;
+    transform: scale(1.05);
+}
+
+.contenedor-tabla {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.15);
+}
+
+</style>
+</head>
+<body>
+
+<div class="seccion-principal">
+
+    <div class="encabezado-pagina">
+        <h1 class="titulo-pagina">Editar Estudiante: {{ estudiante.nombre }} {{ estudiante.apellido }}</h1>
+        <p class="subtitulo-pagina">Modifica la información del estudiante</p>
+    </div>
+
+    <div class="contenedor-tabla">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class="boton boton-primario" type="submit">
+                <i class="fas fa-save"></i> Guardar
+            </button>
+
+            <a href="{% url 'app:editar_estudiantes' %}" class="boton boton-eliminar">
+                Cancelar
+            </a>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>

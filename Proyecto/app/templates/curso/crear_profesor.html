@@ -1,0 +1,12 @@
+{% extends "curso/home_curso.html" %}
+
+{% block content %}
+<h1>Crear Profesor</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-primary">Guardar</button>
+  <a class="btn btn-secondary" href="{% url 'app:listar_profesores' %}">Cancelar</a>
+</form>
+{% endblock %}
