@@ -1,3 +1,4 @@
+{% load signing_tags %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -43,7 +44,7 @@
                       {% endif %}
                      </td>
                 <td>
-                    <a href="{% url 'app:eliminar_evaluacion_detalle' ev.id %}" class="button edit">eliminar</a>
+                    <a href="{% url 'app:eliminar_evaluacion_detalle' ev.id|sign %}" class="button edit">eliminar</a>
 
                 </td>
             </tr>

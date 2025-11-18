@@ -1,8 +1,9 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor, Estudiantes_pendientes, LoginEstudiante
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2, Login3, PendientesForm
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password, check_password
+from django.core import signing
 
 
 # views.py
@@ -334,8 +335,14 @@ def editar_evaluacion(request):
     evaluaciones = Evaluaciones.objects.all()
     return render(request, "eval/editar_evaluacion.html", {"evaluaciones": evaluaciones})
 
-def editar_evaluacion_detalle(request, id):
-    evaluaciones = get_object_or_404(Evaluaciones, id=id)
+def editar_evaluacion_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+
+        # Obtiene la evaluación
+    evaluaciones = get_object_or_404(Evaluaciones, id=id_real)
     form = EvaluacionesForm(request.POST or None, instance=evaluaciones)
     if form.is_valid():
         form.save()
@@ -346,8 +353,12 @@ def editar_evaluacion_detalle(request, id):
 def eliminar_evaluacion(request):
     evaluaciones = Evaluaciones.objects.all()
     return render(request, "eval/eliminar_evaluacion.html", {"evaluaciones": evaluaciones})
-def eliminar_evaluacion_detalle(request, id):
-    evaluaciones = get_object_or_404(Evaluaciones, id=id)
+def eliminar_evaluacion_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    evaluaciones = get_object_or_404(Evaluaciones, id=id_real)
     if request.method == "POST":
         evaluaciones.delete()
         return redirect("app:eliminar_evaluacion")  # vuelve a la lista de eliminar
@@ -385,8 +396,12 @@ def editar_calificacion(request):
     calificaciones = Calificacion.objects.all()
     return render(request, "calificacion/editar_calificacion.html", {"calificaciones": calificaciones})
 
-def editar_calificacion_detalle(request, id):
-    calificacion = get_object_or_404(Calificacion, id=id)
+def editar_calificacion_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    calificacion = get_object_or_404(Calificacion, id=id_real)
     form = CalificacionForm(request.POST or None, instance=calificacion)
     if form.is_valid():
         form.save()
@@ -397,8 +412,12 @@ def editar_calificacion_detalle(request, id):
 def eliminar_calificacion(request):
     calificaciones = Calificacion.objects.all()
     return render(request, "calificacion/eliminar_calificacion.html", {"calificaciones": calificaciones})
-def eliminar_calificacion_detalle(request, id):
-    calificaciones = get_object_or_404(Calificacion, id=id)
+def eliminar_calificacion_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    calificaciones = get_object_or_404(Calificacion, id=id_real)
     if request.method == "POST":
         calificaciones.delete()
         return redirect("app:eliminar_calificacion")  # vuelve a la lista de eliminar

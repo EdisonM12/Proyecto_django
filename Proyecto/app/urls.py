@@ -54,8 +54,8 @@ urlpatterns = [
     path("evaluaciones/nuevo/", views.crear_evaluacion, name="crear_evaluacion"),
     path("evaluaciones/editar/", views.editar_evaluacion, name="editar_evaluacion"),
     path("evaluaciones/eliminar/", views.eliminar_evaluacion, name="eliminar_evaluacion"),
-    path("evaluaciones/<int:id>/editar/", views.editar_evaluacion_detalle, name="editar_evaluacion_detalle"),
-    path("evaluaciones/<int:id>/eliminar/", views.eliminar_evaluacion_detalle, name="eliminar_evaluacion_detalle"),
+    path("evaluaciones/<str:token>/editar/", views.editar_evaluacion_detalle, name="editar_evaluacion_detalle"),
+    path("evaluaciones/<str:token>/eliminar/", views.eliminar_evaluacion_detalle, name="eliminar_evaluacion_detalle"),
 
 
 
@@ -65,8 +65,8 @@ urlpatterns = [
     path("calificacion/nuevo/", views.crear_calificacion, name="crear_calificacion"),
     path("calificacion/editar/", views.editar_calificacion, name="editar_calificacion"),
     path("calificacion/eliminar/", views.eliminar_calificacion, name="eliminar_calificacion"),
-    path("calificacion/<int:id>/editar/", views.editar_calificacion_detalle, name="editar_calificacion_detalle"),
-    path("calificacion/<int:id>/eliminar/", views.eliminar_calificacion_detalle, name="eliminar_calificacion_detalle"),
+    path("calificacion/<str:token>/editar/", views.editar_calificacion_detalle, name="editar_calificacion_detalle"),
+    path("calificacion/<str:token>/eliminar/", views.eliminar_calificacion_detalle, name="eliminar_calificacion_detalle"),
 
 #MATERIA
     path('materias/', views.lista_materias, name='lista_materias'),
