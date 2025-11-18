@@ -4,7 +4,7 @@ from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, Curso
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password, check_password
 from django.core import signing
-
+from django.db.models import Q
 
 # views.py
 def login_estudiante(request):
@@ -178,10 +178,27 @@ def crear_estudiante(request):
 
 
 # LISTAR ESTUDIANTES
+#def listar_estudiantes(request):
+ #   estudiantes = Estudiante.objects.all()
+  #  return render(request, "app/listar_estudiantes.html", {"estudiantes": estudiantes})
+
 def listar_estudiantes(request):
-    estudiantes = Estudiante.objects.all()
+
+
+    query = request.GET.get("q", "")
+    query = query.strip().lower()  # todo en minúsculas
+
+    # 🔥 PRUEBA SIMPLE: SOLO FILTRA POR NOMBRE
+    if query:
+        estudiantes = Estudiante.objects.filter(
+            nombre__icontains=query
+        )
+    else:
+        estudiantes = Estudiante.objects.all()
+
     return render(request, "app/listar_estudiantes.html", {
-        "estudiantes": estudiantes
+        "estudiantes": estudiantes,
+        "query": query
     })
 def editar_estudiantes(request):
     estudiantes = Estudiante.objects.all()

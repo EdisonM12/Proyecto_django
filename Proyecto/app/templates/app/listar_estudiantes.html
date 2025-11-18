@@ -1,71 +1,98 @@
-
 {% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/estudiantes.css' %}">
+    <title>Lista de Estudiantes</title>
 
+    <!-- ICONOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
 {% block content %}
 
-<div class="seccion-principal">
+    <div class="seccion-principal">
 
-    <div class="encabezado-pagina">
-        <h1 class="titulo-pagina">Lista de Estudiantes</h1>
-        <p class="subtitulo-pagina">Consulta todos los estudiantes registrados</p>
-    </div>
-
-    <div class="barra-acciones">
-        <div class="buscador">
-            <i class="fas fa-search"></i>
-            <input type="text" placeholder="Buscar estudiante...">
+        <div class="encabezado-pagina">
+            <h1 class="titulo-pagina">Lista de Estudiantes</h1>
+            <p class="subtitulo-pagina">Consulta todos los estudiantes registrados</p>
         </div>
 
-        <span class="contador-badge">
-            <i class="fas fa-users"></i> {{ estudiantes.count }} Estudiantes
-        </span>
-    </div>
+        <!-- Buscador + contador -->
+        <div class="fila-superior">
+            <form method="GET" action="{% url 'app:listar_estudiantes' %}" class="buscador">
+                <i class="fas fa-search"></i>
+                <input type="text" name="q" placeholder="Buscar estudiante..." value="{{ query }}" autocomplete="off">
+            </form>
 
-    <div class="contenedor-tabla">
-        <table>
-            <thead>
+            <span class="contador-badge">
+                <i class="fas fa-users"></i>
+                {{ estudiantes.count }} Estudiantes
+            </span>
+        </div>
+
+        <div class="contenedor-tabla">
+            <table>
+                <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
-                    <th>Correo</th>
                     <th>Dirección</th>
                     <th>Teléfono</th>
                     <th>Cédula</th>
                     <th>Curso</th>
-                    <th>Materia</th>
+                    <th>Materias</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
                 {% for e in estudiantes %}
-                <tr>
-                    <td>{{ e.nombre }}</td>
-                    <td>{{ e.apellido }}</td>
-                    <td>{{ e.correo }}</td>
-                    <td>{{ e.direccion }}</td>
-                    <td>{{ e.telefono }}</td>
-                    <td>{{ e.cedula }}</td>
-                    <td>{{ e.curso }}</td>
-                    <td>{{ e.datos }}</td>
-                </tr>
+                    <tr>
+                        <td>{{ e.nombre }}</td>
+                        <td>{{ e.apellido }}</td>
+                        <td>{{ e.direccion }}</td>
+                        <td>{{ e.telefono }}</td>
+                        <td>{{ e.cedula }}</td>
+                        <td>{{ e.curso }}</td>
+
+                        <!-- 🔥 MATERIAS CORRECTAMENTE MOSTRADAS -->
+                        <td>
+                            {% for m in e.curso.materia.all %}
+                                {{ m.nombre }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
 
                 {% empty %}
-                <tr>
-                    <td colspan="8">
-                        <div class="estado-vacio">
-                            <div class="icono-vacio">
-                                <i class="fas fa-user-slash"></i>
+                    <tr>
+                        <td colspan="8">
+                            <div class="estado-vacio">
+                                <div class="icono-vacio">
+                                    <i class="fas fa-user-slash"></i>
+                                </div>
+                                <h3>No hay estudiantes</h3>
+                                <p>Aún no se han registrado estudiantes.</p>
                             </div>
-                            <h3>No hay estudiantes</h3>
-                            <p>Aún no se han registrado estudiantes.</p>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
-</div>
-
 {% endblock %}
+
+<!-- Buscador en tiempo real + convertir a minúsculas -->
+<script>
+    document.querySelector('.buscador input').addEventListener('input', function () {
+        this.value = this.value.toLowerCase();   // convertir a minúsculas
+        this.form.submit();                      // filtrar automáticamente
+    });
+</script>
+
+</body>
+</html>
