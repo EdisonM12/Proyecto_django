@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+</head>
+<body>
+   <h2>Asignar curso y materia a {{ pendiente.nombre }} {{ pendiente.apellido }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label for="curso">Curso:</label>
+    <select name="curso" id="curso" required>
+        <option value="">Seleccione...</option>
+        {% for c in cursos %}
+            <option value="{{ c.id }}">{{ c.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <label for="materia">Materia:</label>
+    <select name="materia" id="materia" required>
+        <option value="">Seleccione...</option>
+        {% for m in materias %}
+            <option value="{{ m.id }}">{{ m.nombre }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
+    <button type="submit">Aceptar estudiante</button>
+</form>
+
+</body>
+</html>

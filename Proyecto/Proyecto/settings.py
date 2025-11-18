@@ -75,8 +75,13 @@ WSGI_APPLICATION = 'Proyecto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',       # Ejemplo: proyecto_academico
+        'USER': 'postgres.qizpqqmfhzkcrlkfuxon',     # Ejemplo: postgres
+        'PASSWORD': '0350319000',       # Ejemplo: 1234
+        'HOST': 'aws-1-us-east-2.pooler.supabase.com',               # o la IP del servidor si está en remoto
+        'PORT': '5432',                    # puerto por defecto de PostgreSQL
+        'OPTIONS': { 'sslmode': 'require' }
     }
 }
 
@@ -120,6 +125,8 @@ STATICFILES_DIRS = []
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

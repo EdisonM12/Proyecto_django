@@ -1,0 +1,33 @@
+
+{% load static %}
+
+{% block content %}
+
+<div class="seccion-principal">
+
+    <div class="encabezado-pagina">
+        <h1 class="titulo-pagina">
+            Editar Estudiante: {{ estudiante.nombre }} {{ estudiante.apellido }}
+        </h1>
+        <p class="subtitulo-pagina">Modifica la información del estudiante</p>
+    </div>
+
+    <div class="contenedor-tabla" style="padding: 2rem;">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <button class="boton boton-primario" type="submit">
+                <i class="fas fa-save"></i> Guardar
+            </button>
+
+            <a href="{% url 'app:editar_estudiantes' %}"
+               class="boton boton-accion boton-eliminar" style="background: var(--gris);">
+                Cancelar
+            </a>
+        </form>
+    </div>
+
+</div>
+
+{% endblock %}
