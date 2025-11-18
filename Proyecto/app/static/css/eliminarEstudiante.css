@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Eliminar Estudiantes</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298, #4ca1af);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+            pointer-events: none;
+        }
+
+        .seccion-principal {
+            width: 90%;
+            max-width: 1400px;
+            margin: 40px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .encabezado-pagina {
+            text-align: center;
+            padding: 30px 0;
+            color: white;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .titulo-pagina {
+            font-size: 42px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .subtitulo-pagina {
+            color: #e8f1f5;
+            font-size: 18px;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .contenedor-tabla {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            margin-top: 30px;
+            animation: fadeInUp 0.6s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 15px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+        }
+
+        thead tr {
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 14px 12px;
+            text-align: left;
+            color: #2c3e50;
+            transition: background 0.3s ease;
+        }
+
+        tbody tr {
+            border-bottom: 1px solid #e8ecef;
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f8fbfd;
+            transform: scale(1.01);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        tbody tr:nth-child(even):hover {
+            background: #f0f6fa;
+        }
+
+        .acciones {
+            text-align: center;
+        }
+
+        .acciones a {
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, #e63946, #d62839);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+        }
+
+        .acciones a:hover {
+            background: linear-gradient(135deg, #d62839, #c72e39);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(230, 57, 70, 0.4);
+        }
+
+        .acciones a:active {
+            transform: translateY(0);
+        }
+
+        .acciones a i {
+            font-size: 15px;
+        }
+
+        .estado-vacio {
+            text-align: center;
+            padding: 60px 30px;
+            color: #7f8c8d;
+        }
+
+        .icono-vacio {
+            margin-bottom: 20px;
+        }
+
+        .icono-vacio i {
+            font-size: 80px;
+            color: #bdc3c7;
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 0.6;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        .estado-vacio h3 {
+            margin-top: 15px;
+            font-size: 24px;
+            color: #95a5a6;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .seccion-principal {
+                width: 95%;
+            }
+
+            .titulo-pagina {
+                font-size: 28px;
+            }
+
+            .contenedor-tabla {
+                padding: 15px;
+                overflow-x: auto;
+            }
+
+            table {
+                font-size: 13px;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
+
+            .acciones a {
+                padding: 8px 12px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+{% load static %}
+{% block content %}
+<div class="seccion-principal">
+    <div class="encabezado-pagina">
+        <h1 class="titulo-pagina">Eliminar Estudiantes</h1>
+        <p class="subtitulo-pagina">Selecciona un estudiante para eliminarlo</p>
+    </div>
+    <div class="contenedor-tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Cédula</th>
+                    <th>Correo</th>
+                    <th>Curso</th>
+                    <th>Materia</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for e in estudiantes %}
+                <tr>
+                    <td>{{ e.nombre }}</td>
+                    <td>{{ e.apellido }}</td>
+                    <td>{{ e.cedula }}</td>
+                    <td>{{ e.correo }}</td>
+                    <td>{{ e.curso }}</td>
+                    <td>{{ e.datos }}</td>
+                    <td class="acciones">
+                        <a href="{% url 'app:eliminar_estudiantes_detalle' e.id %}">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7">
+                        <div class="estado-vacio">
+                            <div class="icono-vacio">

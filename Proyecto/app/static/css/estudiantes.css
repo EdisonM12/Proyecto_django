@@ -1,0 +1,89 @@
+body {
+    background: linear-gradient(135deg, #1e1f29, #3d2b42, #2f4454);
+    background-size: 300% 300%;
+    animation: fondo 12s ease infinite;
+    font-family: "Poppins", sans-serif;
+}
+
+@keyframes fondo {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.seccion-principal {
+    width: 90%;
+    max-width: 1150px;
+    margin: 40px auto;
+    color: white;
+}
+
+.encabezado-pagina {
+    text-align: center;
+}
+
+.titulo-pagina {
+    font-size: 38px;
+    letter-spacing: 1px;
+}
+
+.subtitulo-pagina {
+    opacity: .8;
+}
+
+.contenedor-tabla {
+    overflow-x: auto;
+    margin-top: 25px;
+}
+
+.tabla-estudiantes {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, .05);
+    backdrop-filter: blur(6px);
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.tabla-estudiantes th {
+    padding: 14px;
+    background: rgba(255, 255, 255, .08);
+    font-size: 15px;
+}
+
+.tabla-estudiantes td {
+    padding: 12px;
+    text-align: center;
+    background: rgba(255, 255, 255, .04);
+}
+
+.tabla-estudiantes tr:hover {
+    background: rgba(255, 255, 255, .12);
+    transition: .3s;
+}
+
+.acciones a {
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 8px;
+    background: #4b9cd3;
+    color: white;
+    text-decoration: none;
+    transition: .3s;
+}
+
+.acciones a:hover {
+    background: #3677a6;
+    transform: scale(1.05);
+}
+
+.estado-vacio {
+    text-align: center;
+    padding: 30px;
+}
+
+.estado-vacio i {
+    font-size: 48px;
+    margin-bottom: 10px;
+    color: #b6c5d1;
+}

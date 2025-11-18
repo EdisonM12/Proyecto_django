@@ -1,0 +1,82 @@
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: #2c3e50;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #fff;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+  margin-bottom: 20px;
+}
+
+.table.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.table th {
+  background: linear-gradient(90deg, #8e44ad, #9b59b6);
+  color: #fff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  transition: background 0.3s;
+}
+
+.table tr:hover td {
+  background-color: rgba(230, 230, 230, 0.8);
+}
+
+.btn {
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  transition: 0.3s;
+  margin-right: 5px;
+}
+
+.btn-primary {
+  background-color: #3498db;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+}
+
+.btn-danger:hover {
+  background-color: #c0392b;
+}
+
+.btn-sm {
+  padding: 4px 10px;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,37 @@
+
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/eliminar_profesor.css' %}">
+<h1>Eliminar Profesores</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Cédula</th>
+            <th>Correo</th>
+            <th>Fecha Nacimiento</th>
+            <th>Materia</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in profesores %}
+        <tr>
+            <td>{{ p.nombre }}</td>
+            <td>{{ p.apellido }}</td>
+            <td>{{ p.cedula }}</td>
+            <td>{{ p.correo }}</td>
+            <td>{{ p.fecha_nacimiento }}</td>
+            <td>{{ p.materia }}</td>
+            <td>
+                <a class="btn btn-sm btn-danger" href="{% url 'app:eliminar_profesor_detalle' p.id %}">Eliminar</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="7">No hay profesores.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

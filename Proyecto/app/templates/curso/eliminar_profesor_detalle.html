@@ -1,0 +1,11 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'css/eliminar_profesor_detalle.css' %}">
+
+<h1>Eliminar Profesor: {{ profesor.nombre }}</h1>
+<p>¿Seguro que deseas eliminar este profesor?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a href="{% url 'app:eliminar_profesor' %}" class="btn btn-secondary">Cancelar</a>
+</form>

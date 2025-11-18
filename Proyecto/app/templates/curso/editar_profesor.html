@@ -1,0 +1,121 @@
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Editar Profesores</h1>
+    <table class="table table-striped" id="tabla-profesores">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Cédula</th>
+                <th>Correo</th>
+                <th>Materia</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in profesores %}
+            <tr>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.apellido }}</td>
+                <td>{{ p.cedula }}</td>
+                <td>{{ p.correo }}</td>
+                <td>{{ p.materia }}</td>
+                <td>
+                    <a class="btn btn-primary" href="{% url 'app:editar_profesor_detalle' p.id %}">Editar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6">No hay profesores.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: #2c3e50;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #fff;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  border-radius: 10px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+.table.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.table th {
+  background: linear-gradient(90deg, #1abc9c, #16a085);
+  color: #fff;
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #ecf0f1;
+  transition: background 0.3s;
+}
+
+.table tr:hover td {
+  background-color: #ecf0f1;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: rgba(249, 250, 252, 0.8);
+}
+
+.btn-primary {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  color: #fff;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const table = document.getElementById('tabla-profesores');
+  setTimeout(() => {
+    table.classList.add('show');
+  }, 100);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "curso/home_curso.html" %}
+{% block content %}
+<h1>Nuevo Curso</h1>
+<form method="post" class="card card-body" id="form-curso">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="btn btn-success">Guardar</button>
+  <a class="btn btn-secondary" href="{% url 'app:listar_cursos' %}">Volver</a>
+</form>
+
+<style>
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: url('https://images.unsplash.com/photo-1531746790731-6c087fecd65a?auto=format&fit=crop&w=1950&q=80') no-repeat center center fixed;
+  background-size: cover;
+  color: #2c3e50;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #fff;
+  text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+form.card {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: rgba(255,255,255,0.95);
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+}
+
+form.card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+form p {
+  margin-bottom: 15px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  transition: 0.3s;
+  margin-top: 10px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.btn-success {
+  background-color: #1abc9c;
+}
+
+.btn-success:hover {
+  background-color: #16a085;
+}
+
+.btn-secondary {
+  background-color: #3498db;
+}
+
+.btn-secondary:hover {
+  background-color: #2980b9;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('form-curso');
+  setTimeout(() => {
+    form.classList.add('show');
+  }, 100);
+});
+</script>
+{% endblock %}
