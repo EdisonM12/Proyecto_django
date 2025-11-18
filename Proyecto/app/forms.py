@@ -225,12 +225,13 @@ class PendientesForm(forms.ModelForm):
 
         class Meta:
             model = Estudiantes_pendientes
-            fields = ['nombre', 'apellido', 'email', 'direccion', 'telefono']
+            fields = ['nombre', 'apellido', 'email', 'direccion', 'telefono', 'cedula']
             widgets = {
                 'nombre': forms.TextInput(attrs={'placeholder': 'Tu nombre'}),
                 'apellido': forms.TextInput(attrs={'placeholder': 'Tu apellido'}),
                 'email': forms.EmailInput(attrs={'placeholder': 'correo@ejemplo.com'}),
                 'direccion': forms.TextInput(attrs={'placeholder': 'Tu dirección'}),
+                'cedula': forms.TextInput(attrs={'placeholder': 'Tu cedula'}),
                 'telefono': forms.TextInput(attrs={'placeholder': '0999999999'}),
             }
 

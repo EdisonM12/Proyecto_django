@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor, Estudiantes_pendientes, LoginEstudiante
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2, Login3, PendientesForm
@@ -7,13 +8,12 @@ from django.contrib.auth.hashers import make_password, check_password
 
 # views.py
 def login_estudiante(request):
-    """Login y Registro en una misma vista"""
 
     if request.method == "POST":
         form_type = request.POST.get('form_type', 'login')
 
         if form_type == 'registro':
-            # Formulario de REGISTRO con prefijo
+
             form_registro = PendientesForm(request.POST, prefix='registro')
 
             if form_registro.is_valid():
@@ -22,7 +22,7 @@ def login_estudiante(request):
                 pendiente.password = make_password(form_registro.cleaned_data['password'])
                 pendiente.save()
 
-                return redirect('app:login_estudiante')
+                return redirect('app:Estudiante_login')
 
         else:
             # Formulario de LOGIN con prefijo
@@ -35,7 +35,7 @@ def login_estudiante(request):
                 try:
                     usuario = LoginEstudiante.objects.get(email=email)
 
-                    if usuario.check_password(password):
+                    if check_password(password, usuario.password):
                         request.session['estudiante_email'] = email
 
                         try:
@@ -45,7 +45,7 @@ def login_estudiante(request):
                         except Estudiante.DoesNotExist:
                             pass
 
-                        return redirect('app:estudiante_home')
+                        return redirect('app:Estudiante_home')
 
                 except LoginEstudiante.DoesNotExist:
                     pass
@@ -73,10 +73,12 @@ def registrar_pendiente(request):
             apellido=request.POST['apellido'],
             direccion=request.POST['direccion'],
             telefono=request.POST['telefono'],
+            cedula = request.POST['cedula'],
             email = request.POST['email'],
             password= make_password(request.Post['password']),
             estado = "PENDIENTE"
         )
+        messages.success(request, "Registro realizado")
 
         return redirect("app:Estudiante_login")
 
@@ -102,6 +104,7 @@ def aceptar_pendiente(request, id):
             apellido=pendiente.apellido,
             direccion=pendiente.direccion,
             telefono=pendiente.telefono,
+            cedula = pendiente.cedula,
             curso=curso,
             datos=materia,
             contraseñas=login

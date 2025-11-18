@@ -34,7 +34,7 @@ class Profesor(models.Model):
     login = models.OneToOneField(LoginProfesor, on_delete=models.CASCADE, null=True, blank=True)
 
 
-    def str(self):
+    def __str__(self):
         return self.nombre
 
 class Materia(models.Model):
@@ -73,7 +73,7 @@ class Estudiantes_pendientes(models.Model):
     apellido = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
     direccion = models.CharField(max_length=255)
-    telefono = models.IntegerField(unique=True)
+    telefono = models.CharField(unique=True, blank= True, null=True )
     cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
     estado = models.CharField(max_length=20, default="PENDIENTE")
     password = models.CharField(max_length=255, null=True, blank=True)
@@ -84,24 +84,24 @@ class Estudiante(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     direccion = models.CharField(max_length=255)
-    telefono = models.CharField(unique=True)
+    telefono = models.CharField(unique=True, null=True, blank=True)
     cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
     curso = models.ForeignKey(Curso , on_delete=models.PROTECT, null=True, blank=True)
     datos = models.ForeignKey(Materia, on_delete=models.PROTECT, null=True, blank=True)
     contraseñas= models.OneToOneField(LoginEstudiante, on_delete=models.PROTECT, null=True, blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
 
 class Evaluaciones(models.Model):
-    materia = models.CharField(max_length=255)
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE, max_length=255)
     periodo = models.CharField(max_length=255)
     pendiente = models.BooleanField()
     archivo = models.FileField(upload_to='pdfs/', null=True, blank=True)
     curso = models.ForeignKey(Curso, on_delete=models.CASCADE, null=True, blank=True)
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.materia} - {self.periodo}"
 
 
@@ -114,6 +114,6 @@ class Calificacion(models.Model):
     class Meta:
         unique_together = ("estudiante", "evaluacion")
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.estudiante} - {self.evaluacion} = {self.nota}"
 
