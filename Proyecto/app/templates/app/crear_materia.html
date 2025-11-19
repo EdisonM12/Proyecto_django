@@ -19,7 +19,7 @@
             background: white;
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         /* Títulos */
@@ -57,7 +57,7 @@
         form input:focus,
         form select:focus {
             border-color: #4A90E2;
-            box-shadow: 0 0 6px rgba(74,144,226,0.4);
+            box-shadow: 0 0 6px rgba(74, 144, 226, 0.4);
         }
 
         /* Botón principal */
@@ -110,6 +110,23 @@
 
     <a href="{% url 'app:listar_materia' %}" class="volver">Volver</a>
 </div>
+<script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const nombre = document.getElementById("id_nombre").value.trim();
+        const profesor = document.getElementById("id_profesor").value;
 
+        if (nombre.length < 3) {
+            alert("El nombre de la materia debe tener al menos 3 caracteres.");
+            e.preventDefault();
+            return;
+        }
+
+        if (profesor === "") {
+            alert("Seleccione un profesor.");
+            e.preventDefault();
+            return;
+        }
+    });
+</script>
 </body>
 </html>

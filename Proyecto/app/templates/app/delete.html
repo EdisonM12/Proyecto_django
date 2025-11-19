@@ -5,12 +5,21 @@
     <title>Eliminar Estudiante</title>
 </head>
 <body>
-    <h2 style="text-align:center;">Eliminar Estudiante</h2>
-    <p style="text-align:center;">¿Estás seguro de eliminar a {{ estudiante.nombre }} {{ estudiante.apellido }}?</p>
-    <form method="post" style="text-align:center;">
-        {% csrf_token %}
-        <button type="submit">Sí, eliminar</button>
-        <a href="{% url 'app:listar_estudiantes' %}">Cancelar</a>
-    </form>
+<h2 style="text-align:center;">Eliminar Estudiante</h2>
+<p style="text-align:center;">¿Estás seguro de eliminar a {{ estudiante.nombre }} {{ estudiante.apellido }}?</p>
+<form method="post" style="text-align:center;">
+    {% csrf_token %}
+    <button type="submit">Sí, eliminar</button>
+    <a href="{% url 'app:listar_estudiantes' %}">Cancelar</a>
+</form>
+<script>
+    // Confirmación adicional
+    document.getElementById("eliminarForm").addEventListener("submit", function (e) {
+        const confirmar = confirm("Esta acción no se puede deshacer. ¿Deseas continuar?");
+        if (!confirmar) {
+            e.preventDefault(); // Cancela el envío si el usuario dice "No"
+        }
+    });
+</script>
 </body>
 </html>

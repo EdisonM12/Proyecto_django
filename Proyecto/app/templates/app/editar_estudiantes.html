@@ -2,158 +2,158 @@
 {% load static %}
 
 {% block content %}
-<style>
-    /* ===========================
-   ESTILOS GENERALES
-=========================== */
-.seccion-principal {
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
-    font-family: "Poppins", sans-serif;
-}
+    <style>
+        /* ===========================
+       ESTILOS GENERALES
+    =========================== */
+        .seccion-principal {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            font-family: "Poppins", sans-serif;
+        }
 
-/* ===========================
-   ENCABEZADO
-=========================== */
-.encabezado-pagina {
-    text-align: center;
-    margin-bottom: 30px;
-}
+        /* ===========================
+           ENCABEZADO
+        =========================== */
+        .encabezado-pagina {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.titulo-pagina {
-    font-size: 32px;
-    font-weight: 700;
-    color: #2a3d66;
-    margin-bottom: 5px;
-}
+        .titulo-pagina {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2a3d66;
+            margin-bottom: 5px;
+        }
 
-.subtitulo-pagina {
-    font-size: 16px;
-    color: #555;
-}
+        .subtitulo-pagina {
+            font-size: 16px;
+            color: #555;
+        }
 
-/* ===========================
-   TABLA
-=========================== */
-.contenedor-tabla {
-    overflow-x: auto;
-    border-radius: 10px;
-    box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
-}
+        /* ===========================
+           TABLA
+        =========================== */
+        .contenedor-tabla {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border-radius: 10px;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 10px;
+        }
 
-thead {
-    background: #2a3d66;
-    color: white;
-}
+        thead {
+            background: #2a3d66;
+            color: white;
+        }
 
-thead th {
-    padding: 14px;
-    text-align: left;
-    font-size: 15px;
-}
+        thead th {
+            padding: 14px;
+            text-align: left;
+            font-size: 15px;
+        }
 
-tbody tr {
-    border-bottom: 1px solid #eee;
-}
+        tbody tr {
+            border-bottom: 1px solid #eee;
+        }
 
-tbody tr:hover {
-    background: #f4f8ff;
-}
+        tbody tr:hover {
+            background: #f4f8ff;
+        }
 
-tbody td {
-    padding: 12px;
-    font-size: 14px;
-    color: #333;
-}
+        tbody td {
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+        }
 
-/* ===========================
-   ESTADO VACÍO
-=========================== */
-.estado-vacio {
-    text-align: center;
-    padding: 25px 10px;
-}
+        /* ===========================
+           ESTADO VACÍO
+        =========================== */
+        .estado-vacio {
+            text-align: center;
+            padding: 25px 10px;
+        }
 
-.estado-vacio .icono-vacio {
-    font-size: 40px;
-    color: #2a3d66;
-    margin-bottom: 10px;
-}
+        .estado-vacio .icono-vacio {
+            font-size: 40px;
+            color: #2a3d66;
+            margin-bottom: 10px;
+        }
 
-/* ===========================
-   BOTONES
-=========================== */
-.boton-accion {
-    text-decoration: none;
-    color: #ffffff;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    transition: 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
+        /* ===========================
+           BOTONES
+        =========================== */
+        .boton-accion {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-/* Botón Editar */
-.boton-editar {
-    background: #4A90E2;
-}
+        /* Botón Editar */
+        .boton-editar {
+            background: #4A90E2;
+        }
 
-.boton-editar:hover {
-    background: #357ABD;
-}
+        .boton-editar:hover {
+            background: #357ABD;
+        }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
-@media (max-width: 768px) {
-    table thead {
-        display: none;
-    }
+        /* ===========================
+           RESPONSIVE
+        =========================== */
+        @media (max-width: 768px) {
+            table thead {
+                display: none;
+            }
 
-    table tr {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 10px;
-    }
+            table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 10px;
+            }
 
-    table td {
-        display: flex;
-        justify-content: space-between;
-        font-size: 14px;
-        padding: 8px 5px;
-    }
+            table td {
+                display: flex;
+                justify-content: space-between;
+                font-size: 14px;
+                padding: 8px 5px;
+            }
 
-    table td::before {
-        content: attr(data-label);
-        font-weight: 700;
-        color: #2a3d66;
-    }
-}
+            table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: #2a3d66;
+            }
+        }
 
-</style>
-<div class="seccion-principal">
+    </style>
+    <div class="seccion-principal">
 
-    <div class="encabezado-pagina">
-        <h1 class="titulo-pagina">Editar Estudiantes</h1>
-        <p class="subtitulo-pagina">Selecciona un estudiante para modificar sus datos</p>
-    </div>
+        <div class="encabezado-pagina">
+            <h1 class="titulo-pagina">Editar Estudiantes</h1>
+            <p class="subtitulo-pagina">Selecciona un estudiante para modificar sus datos</p>
+        </div>
 
-    <div class="contenedor-tabla">
-        <table>
-            <thead>
+        <div class="contenedor-tabla">
+            <table>
+                <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -161,40 +161,78 @@ tbody td {
                     <th>Curso</th>
                     <th>Acciones</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
                 {% for e in estudiantes %}
-                <tr>
-                    <td>{{ e.nombre }}</td>
-                    <td>{{ e.apellido }}</td>
-                    <td>{{ e.cedula }}</td>
-                    <td>{{ e.curso }}</td>
+                    <tr>
+                        <td>{{ e.nombre }}</td>
+                        <td>{{ e.apellido }}</td>
+                        <td>{{ e.cedula }}</td>
+                        <td>{{ e.curso }}</td>
 
-                    <td class="acciones">
-                        <a href="{% url 'app:editar_estudiantes_detalle' e.id|sign %}"
-                           class="boton-accion boton-editar">
-                            <i class="fas fa-edit"></i> Editar
-                        </a>
-                    </td>
-                </tr>
+                        <td class="acciones">
+                            <a href="{% url 'app:editar_estudiantes_detalle' e.id|sign %}"
+                               class="boton-accion boton-editar">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                        </td>
+                    </tr>
 
                 {% empty %}
-                <tr>
-                    <td colspan="7">
-                        <div class="estado-vacio">
-                            <div class="icono-vacio">
-                                <i class="fas fa-user-edit"></i>
+                    <tr>
+                        <td colspan="7">
+                            <div class="estado-vacio">
+                                <div class="icono-vacio">
+                                    <i class="fas fa-user-edit"></i>
+                                </div>
+                                <h3>No hay estudiantes</h3>
                             </div>
-                            <h3>No hay estudiantes</h3>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
+    <script>
+        // Confirmación al hacer clic en "Editar"
+        document.querySelectorAll('.boton-editar').forEach(function (boton) {
+            boton.addEventListener('click', function (e) {
+                const nombre = this.closest('tr').querySelector('td:first-child').textContent;
+                const apellido = this.closest('tr').querySelector('td:nth-child(2)').textContent;
+                const confirmar = confirm(`¿Deseas editar al estudiante ${nombre} ${apellido}?`);
+                if (!confirmar) {
+                    e.preventDefault();
+                }
+            });
+        });
 
-</div>
+        // Filtro rápido por nombre o cédula
+        const searchInput = document.createElement('input');
+        searchInput.placeholder = "Buscar estudiante...";
+        searchInput.style.marginBottom = "15px";
+        searchInput.style.padding = "8px 12px";
+        searchInput.style.width = "100%";
+        searchInput.style.borderRadius = "8px";
+        searchInput.style.border = "1px solid #ccc";
 
+        const tabla = document.querySelector('.contenedor-tabla');
+        tabla.parentNode.insertBefore(searchInput, tabla);
+
+        searchInput.addEventListener('keyup', function () {
+            const filtro = this.value.toLowerCase();
+            document.querySelectorAll('tbody tr').forEach(function (tr) {
+                const nombre = tr.querySelector('td:first-child')?.textContent.toLowerCase() || '';
+                const apellido = tr.querySelector('td:nth-child(2)')?.textContent.toLowerCase() || '';
+                const cedula = tr.querySelector('td:nth-child(3)')?.textContent.toLowerCase() || '';
+                if (nombre.includes(filtro) || apellido.includes(filtro) || cedula.includes(filtro)) {
+                    tr.style.display = '';
+                } else {
+                    tr.style.display = 'none';
+                }
+            });
+        });
+    </script>
 {% endblock %}

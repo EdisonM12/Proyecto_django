@@ -45,13 +45,19 @@
             background: #ffffff;
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
             animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ============================
@@ -165,31 +171,44 @@
     </style>
 </head>
 <body>
-    <div class="contenedor">
-        <h1>Eliminar Materia</h1>
+<div class="contenedor">
+    <h1>Eliminar Materia</h1>
 
-        <div class="alerta-eliminar">
-            <i class="fas fa-exclamation-triangle"></i>
-            <p>¿Estás seguro que deseas eliminar la materia</p>
-            <span class="nombre-materia">"{{ materia.nombre }}"?</span>
-            <p style="margin-top: 15px; font-size: 0.95rem; font-weight: 400;">
-                Esta acción no se puede deshacer.
-            </p>
-        </div>
-
-        <form method="post">
-            {% csrf_token %}
-            <div class="contenedor-botones">
-                <button type="submit" class="boton btn-eliminar">
-                    <i class="fas fa-trash-alt"></i>
-                    Sí, eliminar
-                </button>
-                <a href="{% url 'app:lista_materias' %}" class="boton btn-cancelar">
-                    <i class="fas fa-times"></i>
-                    Cancelar
-                </a>
-            </div>
-        </form>
+    <div class="alerta-eliminar">
+        <i class="fas fa-exclamation-triangle"></i>
+        <p>¿Estás seguro que deseas eliminar la materia</p>
+        <span class="nombre-materia">"{{ materia.nombre }}"?</span>
+        <p style="margin-top: 15px; font-size: 0.95rem; font-weight: 400;">
+            Esta acción no se puede deshacer.
+        </p>
     </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="contenedor-botones">
+            <button type="submit" class="boton btn-eliminar">
+                <i class="fas fa-trash-alt"></i>
+                Sí, eliminar
+            </button>
+            <a href="{% url 'app:lista_materias' %}" class="boton btn-cancelar">
+                <i class="fas fa-times"></i>
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+<script>
+    // Validación front-end: confirmación antes de eliminar
+    const formEliminar = document.getElementById("form-eliminar-materia");
+
+    formEliminar.addEventListener("submit", function (e) {
+        const confirmacion = confirm(
+            `⚠️ Atención: Esta acción eliminará la materia "${"{{ materia.nombre }}"}" de forma permanente. ¿Deseas continuar?`
+        );
+        if (!confirmacion) {
+            e.preventDefault(); // Cancela el envío si el usuario presiona "Cancelar"
+        }
+    });
+</script>
 </body>
 </html>

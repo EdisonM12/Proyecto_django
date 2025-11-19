@@ -1,11 +1,270 @@
 {% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Calificación</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .container {
+            max-width: 600px;
+        }
 
+        .delete-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
 
-<h1>Eliminar calificacion: {{ calificacion.nombre }}</h1>
-<p>¿Seguro que deseas eliminar esta calificacion?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Eliminar</button>
-    <a href="{% url 'app:eliminar_calificacion' %}" class="btn btn-secondary">Cancelar</a>
-</form>
+        .delete-header {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .delete-header i {
+            font-size: 60px;
+            color: white;
+            margin-bottom: 15px;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-10px);
+            }
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        .delete-header h1 {
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .delete-body {
+            padding: 40px;
+        }
+
+        .warning-message {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .warning-message i {
+            font-size: 40px;
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .warning-message p {
+            color: #856404;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 0;
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-item i {
+            font-size: 20px;
+            color: #667eea;
+            margin-right: 12px;
+            width: 30px;
+            text-align: center;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #495057;
+            margin-right: 10px;
+        }
+
+        .info-value {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .btn-danger-custom {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-danger-custom:hover {
+            background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+        }
+
+        .btn-secondary-custom {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-secondary-custom:hover {
+            background: #5a6268;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+        }
+
+        @media (max-width: 576px) {
+            .delete-body {
+                padding: 25px 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .delete-header h1 {
+                font-size: 22px;
+            }
+
+            .delete-header i {
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <div class="delete-card">
+        <div class="delete-header">
+            <i class="fas fa-exclamation-triangle"></i>
+            <h1>Confirmar Eliminación</h1>
+        </div>
+
+        <div class="delete-body">
+            <div class="warning-message">
+                <i class="fas fa-skull-crossbones"></i>
+                <p>¿Estás seguro que deseas eliminar esta calificación?</p>
+                <small style="color: #856404; display: block; margin-top: 8px;">
+                    Esta acción no se puede deshacer
+                </small>
+            </div>
+
+            <div class="info-section">
+                <div class="info-item">
+                    <i class="fas fa-user-graduate"></i>
+                    <span class="info-label">Estudiante:</span>
+                    <span class="info-value">{{ calificacion.estudiante }}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-book"></i>
+                    <span class="info-label">Evaluación:</span>
+                    <span class="info-value">{{ calificacion.evaluacion }}</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-star"></i>
+                    <span class="info-label">Nota:</span>
+                    <span class="info-value">{{ calificacion.nota }}</span>
+                </div>
+                <div class="info-item">
+                    <i class="far fa-calendar"></i>
+                    <span class="info-label">Fecha:</span>
+                    <span class="info-value">{{ calificacion.fecha_registro|date:"d/m/Y" }}</span>
+                </div>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="btn-danger-custom">
+                        <i class="fas fa-trash-alt"></i> Sí, Eliminar
+                    </button>
+                    <a href="{% url 'app:eliminar_calificacion' %}" class="btn-secondary-custom">
+                        <i class="fas fa-times"></i> No, Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    const formEliminar = document.getElementById('form-eliminar');
+
+    formEliminar.addEventListener('submit', function (e) {
+        const confirmacion = confirm(
+            `⚠️ Atención: Esta acción eliminará permanentemente la calificación.\n\n` +
+            `Estudiante: {{ calificacion.estudiante }}\n` +
+            `Evaluación: {{ calificacion.evaluacion }}\n` +
+            `Nota: {{ calificacion.nota }}\n` +
+            `Fecha: {{ calificacion.fecha_registro|date:"d/m/Y" }}\n\n` +
+            `¿Deseas continuar?`
+        );
+        if (!confirmacion) e.preventDefault(); // cancela si el usuario presiona "Cancelar"
+    });
+</script>
+</body>
+</html>

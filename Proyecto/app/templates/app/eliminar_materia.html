@@ -106,6 +106,21 @@
         <p class="vacio">No hay materias registradas.</p>
     {% endfor %}
 </div>
+<script>
+    // Selecciona todos los formularios de eliminar
+    const formulariosEliminar = document.querySelectorAll(".form-eliminar");
+
+    formulariosEliminar.forEach(form => {
+        form.addEventListener("submit", function (e) {
+            const confirmacion = confirm(
+                "⚠️ Atención: Esta acción eliminará la materia de forma permanente. ¿Deseas continuar?"
+            );
+            if (!confirmacion) {
+                e.preventDefault(); // Cancela la acción si el usuario presiona "Cancelar"
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

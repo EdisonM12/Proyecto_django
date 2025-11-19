@@ -3,57 +3,275 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Editar evaluacion</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar evaluación</title>
     <style>
-        table { width: 80%; margin: auto; border-collapse: collapse; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: center; }
-        th { background-color: #f4f4f4; }
-        a.button { padding: 5px 10px; color: white; text-decoration: none; border-radius: 3px; }
-        a.button.create { background-color: #4CAF50; }
-        a.button.edit { background-color: #2196F3; }
-        a.button.delete { background-color: #f44336; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        th {
+            color: white;
+            padding: 18px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        tbody tr:hover {
+            background-color: #e9ecef;
+            transform: scale(1.01);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            color: #333;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .pdf-link {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .pdf-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .no-pdf {
+            color: #999;
+            font-style: italic;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .button.edit {
+            background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+        }
+
+        .button.edit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4);
+        }
+
+        .empty-state {
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-si {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-no {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .actions-cell {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .header h2 {
+                font-size: 1.8rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 10px 5px;
+            }
+
+            .button {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+
+            .back-button {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            table {
+                font-size: 0.75rem;
+            }
+
+            th, td {
+                padding: 8px 4px;
+            }
+
+            .button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <h2 style="text-align:center;">Lista de Evaluaciones</h2>
+    <div class="container">
+        <a href="javascript:history.back()" class="back-button">← Volver</a>
 
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Materia</th>
-                <th>Periodo</th>
-                <th>Pendiente</th>
-                <th>Archivo</th>
 
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ev in evaluacion %}
-            <tr>
-                <td>{{ ev.id }}</td>
-                <td>{{ ev.materia }}</td>
-                <td>{{ ev.periodo }}</td>
-                <td>{{ ev.pendiente }}</td>
-                  <td>
-                     {% if ev.archivo %}
-                       <a href="{{ ev.archivo.url }}" target="_blank">Ver PDF</a>
-                     {% else %}
-                           Sin PDF
-                      {% endif %}
-                     </td>
-                <td>
-                    <a href="{% url 'app:editar_evaluacion_detalle' ev.id|sign %}" class="button edit">Editar</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="5">No hay evaluaciones</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Materia</th>
+                        <th>Periodo</th>
+                        <th>Pendiente</th>
+                        <th>Archivo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ev in evaluacion %}
+                    <tr>
+                        <td><strong>{{ ev.id }}</strong></td>
+                        <td>{{ ev.materia }}</td>
+                        <td>{{ ev.periodo }}</td>
+                        <td>
+                            {% if ev.pendiente == 'Sí' or ev.pendiente == 'Si' %}
+                                <span class="badge badge-si">{{ ev.pendiente }}</span>
+                            {% else %}
+                                <span class="badge badge-no">{{ ev.pendiente }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if ev.archivo %}
+                                <a href="{{ ev.archivo.url }}" target="_blank" class="pdf-link">📄 Ver PDF</a>
+                            {% else %}
+                                <span class="no-pdf">Sin PDF</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'app:editar_evaluacion_detalle' ev.id|sign %}" class="button edit">✏️ Editar</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            No hay evaluaciones registradas
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
-

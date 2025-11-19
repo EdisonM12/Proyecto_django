@@ -1,12 +1,49 @@
 {% extends "curso/home_curso.html" %}
 
 {% block content %}
-<h1>Crear Profesor</h1>
+    <h1>Crear Profesor</h1>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-primary">Guardar</button>
-  <a class="btn btn-secondary" href="{% url 'app:listar_profesores' %}">Cancelar</a>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-primary">Guardar</button>
+        <a class="btn btn-secondary" href="{% url 'app:listar_profesores' %}">Cancelar</a>
+    </form>
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const nombre = document.getElementById("id_nombre")?.value.trim();
+            const apellido = document.getElementById("id_apellido")?.value.trim();
+            const correo = document.getElementById("id_correo")?.value.trim();
+            const cedula = document.getElementById("id_cedula")?.value.trim();
+
+            // Validar nombre
+            if (nombre.length < 2) {
+                alert("El nombre debe tener al menos 2 caracteres.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validar apellido
+            if (apellido.length < 2) {
+                alert("El apellido debe tener al menos 2 caracteres.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validar correo
+            const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!correoRegex.test(correo)) {
+                alert("Ingrese un correo válido.");
+                e.preventDefault();
+                return;
+            }
+
+            // Validar cédula
+            if (!/^\d{10}$/.test(cedula)) {
+                alert("La cédula debe tener exactamente 10 dígitos.");
+                e.preventDefault();
+                return;
+            }
+        });
+    </script>
 {% endblock %}

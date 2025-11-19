@@ -32,13 +32,19 @@
             background: #ffffff;
             padding: 2.5rem;
             border-radius: 20px;
-            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
             animation: fadeIn 0.5s ease;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         form {
@@ -130,47 +136,67 @@
     </style>
 </head>
 <body>
-    <div class="contenedor">
-        <h1>Editar Materia</h1>
+<div class="contenedor">
+    <h1>Editar Materia</h1>
 
-        <form method="post">
-            {% csrf_token %}
+    <form method="post">
+        {% csrf_token %}
 
-            <div>
-                <label for="id_nombre">Nombre de la materia</label>
-                {{ form.nombre }}
-                {% if form.nombre.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.nombre.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
+        <div>
+            <label for="id_nombre">Nombre de la materia</label>
+            {{ form.nombre }}
+            {% if form.nombre.errors %}
+                <ul class="errorlist">
+                    {% for error in form.nombre.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
 
-            <div>
-                <label for="id_profesor">Profesor</label>
-                {{ form.profesor }}
-                {% if form.profesor.errors %}
-                    <ul class="errorlist">
-                        {% for error in form.profesor.errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                {% endif %}
-            </div>
+        <div>
+            <label for="id_profesor">Profesor</label>
+            {{ form.profesor }}
+            {% if form.profesor.errors %}
+                <ul class="errorlist">
+                    {% for error in form.profesor.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
 
-            <div class="contenedor-botones">
-                <button type="submit" class="boton btn-guardar">
-                    <i class="fas fa-save"></i>
-                    Guardar cambios
-                </button>
-                <a href="{% url 'app:editar_materia' %}" class="boton btn-cancelar">
-                    <i class="fas fa-times"></i>
-                    Cancelar
-                </a>
-            </div>
-        </form>
-    </div>
+        <div class="contenedor-botones">
+            <button type="submit" class="boton btn-guardar">
+                <i class="fas fa-save"></i>
+                Guardar cambios
+            </button>
+            <a href="{% url 'app:editar_materia' %}" class="boton btn-cancelar">
+                <i class="fas fa-times"></i>
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+<script>
+    document.getElementById("form-materia").addEventListener("submit", function (e) {
+        const nombre = document.getElementById("id_nombre").value.trim();
+        const profesor = document.getElementById("id_profesor").value;
+
+        // Validación nombre
+        if (nombre.length < 3) {
+            alert("El nombre de la materia debe tener al menos 3 caracteres.");
+            e.preventDefault();
+            return;
+        }
+
+        // Validación profesor
+        if (profesor === "" || profesor === null) {
+            alert("Seleccione un profesor.");
+            e.preventDefault();
+            return;
+        }
+    });
+</script>
 </body>
 </html>

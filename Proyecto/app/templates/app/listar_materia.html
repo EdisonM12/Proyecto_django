@@ -32,7 +32,7 @@
             background: white;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
         .materia-item {
@@ -68,6 +68,7 @@
         .editar {
             background: #4A90E2;
         }
+
         .editar:hover {
             background: #357ABD;
         }
@@ -75,6 +76,7 @@
         .eliminar {
             background: #d9534f;
         }
+
         .eliminar:hover {
             background: #b52b27;
         }
@@ -110,6 +112,23 @@
     {% endfor %}
 
 </div>
+<script>
+    // Búsqueda en tiempo real
+    const inputBuscar = document.getElementById('buscar-materia');
+    const lista = document.getElementById('lista-materias');
+    inputBuscar.addEventListener('input', function () {
+        const filtro = inputBuscar.value.toLowerCase();
+        for (let item of lista.getElementsByClassName('materia-item')) {
+            const texto = item.textContent.toLowerCase();
+            item.style.display = texto.includes(filtro) ? '' : 'none';
+        }
+    });
 
+    // Resaltar al pasar el cursor
+    for (let item of lista.getElementsByClassName('materia-item')) {
+        item.addEventListener('mouseover', () => item.style.backgroundColor = '#f1f1f1');
+        item.addEventListener('mouseout', () => item.style.backgroundColor = '');
+    }
+</script>
 </body>
 </html>

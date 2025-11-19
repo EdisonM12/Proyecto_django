@@ -3,159 +3,159 @@
 
 {% block content %}
 
-<style>
-    /* ============================
-   ESTILOS GENERALES
-============================ */
-.seccion-principal {
-    width: 90%;
-    max-width: 1100px;
-    margin: 40px auto;
-    font-family: "Poppins", sans-serif;
-}
+    <style>
+        /* ============================
+       ESTILOS GENERALES
+    ============================ */
+        .seccion-principal {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            font-family: "Poppins", sans-serif;
+        }
 
-/* ============================
-   ENCABEZADO
-============================ */
-.encabezado-pagina {
-    text-align: center;
-    margin-bottom: 30px;
-}
+        /* ============================
+           ENCABEZADO
+        ============================ */
+        .encabezado-pagina {
+            text-align: center;
+            margin-bottom: 30px;
+        }
 
-.titulo-pagina {
-    font-size: 32px;
-    font-weight: 700;
-    color: #b11b1b; /* Rojo suave */
-    margin-bottom: 5px;
-}
+        .titulo-pagina {
+            font-size: 32px;
+            font-weight: 700;
+            color: #b11b1b; /* Rojo suave */
+            margin-bottom: 5px;
+        }
 
-.subtitulo-pagina {
-    font-size: 16px;
-    color: #555;
-}
+        .subtitulo-pagina {
+            font-size: 16px;
+            color: #555;
+        }
 
-/* ============================
-   TABLA
-============================ */
-.contenedor-tabla {
-    overflow-x: auto;
-    border-radius: 10px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-}
+        /* ============================
+           TABLA
+        ============================ */
+        .contenedor-tabla {
+            overflow-x: auto;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+        }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-}
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-thead {
-    background: #b11b1b;
-    color: white;
-}
+        thead {
+            background: #b11b1b;
+            color: white;
+        }
 
-thead th {
-    padding: 14px;
-    font-size: 15px;
-    text-align: left;
-}
+        thead th {
+            padding: 14px;
+            font-size: 15px;
+            text-align: left;
+        }
 
-tbody tr {
-    border-bottom: 1px solid #eee;
-}
+        tbody tr {
+            border-bottom: 1px solid #eee;
+        }
 
-tbody tr:hover {
-    background: rgba(255, 230, 230, 0.6);
-}
+        tbody tr:hover {
+            background: rgba(255, 230, 230, 0.6);
+        }
 
-tbody td {
-    padding: 12px;
-    font-size: 14px;
-    color: #333;
-}
+        tbody td {
+            padding: 12px;
+            font-size: 14px;
+            color: #333;
+        }
 
-/* ============================
-   BOTONES
-============================ */
-.boton-accion {
-    text-decoration: none;
-    color: #fff;
-    padding: 8px 15px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: 0.3s;
-}
+        /* ============================
+           BOTONES
+        ============================ */
+        .boton-accion {
+            text-decoration: none;
+            color: #fff;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.3s;
+        }
 
-/* Botón ELIMINAR */
-.boton-eliminar {
-    background: #d9534f;
-}
+        /* Botón ELIMINAR */
+        .boton-eliminar {
+            background: #d9534f;
+        }
 
-.boton-eliminar:hover {
-    background: #b52b27;
-}
+        .boton-eliminar:hover {
+            background: #b52b27;
+        }
 
-/* ============================
-   ESTADO VACÍO
-============================ */
-.estado-vacio {
-    text-align: center;
-    padding: 25px 10px;
-}
+        /* ============================
+           ESTADO VACÍO
+        ============================ */
+        .estado-vacio {
+            text-align: center;
+            padding: 25px 10px;
+        }
 
-.estado-vacio .icono-vacio {
-    font-size: 40px;
-    color: #b11b1b;
-    margin-bottom: 10px;
-}
+        .estado-vacio .icono-vacio {
+            font-size: 40px;
+            color: #b11b1b;
+            margin-bottom: 10px;
+        }
 
-/* ============================
-   RESPONSIVE
-============================ */
-@media (max-width: 768px) {
-    table thead {
-        display: none;
-    }
+        /* ============================
+           RESPONSIVE
+        ============================ */
+        @media (max-width: 768px) {
+            table thead {
+                display: none;
+            }
 
-    table tr {
-        display: block;
-        margin-bottom: 15px;
-        border: 1px solid #ddd;
-        border-radius: 10px;
-        padding: 10px;
-    }
+            table tr {
+                display: block;
+                margin-bottom: 15px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                padding: 10px;
+            }
 
-    table td {
-        display: flex;
-        justify-content: space-between;
-        padding: 8px 5px;
-        font-size: 14px;
-    }
+            table td {
+                display: flex;
+                justify-content: space-between;
+                padding: 8px 5px;
+                font-size: 14px;
+            }
 
-    table td::before {
-        content: attr(data-label);
-        font-weight: 700;
-        color: #b11b1b;
-    }
-}
+            table td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: #b11b1b;
+            }
+        }
 
-</style>
-<div class="seccion-principal">
+    </style>
+    <div class="seccion-principal">
 
-    <div class="encabezado-pagina">
-        <h1 class="titulo-pagina">Eliminar Estudiantes</h1>
-        <p class="subtitulo-pagina">Selecciona un estudiante para eliminarlo</p>
-    </div>
+        <div class="encabezado-pagina">
+            <h1 class="titulo-pagina">Eliminar Estudiantes</h1>
+            <p class="subtitulo-pagina">Selecciona un estudiante para eliminarlo</p>
+        </div>
 
-    <div class="contenedor-tabla">
-        <table>
-            <thead>
+        <div class="contenedor-tabla">
+            <table>
+                <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Apellido</th>
@@ -165,42 +165,55 @@ tbody td {
                     <th>Materia</th>
                     <th>Acciones</th>
                 </tr>
-            </thead>
+                </thead>
 
-            <tbody>
+                <tbody>
                 {% for e in estudiantes %}
-                <tr>
-                    <td>{{ e.nombre }}</td>
-                    <td>{{ e.apellido }}</td>
-                    <td>{{ e.cedula }}</td>
-                    <td>{{ e.correo }}</td>
-                    <td>{{ e.curso }}</td>
-                    <td>{{ e.datos }}</td>
+                    <tr>
+                        <td>{{ e.nombre }}</td>
+                        <td>{{ e.apellido }}</td>
+                        <td>{{ e.cedula }}</td>
+                        <td>{{ e.correo }}</td>
+                        <td>{{ e.curso }}</td>
+                        <td>{{ e.datos }}</td>
 
-                    <td class="acciones">
-                        <a href="{% url 'app:eliminar_estudiantes_detalle' e.id|sign %}"
-                           class="boton-accion boton-eliminar">
-                            <i class="fas fa-trash"></i> Eliminar
-                        </a>
-                    </td>
-                </tr>
+                        <td class="acciones">
+                            <a href="{% url 'app:eliminar_estudiantes_detalle' e.id|sign %}"
+                               class="boton-accion boton-eliminar">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
 
                 {% empty %}
-                <tr>
-                    <td colspan="7">
-                        <div class="estado-vacio">
-                            <div class="icono-vacio">
-                                <i class="fas fa-user-times"></i>
+                    <tr>
+                        <td colspan="7">
+                            <div class="estado-vacio">
+                                <div class="icono-vacio">
+                                    <i class="fas fa-user-times"></i>
+                                </div>
+                                <h3>No hay estudiantes</h3>
                             </div>
-                            <h3>No hay estudiantes</h3>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
     </div>
+    <script>
+        // Selecciona todos los botones de eliminar
+        const botonesEliminar = document.querySelectorAll('.boton-eliminar');
 
-</div>
-
+        botonesEliminar.forEach(function (boton) {
+            boton.addEventListener('click', function (e) {
+                // Muestra un confirm
+                const confirmacion = confirm("¿Estás seguro de que deseas eliminar este estudiante?");
+                if (!confirmacion) {
+                    e.preventDefault(); // Cancela la acción si presionó "Cancelar"
+                }
+            });
+        });
+    </script>
 {% endblock %}

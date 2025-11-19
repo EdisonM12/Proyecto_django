@@ -1,9 +1,134 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/editar_profesor_detalle.css' %}">
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Evaluación</title>
+
+    <style>
+    /* =========================
+       ESTILOS GENERALES
+    ========================= */
+    body {
+        font-family: "Poppins", sans-serif;
+        background: #f4f6f9;
+        margin: 0;
+        padding: 40px 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background: #ffffff;
+        border-radius: 12px;
+        padding: 30px 40px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    /* =========================
+       TITULO
+    ========================= */
+    h1 {
+        text-align: center;
+        color: #2a3d66;
+        margin-bottom: 30px;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    /* =========================
+       FORMULARIO
+    ========================= */
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    form p {
+        margin: 0;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="date"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #4A90E2;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        outline: none;
+    }
+
+    /* =========================
+       BOTONES
+    ========================= */
+    .btn {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        transition: 0.3s;
+        text-decoration: none;
+        text-align: center;
+        display: inline-block;
+    }
+
+    .btn-primary {
+        background-color: #4A90E2;
+        color: #ffffff;
+    }
+
+    .btn-primary:hover {
+        background-color: #357ABD;
+        box-shadow: 0 4px 12px rgba(53, 122, 189, 0.3);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #ffffff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        box-shadow: 0 4px 12px rgba(90, 98, 104, 0.3);
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+    @media (max-width: 640px) {
+        .container {
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+    </style>
+</head>
+<body>
+
 <div class="container">
-    <h1>Editar evaluacion: {{ evaluacion.nombre }}</h1>
+    <h1>Editar evaluación: {{ evaluacion.nombre }}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -11,4 +136,6 @@
         <a href="{% url 'app:editar_evaluacion' %}" class="btn btn-secondary">Volver</a>
     </form>
 </div>
-{% endblock %}
+
+</body>
+</html>

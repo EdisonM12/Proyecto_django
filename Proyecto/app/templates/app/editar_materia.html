@@ -33,7 +33,7 @@
             background: white;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
         }
 
         .materia-item {
@@ -69,6 +69,7 @@
         .editar {
             background: #4A90E2;
         }
+
         .editar:hover {
             background: #357ABD;
         }
@@ -76,6 +77,7 @@
         .eliminar {
             background: #d9534f;
         }
+
         .eliminar:hover {
             background: #b52b27;
         }
@@ -114,6 +116,29 @@
     {% endfor %}
 
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const materias = document.querySelectorAll(".materia-item");
+        const vacio = document.querySelector(".vacio");
 
+        // Si no hay materias, mostrar mensaje destacado
+        if (materias.length === 0 && vacio) {
+            vacio.style.color = "#d9534f";
+            vacio.style.fontWeight = "600";
+            vacio.style.fontSize = "18px";
+        }
+
+        // Validación simple antes de abrir edición
+        document.querySelectorAll(".acciones a.editar").forEach(link => {
+            link.addEventListener("click", function (e) {
+                const nombreMateria = this.closest(".materia-item").querySelector(".materia-info").innerText;
+                if (!nombreMateria || nombreMateria.trim() === "") {
+                    e.preventDefault();
+                    alert("No se puede editar una materia vacía.");
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

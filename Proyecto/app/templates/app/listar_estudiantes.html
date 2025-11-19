@@ -1,177 +1,176 @@
 {% load static %}
 
 <style>
-/* ======= ESTILOS GENERALES ======= */
-.seccion-principal {
-    width: 90%;
-    max-width: 1200px;
-    margin: 30px auto;
-    font-family: "Poppins", sans-serif;
-    color: #333;
-}
+    /* ======= ESTILOS GENERALES ======= */
+    .seccion-principal {
+        width: 90%;
+        max-width: 1200px;
+        margin: 30px auto;
+        font-family: "Poppins", sans-serif;
+        color: #333;
+    }
 
-/* ======= ENCABEZADO ======= */
-.encabezado-pagina {
-    text-align: center;
-    margin-bottom: 25px;
-}
+    /* ======= ENCABEZADO ======= */
+    .encabezado-pagina {
+        text-align: center;
+        margin-bottom: 25px;
+    }
 
-.titulo-pagina {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #3f51b5;
-}
+    .titulo-pagina {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #3f51b5;
+    }
 
-.subtitulo-pagina {
-    font-size: 1rem;
-    color: #666;
-    margin-top: 5px;
-}
+    .subtitulo-pagina {
+        font-size: 1rem;
+        color: #666;
+        margin-top: 5px;
+    }
 
-/* ======= BARRA DE ACCIONES ======= */
-.barra-acciones {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.buscador {
-    position: relative;
-}
-
-.buscador i {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: #555;
-}
-
-.buscador input {
-    width: 250px;
-    padding: 10px 12px 10px 35px;
-    border-radius: 8px;
-    border: 1.5px solid #ccc;
-    transition: 0.3s;
-    font-size: 0.95rem;
-}
-
-.buscador input:focus {
-    outline: none;
-    border-color: #3f51b5;
-    box-shadow: 0 0 4px rgba(63, 81, 181, 0.3);
-}
-
-.contador-badge {
-    background: #3f51b5;
-    color: #fff;
-    padding: 8px 16px;
-    border-radius: 25px;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-weight: 600;
-}
-
-/* ======= TABLA ======= */
-.contenedor-tabla {
-    overflow-x: auto;
-    margin-top: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-thead {
-    background: #3f51b5;
-    color: white;
-}
-
-th, td {
-    padding: 13px;
-    text-align: center;
-    font-size: 0.95rem;
-}
-
-tbody tr:nth-child(even) {
-    background: #f5f5f5;
-}
-
-tbody tr:hover {
-    background: #e8eaf6;
-    transition: 0.2s;
-}
-
-/* ======= ESTADO VACÍO ======= */
-.estado-vacio {
-    text-align: center;
-    padding: 30px 0;
-}
-
-.icono-vacio i {
-    font-size: 3rem;
-    color: #c5cae9;
-}
-
-.estado-vacio h3 {
-    margin-top: 10px;
-    color: #3f51b5;
-}
-
-.estado-vacio p {
-    color: #777;
-    font-size: 0.9rem;
-}
-
-/* ======= BOTÓN VOLVER ======= */
-.volver {
-    margin: 25px auto;
-    width: 160px;
-    text-align: center;
-    background: #3f51b5;
-    color: white;
-    padding: 12px 0;
-    border-radius: 25px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-}
-
-.volver:hover {
-    background: #303f9f;
-    transform: translateY(-2px);
-}
-
-/* ======= RESPONSIVE ======= */
-@media (max-width: 768px) {
+    /* ======= BARRA DE ACCIONES ======= */
     .barra-acciones {
-        flex-direction: column;
-        gap: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .buscador {
+        position: relative;
+    }
+
+    .buscador i {
+        position: absolute;
+        top: 50%;
+        left: 10px;
+        transform: translateY(-50%);
+        color: #555;
     }
 
     .buscador input {
-        width: 100%;
+        width: 250px;
+        padding: 10px 12px 10px 35px;
+        border-radius: 8px;
+        border: 1.5px solid #ccc;
+        transition: 0.3s;
+        font-size: 0.95rem;
     }
-}
+
+    .buscador input:focus {
+        outline: none;
+        border-color: #3f51b5;
+        box-shadow: 0 0 4px rgba(63, 81, 181, 0.3);
+    }
+
+    .contador-badge {
+        background: #3f51b5;
+        color: #fff;
+        padding: 8px 16px;
+        border-radius: 25px;
+        font-size: 0.95rem;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-weight: 600;
+    }
+
+    /* ======= TABLA ======= */
+    .contenedor-tabla {
+        overflow-x: auto;
+        margin-top: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    thead {
+        background: #3f51b5;
+        color: white;
+    }
+
+    th, td {
+        padding: 13px;
+        text-align: center;
+        font-size: 0.95rem;
+    }
+
+    tbody tr:nth-child(even) {
+        background: #f5f5f5;
+    }
+
+    tbody tr:hover {
+        background: #e8eaf6;
+        transition: 0.2s;
+    }
+
+    /* ======= ESTADO VACÍO ======= */
+    .estado-vacio {
+        text-align: center;
+        padding: 30px 0;
+    }
+
+    .icono-vacio i {
+        font-size: 3rem;
+        color: #c5cae9;
+    }
+
+    .estado-vacio h3 {
+        margin-top: 10px;
+        color: #3f51b5;
+    }
+
+    .estado-vacio p {
+        color: #777;
+        font-size: 0.9rem;
+    }
+
+    /* ======= BOTÓN VOLVER ======= */
+    .volver {
+        margin: 25px auto;
+        width: 160px;
+        text-align: center;
+        background: #3f51b5;
+        color: white;
+        padding: 12px 0;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .volver:hover {
+        background: #303f9f;
+        transform: translateY(-2px);
+    }
+
+    /* ======= RESPONSIVE ======= */
+    @media (max-width: 768px) {
+        .barra-acciones {
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .buscador input {
+            width: 100%;
+        }
+    }
 </style>
 
 {% block content %}
 
-<div class="seccion-principal">
+    <div class="seccion-principal">
 
-    <div class="encabezado-pagina">
-        <h1 class="titulo-pagina">Lista de Estudiantes</h1>
-        <p class="subtitulo-pagina">Consulta todos los estudiantes registrados</p>
-    </div>
-
+        <div class="encabezado-pagina">
+            <h1 class="titulo-pagina">Lista de Estudiantes</h1>
+            <p class="subtitulo-pagina">Consulta todos los estudiantes registrados</p>
+        </div>
 
 
         <span class="contador-badge">
@@ -182,32 +181,28 @@ tbody tr:hover {
     <div class="contenedor-tabla">
         <table>
             <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Correo</th>
-                    <th>Dirección</th>
-                    <th>Teléfono</th>
-                    <th>Cédula</th>
-                    <th>Curso</th>
-                    <th>Materia</th>
-                </tr>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Cédula</th>
+                <th>Curso</th>
+            </tr>
             </thead>
 
             <tbody>
-                {% for e in estudiantes %}
+            {% for e in estudiantes %}
                 <tr>
                     <td>{{ e.nombre }}</td>
                     <td>{{ e.apellido }}</td>
-                    <td>{{ e.correo }}</td>
                     <td>{{ e.direccion }}</td>
                     <td>{{ e.telefono }}</td>
                     <td>{{ e.cedula }}</td>
                     <td>{{ e.curso }}</td>
-                    <td>{{ e.datos }}</td>
                 </tr>
 
-                {% empty %}
+            {% empty %}
                 <tr>
                     <td colspan="8">
                         <div class="estado-vacio">
@@ -219,15 +214,32 @@ tbody tr:hover {
                         </div>
                     </td>
                 </tr>
-                {% endfor %}
+            {% endfor %}
             </tbody>
         </table>
     </div>
 
-    <div class="volver" onclick="location.href='{% url 'app:inicio' %}'">
+    <div class="volver" onclick="location.href='{% url 'app:profesor' %}'">
         Volver
     </div>
 
-</div>
+    </div>
+    <script>
+        // Búsqueda en tiempo real
+        const inputBuscar = document.getElementById('buscar-estudiante');
+        const tabla = document.getElementById('tabla-estudiantes');
+        inputBuscar.addEventListener('input', function () {
+            const filtro = inputBuscar.value.toLowerCase();
+            for (let row of tabla.rows) {
+                let textoFila = row.textContent.toLowerCase();
+                row.style.display = textoFila.includes(filtro) ? '' : 'none';
+            }
+        });
 
+        // Resaltar fila al pasar el mouse
+        for (let row of tabla.rows) {
+            row.addEventListener('mouseover', () => row.style.backgroundColor = '#f1f1f1');
+            row.addEventListener('mouseout', () => row.style.backgroundColor = '');
+        }
+    </script>
 {% endblock %}
