@@ -307,13 +307,8 @@ class EvaluacionesForm(forms.ModelForm):
 
     def clean_materia(self):
         materia = self.cleaned_data.get("materia")
-
-        if not materia or materia.strip() == "":
-            raise forms.ValidationError("La materia no puede estar vacía.")
-
-        if len(materia) < 3:
-            raise forms.ValidationError("La materia debe tener al menos 3 caracteres.")
-
+        if not materia:
+            raise forms.ValidationError("Debe seleccionar una materia.")
         return materia
 
     def clean_periodo(self):

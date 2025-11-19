@@ -2,15 +2,277 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eliminar Evaluación</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ============================
+           FUENTE BONITA
+        ============================ */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ============================
+           CONTENEDOR PRINCIPAL
+        ============================ */
+        .contenedor-eliminar {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* ============================
+           TÍTULO
+        ============================ */
+        .titulo-eliminar {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            color: #e74c3c;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ============================
+           ALERTA DE ELIMINAR
+        ============================ */
+        .alerta-eliminar {
+            background: linear-gradient(135deg, #ffe2e2 0%, #ffd5d5 100%);
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid #ffb3b3;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .alerta-eliminar .icono-advertencia {
+            font-size: 4rem;
+            color: #e74c3c;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .alerta-eliminar p {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .info-evaluacion {
+            background: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .info-evaluacion .detalle {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 1rem;
+        }
+
+        .info-evaluacion .label {
+            font-weight: 600;
+            color: #7f8c8d;
+        }
+
+        .info-evaluacion .valor {
+            font-weight: 700;
+            color: #e74c3c;
+            font-size: 1.1rem;
+        }
+
+        .advertencia-texto {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #c0392b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* ============================
+           FORMULARIO Y BOTONES
+        ============================ */
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contenedor-botones {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .boton {
+            flex: 1;
+            padding: 15px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .btn-eliminar {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-eliminar:hover {
+            background: linear-gradient(135deg, #c0392b 0%, #a93226 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.5);
+        }
+
+        .btn-eliminar:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-cancelar {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(149, 165, 166, 0.3);
+        }
+
+        .btn-cancelar:hover {
+            background: linear-gradient(135deg, #7f8c8d 0%, #707b7c 100%);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(149, 165, 166, 0.5);
+        }
+
+        .btn-cancelar:active {
+            transform: translateY(-1px);
+        }
+
+        /* ============================
+           RESPONSIVE
+        ============================ */
+        @media (max-width: 768px) {
+            .contenedor-eliminar {
+                padding: 1.5rem;
+            }
+
+            .contenedor-botones {
+                flex-direction: column;
+            }
+
+            .titulo-eliminar {
+                font-size: 1.5rem;
+            }
+
+            .alerta-eliminar .icono-advertencia {
+                font-size: 3rem;
+            }
+
+            .info-evaluacion .detalle {
+                flex-direction: column;
+                gap: 5px;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h2 style="text-align:center;">Eliminar Evaluación</h2>
-    <p style="text-align:center;">¿Estás seguro de eliminar la evaluación de {{ evaluacion.Materia }} - {{ evaluacion.Periodo }}?</p>
-    <form method="post" style="text-align:center;">
-        {% csrf_token %}
-        <button type="submit">Sí, eliminar</button>
-        <a href="{% url 'app:evaluaciones_tabla' %}">Cancelar</a>
-    </form>
+    <div class="contenedor-eliminar">
+        <h2 class="titulo-eliminar">
+            <i class="fas fa-exclamation-circle"></i>
+            Eliminar Evaluación
+        </h2>
+
+        <div class="alerta-eliminar">
+            <div class="icono-advertencia">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+
+            <p>¿Estás seguro que deseas eliminar esta evaluación?</p>
+
+            <div class="info-evaluacion">
+                <div class="detalle">
+                    <span class="label">
+                        <i class="fas fa-book"></i> Materia:
+                    </span>
+                    <span class="valor">{{ evaluacion.Materia }}</span>
+                </div>
+                <div class="detalle">
+                    <span class="label">
+                        <i class="fas fa-calendar-alt"></i> Período:
+                    </span>
+                    <span class="valor">{{ evaluacion.Periodo }}</span>
+                </div>
+            </div>
+
+            <p class="advertencia-texto">
+                <i class="fas fa-info-circle"></i>
+                Esta acción eliminará permanentemente todos los datos de la evaluación.
+            </p>
+        </div>
+
+        <form method="post">
+            {% csrf_token %}
+            <div class="contenedor-botones">
+                <button type="submit" class="boton btn-eliminar">
+                    <i class="fas fa-trash-alt"></i>
+                    Sí, eliminar
+                </button>
+                <a href="{% url 'app:evaluaciones_tabla' %}" class="boton btn-cancelar">
+                    <i class="fas fa-times-circle"></i>
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>

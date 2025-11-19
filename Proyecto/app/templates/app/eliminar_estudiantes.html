@@ -3,6 +3,149 @@
 
 {% block content %}
 
+<style>
+    /* ============================
+   ESTILOS GENERALES
+============================ */
+.seccion-principal {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ============================
+   ENCABEZADO
+============================ */
+.encabezado-pagina {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-pagina {
+    font-size: 32px;
+    font-weight: 700;
+    color: #b11b1b; /* Rojo suave */
+    margin-bottom: 5px;
+}
+
+.subtitulo-pagina {
+    font-size: 16px;
+    color: #555;
+}
+
+/* ============================
+   TABLA
+============================ */
+.contenedor-tabla {
+    overflow-x: auto;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+thead {
+    background: #b11b1b;
+    color: white;
+}
+
+thead th {
+    padding: 14px;
+    font-size: 15px;
+    text-align: left;
+}
+
+tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+tbody tr:hover {
+    background: rgba(255, 230, 230, 0.6);
+}
+
+tbody td {
+    padding: 12px;
+    font-size: 14px;
+    color: #333;
+}
+
+/* ============================
+   BOTONES
+============================ */
+.boton-accion {
+    text-decoration: none;
+    color: #fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.3s;
+}
+
+/* Botón ELIMINAR */
+.boton-eliminar {
+    background: #d9534f;
+}
+
+.boton-eliminar:hover {
+    background: #b52b27;
+}
+
+/* ============================
+   ESTADO VACÍO
+============================ */
+.estado-vacio {
+    text-align: center;
+    padding: 25px 10px;
+}
+
+.estado-vacio .icono-vacio {
+    font-size: 40px;
+    color: #b11b1b;
+    margin-bottom: 10px;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 768px) {
+    table thead {
+        display: none;
+    }
+
+    table tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    table td {
+        display: flex;
+        justify-content: space-between;
+        padding: 8px 5px;
+        font-size: 14px;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        color: #b11b1b;
+    }
+}
+
+</style>
 <div class="seccion-principal">
 
     <div class="encabezado-pagina">

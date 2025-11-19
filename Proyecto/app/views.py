@@ -199,7 +199,7 @@ def editar_estudiantes(request):
     })
 
 
-def editar_estudiantes_detalle(request):
+def editar_estudiantes_detalle(request, id):
 
     estudiante = get_object_or_404(Estudiante, id=id)
     form = EstudianteForm(request.POST or None, instance=estudiante)

@@ -1,17 +1,115 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ accion }} Materia</title>
+
+    <style>
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 40px;
+        }
+
+        /* Contenedor principal */
+        .contenedor {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Títulos */
+        h1 {
+            text-align: center;
+            color: #2a3d66;
+            margin-bottom: 25px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        /* Inputs del form */
+        form p {
+            margin-bottom: 18px;
+            font-size: 16px;
+        }
+
+        form label {
+            font-weight: 600;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        form input:focus,
+        form select:focus {
+            border-color: #4A90E2;
+            box-shadow: 0 0 6px rgba(74,144,226,0.4);
+        }
+
+        /* Botón principal */
+        .boton-guardar {
+            width: 100%;
+            background: #4A90E2;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 15px;
+        }
+
+        .boton-guardar:hover {
+            background: #357ABD;
+        }
+
+        /* Botón volver */
+        .volver {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            color: #2a3d66;
+            transition: 0.3s;
+        }
+
+        .volver:hover {
+            color: #1a2b4d;
+        }
+    </style>
+
 </head>
 <body>
-     <h1>{{ accion }} Materia</h1>
-     <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">{{ accion }}</button>
-     </form>
-     <a href="{% url 'app:lista_materias' %}">Volver</a>
+
+<div class="contenedor">
+    <h1>{{ accion }} Materia</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" class="boton-guardar">{{ accion }}</button>
+    </form>
+
+    <a href="{% url 'app:lista_materias' %}" class="volver">Volver</a>
+</div>
 
 </body>
 </html>
