@@ -710,7 +710,7 @@
                                     <i class="fa-solid fa-list"></i>
                                     <span>Lista de Estudiantes</span>
                                 </a>
-                                <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:crear_estudiante'%}">
+                                <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:ver_pendiente'%}">
                                     <i class="fa-solid fa-user-plus"></i>
                                     <span>Agregar Estudiante</span>
                                 </a>
@@ -781,12 +781,7 @@
                         </details>
 
                     </li>
-                    <li>
-                        <a class="item-desplegable" href="#" id="crear5" data-url="{% url 'app:ver_pendiente'%}">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar registro</span>
-                                </a>
-                    </li>
+
                     <li>
                         <details class="desplegable">
                             <summary class="boton-desplegable">
@@ -900,10 +895,7 @@
         document.getElementById('lista3').onclick = function (){
         window.location.href = this.dataset.url
         }
-        document.getElementById('crear5').onclick = function (){
-        window.location.href = this.dataset.url
-        }
-
+        
         document.getElementById('lista1_profesor').onclick = function (){
         window.location.href = this.dataset.url
         }
