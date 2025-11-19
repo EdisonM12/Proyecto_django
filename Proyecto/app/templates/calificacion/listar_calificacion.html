@@ -20,21 +20,18 @@
         <th>Evaluación</th>
         <th>Nota</th>
         <th>Fecha</th>
-        <th>Acciones</th>
+
       </tr>
     </thead>
 
     <tbody>
-      {% for c in calificaciones %}
+      {% for c in calificacion %}
       <tr>
         <td>{{ c.estudiante }}</td>
         <td>{{ c.evaluacion }}</td>
         <td>{{ c.nota }}</td>
         <td>{{ c.fecha_registro }}</td>
-        <td>
-          <a href="{% url 'app:editar_calificacion' c.id %}" class="btn btn-warning btn-sm">Editar</a>
-          <a href="{% url 'app:eliminar_calificacion' c.id %}" class="btn btn-danger btn-sm">Eliminar</a>
-        </td>
+
       </tr>
       {% endfor %}
     </tbody>

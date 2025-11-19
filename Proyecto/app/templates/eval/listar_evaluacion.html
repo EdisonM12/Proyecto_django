@@ -15,9 +15,7 @@
 </head>
 <body>
     <h2 style="text-align:center;">Lista de Evaluaciones</h2>
-    <div style="text-align:center; margin-bottom:10px;">
-        <a href="{% url 'app:crear_evaluaciones' %}" class="button create">Crear Nueva</a>
-    </div>
+
     <table>
         <thead>
             <tr>
@@ -27,7 +25,6 @@
                 <th>Pendiente</th>
                 <th>Archivo</th>
 
-                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -43,12 +40,7 @@
                      {% else %}
                            Sin PDF
                       {% endif %}
-                     </td>
-                <td>
-                    <a href="{% url 'app:actualizar_evaluaciones' ev.id %}" class="button edit">Editar</a>
-                    <a href="{% url 'app:eliminar_evaluaciones' ev.id %}" class="button delete">Eliminar</a>
-                </td>
-            </tr>
+
             {% empty %}
             <tr>
                 <td colspan="5">No hay evaluaciones</td>

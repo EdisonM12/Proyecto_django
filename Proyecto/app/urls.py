@@ -51,16 +51,28 @@ urlpatterns = [
     path("estudiantes/eliminar/<int:id>/", views.eliminar_estudiantes_detalle, name="eliminar_estudiantes_detalle"),
 
 
-    path('evaluacione/', views.list_evaluacion, name= 'evaluaciones_tabla' ),
-    path('evaluaciones/nuevo/', views.crear_evaluaciones, name='crear_evaluaciones'),
-    path('evaluaciones/<int:id>/editar/', views.actualizar_Evaluacion, name='actualizar_evaluaciones'),
-    path('evaluaciones/<int:id>/eliminar/', views.eliminar_evalu, name='eliminar_evaluaciones'),
+#evaluaciones
+    path('evaluacion/nuevo/', views.crear_evaluacion, name='crear_evaluacion'),
 
-    path("listar_calificaciones/", views.listar_calificaciones, name="listar_calificaciones"),
-    path("crear_calificacion/", views.crear_calificacion, name="crear_calificacion"),
-    path("editar_calificacion/<int:id>/", views.editar_calificacion, name="editar_calificacion"),
-    path("eliminar_calificacion/<int:id>/", views.eliminar_calificacion, name="eliminar_calificacion"),
+    path("evaluacion/listar/", views.listar_evaluacion, name="listar_evaluacion"),
 
+    path("evaluacion/editar/", views.editar_evaluacion, name="editar_evaluacion"),
+    path("evaluacion/editar/<str:token>/", views.editar_evaluacion_detalle, name="editar_evaluacion_detalle"),
+
+    path("evaluacion/eliminar/", views.eliminar_evaluacion, name="eliminar_evaluacion"),
+    path("evaluacion/eliminar/<str:token>/", views.eliminar_evaluacion_detalle, name="eliminar_evaluacion_detalle"),
+
+    #path("listar_calificaciones/", views., name="listar_calificaciones"),
+   #calificacion
+    path('calificacion/nuevo/', views.crear_calificacion, name='crear_calificacion'),
+
+    path("calificacion/listar/", views.listar_calificacion, name="listar_calificacion"),
+
+    path("calificacion/editar/", views.editar_calificacion, name="editar_calificacion"),
+    path("calificacion/editar/<str:token>/", views.editar_calificacion_detalle, name="editar_calificacion_detalle"),
+
+    path("calificacion/eliminar/", views.eliminar_calificacion, name="eliminar_calificacion"),
+    path("calificacion/eliminar/<str:token>/", views.eliminar_calificacion_detalle, name="eliminar_calificacion_detalle"),
 #MATERIA
     path('materias/', views.lista_materias, name='lista_materias'),
     path('materias/crear/', views.crear_materia, name='crear_materia'),
