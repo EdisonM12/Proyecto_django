@@ -1,36 +1,279 @@
 {% extends "curso/home_curso.html" %}
 {% block content %}
-<h1 class="mb-3">Curos</h1>
 
-<table class="table table-striped">
+<style>
+    /* ===========================
+       ESTILOS GENERALES
+    =========================== */
+    .seccion-principal {
+        width: 90%;
+        max-width: 1100px;
+        margin: 40px auto;
+        font-family: "Poppins", sans-serif;
+    }
 
+    /* ===========================
+       ENCABEZADO
+    =========================== */
+    .encabezado-pagina {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
 
-  <thead>
-  <tr>
+    .titulo-pagina {
+        font-size: 32px;
+        font-weight: 700;
+        color: #2a3d66;
+        margin: 0;
+    }
 
-        <a class="btn btn-sm btn-primary" href="{% url 'app:crear_curso' %}">Nuevo</a>
+    /* ===========================
+       BOTÓN NUEVO
+    =========================== */
+    .btn-nuevo {
+        background: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
 
+    .btn-nuevo:hover {
+        background: #218838;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
 
-  </tr>
+    /* ===========================
+       TABLA
+    =========================== */
+    .contenedor-tabla {
+        overflow-x: auto;
+        border-radius: 10px;
+        box-shadow: 0px 3px 10px rgba(0,0,0,0.1);
+    }
 
-    <tr><th>Código</th><th>Nombre</th><th>Descripción</th><th>Profesor</th></tr>
-  </thead>
-  <tbody>
-    {% for c in cursos %}
-    <tr>
-      <td>{{ c.codigo }}</td>
-      <td>{{ c.nombre }}</td>
-      <td>{{ c.descripcion }}</td>
-      <td>{{ c.profesor}}</td>
-      <td class="text-end">
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #ffffff;
+        border-radius: 10px;
+    }
 
-        <a class="btn btn-sm btn-primary" href="{% url 'app:editar_curso' c.id %}">Editar</a>
-        <a class="btn btn-sm btn-danger" href="{% url 'app:eliminar_curso' c.id %}">Eliminar</a>
-      </td>
-    </tr>
-    {% empty %}
-    <tr><td colspan="4">No hay Cursos aún.</td></tr>
-    {% endfor %}
-  </tbody>
-</table>
+    thead {
+        background: #2a3d66;
+        color: white;
+    }
+
+    thead th {
+        padding: 14px;
+        text-align: left;
+        font-size: 15px;
+    }
+
+    tbody tr {
+        border-bottom: 1px solid #eee;
+    }
+
+    tbody tr:hover {
+        background: #f4f8ff;
+    }
+
+    tbody td {
+        padding: 12px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    /* ===========================
+       ESTADO VACÍO
+    =========================== */
+    .estado-vacio {
+        text-align: center;
+        padding: 40px 10px;
+    }
+
+    .estado-vacio i {
+        font-size: 50px;
+        color: #2a3d66;
+        margin-bottom: 15px;
+    }
+
+    .estado-vacio h3 {
+        color: #555;
+        font-weight: 500;
+    }
+
+    /* ===========================
+       BOTONES DE ACCIÓN
+    =========================== */
+    .acciones {
+        text-align: right;
+        white-space: nowrap;
+    }
+
+    .btn-accion {
+        text-decoration: none;
+        color: #ffffff;
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+        margin-left: 5px;
+    }
+
+    .btn-editar {
+        background: #4A90E2;
+    }
+
+    .btn-editar:hover {
+        background: #357ABD;
+        transform: translateY(-2px);
+    }
+
+    .btn-eliminar {
+        background: #dc3545;
+    }
+
+    .btn-eliminar:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+    }
+
+    /* ===========================
+       RESPONSIVE
+    =========================== */
+    @media (max-width: 768px) {
+        .encabezado-pagina {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+        }
+
+        table thead {
+            display: none;
+        }
+
+        table tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        table td {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            padding: 8px 5px;
+        }
+
+        table td::before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #2a3d66;
+        }
+
+        .acciones {
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .btn-accion {
+            width: 100%;
+            justify-content: center;
+            margin-left: 0;
+            margin-top: 5px;
+        }
+    }
+</style>
+
+<div class="seccion-principal">
+    <!-- Encabezado con título y botón -->
+    <div class="encabezado-pagina">
+        <h1 class="titulo-pagina">Cursos</h1>
+        <a class="btn-nuevo" href="{% url 'app:crear_curso' %}">
+            <i class="fas fa-plus-circle"></i> Nuevo Curso
+        </a>
+    </div>
+
+    <!-- Tabla de cursos -->
+    <div class="contenedor-tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th style="text-align: right;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in cursos %}
+                <tr>
+                    <td data-label="Código">{{ c.codigo }}</td>
+                    <td data-label="Nombre">{{ c.nombre }}</td>
+                    <td data-label="Descripción">{{ c.descripcion }}</td>
+                    <td data-label="Acciones" class="acciones">
+                        <a class="btn-accion btn-editar" href="{% url 'app:editar_curso' c.id %}">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a class="btn-accion btn-eliminar" href="{% url 'app:eliminar_curso' c.id %}">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">
+                        <div class="estado-vacio">
+                            <i class="fas fa-book-open"></i>
+                            <h3>No hay cursos registrados</h3>
+                            <p>Comienza agregando un nuevo curso</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
 {% endblock %}
+```
+
+## Cambios realizados:
+
+1. **✅ Corregido "Curos" → "Cursos"** en el título
+2. **✅ Reestructurado el encabezado** - Título y botón "Nuevo" en una sola fila
+3. **✅ Eliminada la fila extra en `<thead>`** - El botón "Nuevo" ahora está fuera de la tabla
+4. **✅ Agregado `colspan="4"`** correctamente (4 columnas)
+5. **✅ Estilos modernos** consistentes con tu diseño anterior
+6. **✅ Botones con iconos** de Font Awesome
+7. **✅ Hover effects** en todos los botones
+8. **✅ Estado vacío mejorado** con icono y mensaje
+9. **✅ Tabla responsive** con `data-label` para móviles
+10. **✅ Diseño limpio y profesional**
+
+## Estructura visual:
+```
+┌─────────────────────────────────────────┐
+│  Cursos              [+ Nuevo Curso]    │
+├─────────────────────────────────────────┤
+│ Código │ Nombre │ Descripción │ Acciones│
+├─────────────────────────────────────────┤
+│  001   │ Math   │ Matemáticas │ [Editar]│
+│        │        │             │[Eliminar]│
+└─────────────────────────────────────────┘

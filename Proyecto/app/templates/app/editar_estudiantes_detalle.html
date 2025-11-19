@@ -3,6 +3,130 @@
 
 {% block content %}
 
+<style>
+    /* ============================
+   ESTILOS GENERALES
+============================ */
+.seccion-principal {
+    width: 90%;
+    max-width: 900px;
+    margin: 40px auto;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ============================
+   ENCABEZADO
+============================ */
+.encabezado-pagina {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.titulo-pagina {
+    font-size: 28px;
+    font-weight: 700;
+    color: #2a3d66;
+    margin-bottom: 5px;
+}
+
+.subtitulo-pagina {
+    font-size: 15px;
+    color: #555;
+}
+
+/* ============================
+   FORMULARIO
+============================ */
+.contenedor-tabla {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+}
+
+form p {
+    font-size: 15px;
+    margin-bottom: 18px;
+    color: #333;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="number"],
+input[type="email"],
+select,
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #4A90E2;
+    box-shadow: 0 0 5px rgba(74,144,226,0.4);
+}
+
+/* ============================
+   BOTONES
+============================ */
+.boton {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.3s;
+    border: none;
+}
+
+/* Botón Guardar */
+.boton-primario {
+    background: #4A90E2;
+    color: white;
+}
+
+.boton-primario:hover {
+    background: #357ABD;
+}
+
+/* Botón Cancelar */
+.boton-eliminar {
+    background: #bbb;
+    color: white;
+}
+
+.boton-eliminar:hover {
+    background: #999;
+}
+
+/* ============================
+   RESPONSIVE
+============================ */
+@media (max-width: 768px) {
+    .seccion-principal {
+        width: 95%;
+    }
+
+    .contenedor-tabla {
+        padding: 20px;
+    }
+
+    .titulo-pagina {
+        font-size: 24px;
+    }
+}
+
+</style>
 <div class="seccion-principal">
 
     <div class="encabezado-pagina">
@@ -21,7 +145,7 @@
                 <i class="fas fa-save"></i> Guardar
             </button>
 
-            <a href="{% url 'app:editar_estudiantes' e.token %}"
+            <a href="{% url 'app:editar_estudiantes' %}"
                class="boton boton-accion boton-eliminar" style="background: var(--gris);">
                 Cancelar
             </a>
