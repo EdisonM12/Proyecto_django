@@ -1,0 +1,119 @@
+{% load signing_tags %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Materias</title>
+
+    <style>
+        /* ============================
+           ESTILOS GENERALES
+        ============================ */
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2a3d66;
+            margin-bottom: 25px;
+        }
+
+        /* ============================
+           LISTA DE MATERIAS
+        ============================ */
+        .materia-lista {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .materia-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .materia-item:last-child {
+            border-bottom: none;
+        }
+
+        .materia-info {
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* ============================
+           BOTONES
+        ============================ */
+        .acciones a {
+            text-decoration: none;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+            margin-left: 8px;
+            color: white;
+        }
+
+        .editar {
+            background: #4A90E2;
+        }
+        .editar:hover {
+            background: #357ABD;
+        }
+
+        .eliminar {
+            background: #d9534f;
+        }
+        .eliminar:hover {
+            background: #b52b27;
+        }
+
+        /* ============================
+           ESTADO VACÍO
+        ============================ */
+        .vacio {
+            text-align: center;
+            padding: 15px;
+            color: #777;
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>Materias</h1>
+
+<div class="materia-lista">
+
+    {% for m in materia %}
+        <div class="materia-item">
+            <div class="materia-info">
+                {{ m.nombre }} — <strong>{{ m.profesor.nombre }}</strong>
+            </div>
+
+            <div class="acciones">
+                <a href="{% url 'app:editar_materia_detalle' m.id|sign %}" class="editar">Editar</a>
+
+            </div>
+        </div>
+
+    {% empty %}
+        <p class="vacio">No hay materias registradas.</p>
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

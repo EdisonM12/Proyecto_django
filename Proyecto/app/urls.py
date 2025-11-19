@@ -19,8 +19,8 @@ urlpatterns = [
     path("profesores/nuevo/", views.crear_profesor, name="crear_profesor"),
     path("profesores/editar/", views.editar_profesor, name="editar_profesor"),
     path("profesores/eliminar/", views.eliminar_profesor, name="eliminar_profesor"),
-    path("profesores/<int:id>/editar/", views.editar_profesor_detalle, name="editar_profesor_detalle"),
-    path("profesores/<int:id>/eliminar/", views.eliminar_profesor_detalle, name="eliminar_profesor_detalle"),
+    path("profesores/<str:token>/editar/", views.editar_profesor_detalle, name="editar_profesor_detalle"),
+    path("profesores/<str:token>/eliminar/", views.eliminar_profesor_detalle, name="eliminar_profesor_detalle"),
     path('', views.home, name='home'),  # página de login
 
 
@@ -44,11 +44,11 @@ urlpatterns = [
 
 
     path("estudiantes/editar/", views.editar_estudiantes, name="editar_estudiantes"),
-    path("estudiantes/editar/<int:id>/", views.editar_estudiantes_detalle, name="editar_estudiantes_detalle"),
+    path("estudiantes/editar/<str:token>/", views.editar_estudiantes_detalle, name="editar_estudiantes_detalle"),
 
 
     path("estudiantes/eliminar/", views.eliminar_estudiantes, name="eliminar_estudiantes"),
-    path("estudiantes/eliminar/<int:id>/", views.eliminar_estudiantes_detalle, name="eliminar_estudiantes_detalle"),
+    path("estudiantes/eliminar/<str:token>/", views.eliminar_estudiantes_detalle, name="eliminar_estudiantes_detalle"),
 
 
 #evaluaciones
@@ -74,10 +74,15 @@ urlpatterns = [
     path("calificacion/eliminar/", views.eliminar_calificacion, name="eliminar_calificacion"),
     path("calificacion/eliminar/<str:token>/", views.eliminar_calificacion_detalle, name="eliminar_calificacion_detalle"),
 #MATERIA
-    path('materias/', views.lista_materias, name='lista_materias'),
-    path('materias/crear/', views.crear_materia, name='crear_materia'),
-    path('materias/editar/<int:pk>/', views.editar_materia, name='editar_materia'),
-    path('materias/eliminar/<int:pk>/', views.eliminar_materia, name='eliminar_materia'),
+    path('materia/nuevo/', views.crear_materia, name='crear_materia'),
+
+    path("materia/listar/", views.listar_materia, name="listar_materia"),
+
+    path("materia/editar/", views.editar_materia, name="editar_materia"),
+    path("materia/editar/<str:token>/", views.editar_materia_detalle, name="editar_materia_detalle"),
+
+    path("materia/eliminar/", views.eliminar_materia, name="eliminar_materia"),
+    path("materia/eliminar/<str:token>/", views.eliminar_materia_detalle, name="eliminar_materia_detalle"),
 
 ]
 

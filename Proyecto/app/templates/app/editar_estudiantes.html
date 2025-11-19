@@ -1,4 +1,4 @@
-
+{% load signing_tags %}
 {% load static %}
 
 {% block content %}
@@ -172,7 +172,7 @@ tbody td {
                     <td>{{ e.curso }}</td>
 
                     <td class="acciones">
-                        <a href="{% url 'app:editar_estudiantes_detalle' e.id %}"
+                        <a href="{% url 'app:editar_estudiantes_detalle' e.id|sign %}"
                            class="boton-accion boton-editar">
                             <i class="fas fa-edit"></i> Editar
                         </a>

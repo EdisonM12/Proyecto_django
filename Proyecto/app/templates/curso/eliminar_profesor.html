@@ -1,4 +1,4 @@
-
+{% load signing_tags %}
 {% load static %}
 
 {% block content %}
@@ -26,7 +26,7 @@
             <td>{{ p.fecha_nacimiento }}</td>
             <td>{{ p.materia }}</td>
             <td>
-                <a class="btn btn-sm btn-danger" href="{% url 'app:eliminar_profesor_detalle' p.id %}">Eliminar</a>
+                <a class="btn btn-sm btn-danger" href="{% url 'app:eliminar_profesor_detalle' p.id|sign  %}">Eliminar</a>
             </td>
         </tr>
         {% empty %}

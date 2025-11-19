@@ -201,9 +201,13 @@ def editar_estudiantes(request):
     })
 
 
-def editar_estudiantes_detalle(request, id):
+def editar_estudiantes_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
 
-    estudiante = get_object_or_404(Estudiante, id=id)
+    estudiante = get_object_or_404(Estudiante, id=id_real)
     form = EstudianteForm(request.POST or None, instance=estudiante)
 
     if form.is_valid():
@@ -217,13 +221,20 @@ def editar_estudiantes_detalle(request, id):
 
 
 
+
+
+
 def eliminar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
     return render(request, "app/eliminar_estudiantes.html", {
         "estudiantes": estudiantes
     })
-def eliminar_estudiantes_detalle(request, id):
-    estudiante = get_object_or_404(Estudiante, id=id)
+def eliminar_estudiantes_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    estudiante = get_object_or_404(Estudiante, id=id_real)
 
     if request.method == "POST":
         estudiante.delete()
@@ -304,8 +315,12 @@ def editar_profesor(request):
     profesores = Profesor.objects.all()
     return render(request, "curso/editar_profesor.html", {"profesores": profesores})
 
-def editar_profesor_detalle(request, id):
-    profesor = get_object_or_404(Profesor, id=id)
+def editar_profesor_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    profesor = get_object_or_404(Profesor, id=id_real)
     form = ProfesorForm(request.POST or None, instance=profesor)
     if form.is_valid():
         form.save()
@@ -316,8 +331,12 @@ def editar_profesor_detalle(request, id):
 def eliminar_profesor(request):
     profesores = Profesor.objects.all()
     return render(request, "curso/eliminar_profesor.html", {"profesores": profesores})
-def eliminar_profesor_detalle(request, id):
-    profesor = get_object_or_404(Profesor, id=id)
+def eliminar_profesor_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    profesor = get_object_or_404(Profesor, id=id_real)
     if request.method == "POST":
         profesor.delete()
         return redirect("app:eliminar_profesor")  # vuelve a la lista de eliminar
@@ -434,37 +453,58 @@ def eliminar_calificacion_detalle(request, token):
 #CRUD DE MATERIAS
 
 # LISTAR todas las materias
-def lista_materias(request):
+def listar_materia(request):
     materias = Materia.objects.all()
-    return render(request, 'app/materia_list.html', {'materias': materias})
+    return render(request, 'app/listar_materia.html', {'materias': materias})
 
 # CREAR una nueva materia
 def crear_materia(request):
-    if request.method == 'POST':
-        form = MateriaForm(request.POST)
+    if request.method == "POST":
+        form = MateriaForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('app:lista_materias')
+            return redirect("app:crear_materia")
     else:
         form = MateriaForm()
-    return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Crear'})
+    return render(request, "app/crear_materia.html", {"form": form, "accion": "Crear"})
 
-# EDITAR una materia existente
-def editar_materia(request, pk):
-    materia = get_object_or_404(Materia, pk=pk)
-    if request.method == 'POST':
-        form = MateriaForm(request.POST, instance=materia)
-        if form.is_valid():
-            form.save()
-            return redirect('app:lista_materias')
-    else:
-        form = MateriaForm(instance=materia)
-    return render(request, 'app/materia_form.html', {'form': form, 'accion': 'Editar'})
+def editar_materia(request):
+    materia = Materia.objects.all()
+    return render(request, "app/editar_materia.html", {"materia": materia})
 
-# ELIMINAR una materia
-def eliminar_materia(request, pk):
-    materia = get_object_or_404(Materia, pk=pk)
-    if request.method == 'POST':
+
+def eliminar_materia(request):
+
+    materia = Materia.objects.all()
+    return render(request, "app/eliminar_materia.html", {"materia": materia})
+def editar_materia_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    materia = get_object_or_404(Materia, id=id_real)
+    form = MateriaForm(request.POST or None, instance=materia)
+
+    if form.is_valid():
+        form.save()
+        return redirect("app:editar_materia")  # vuelve a la lista de edición
+
+    return render(
+        request,
+        "app/editar_materia_detalle.html",
+        {
+            "form": form,
+            "materia": materia
+        }
+    )
+def eliminar_materia_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    materia = get_object_or_404(Materia, id=id_real)
+    if request.method == "POST":
         materia.delete()
-        return redirect('app:lista_materias')
-    return render(request, 'app/delete_materia.html', {'materia': materia})
+        return redirect("app:eliminar_materia")  # vuelve a la lista de eliminar
+    return render(request, "app/eliminar_materia_detalle.html", {"materia": materia})
+

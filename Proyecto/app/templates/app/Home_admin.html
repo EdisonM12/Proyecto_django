@@ -761,7 +761,7 @@
                                 <i class="fa-solid fa-chevron-down"></i>
                             </summary>
                             <div class="menu-desplegable" >
-                                <a href="#" class="item-desplegable" id="lista3" data-url="{% url 'app:lista_materias'%}">
+                                <a href="#" class="item-desplegable" id="lista3" data-url="{% url 'app:listar_materia'%}">
                                     <i class="fa-solid fa-list"></i>
                                     <span>Lista de Materia</span>
                                 </a>
@@ -769,11 +769,11 @@
                                     <i class="fa-solid fa-user-plus"></i>
                                     <span>Agregar Materia</span>
                                 </a>
-                                <a href="#" class="item-desplegable">
+                                <a class="item-desplegable" href="#" id="editar3" data-url="{% url 'app:editar_materia'%}">
                                     <i class="fa-solid fa-chart-simple"></i>
                                     <span>Editar Materia</span>
                                 </a>
-                                <a href="#" class="item-desplegable">
+                                <a class="item-desplegable" href="#" id="eliminar3" data-url="{% url 'app:eliminar_materia'%}">
                                     <i class="fa-solid fa-graduation-cap"></i>
                                     <span>Eliminar Materia</span>
                                 </a>
@@ -914,6 +914,12 @@
         window.location.href = this.dataset.url
         }
         document.getElementById('eliminar1').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('editar3').onclick = function (){
+        window.location.href = this.dataset.url
+        }
+        document.getElementById('eliminar3').onclick = function (){
         window.location.href = this.dataset.url
         }
 

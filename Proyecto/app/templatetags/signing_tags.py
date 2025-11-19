@@ -1,3 +1,4 @@
+# app/templatetags/signing_tags.py
 from django import template
 from django.core import signing
 

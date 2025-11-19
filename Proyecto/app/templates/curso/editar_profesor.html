@@ -1,3 +1,4 @@
+{% load signing_tags %}
 {% load static %}
 <link rel="stylesheet" href="{% static 'css/editar_profesor.css' %}">
 
@@ -24,7 +25,7 @@
                 <td>{{ p.correo }}</td>
                 <td>{{ p.materia }}</td>
                 <td>
-                    <a class="btn btn-primary" href="{% url 'app:editar_profesor_detalle' p.id %}">Editar</a>
+                    <a class="btn btn-primary" href="{% url 'app:editar_profesor_detalle' p.id|sign  %}">Editar</a>
                 </td>
             </tr>
             {% empty %}

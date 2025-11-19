@@ -1,4 +1,4 @@
-
+{% load signing_tags %}
 {% load static %}
 
 {% block content %}
@@ -178,7 +178,7 @@ tbody td {
                     <td>{{ e.datos }}</td>
 
                     <td class="acciones">
-                        <a href="{% url 'app:eliminar_estudiantes_detalle' e.id %}"
+                        <a href="{% url 'app:eliminar_estudiantes_detalle' e.id|sign %}"
                            class="boton-accion boton-eliminar">
                             <i class="fas fa-trash"></i> Eliminar
                         </a>

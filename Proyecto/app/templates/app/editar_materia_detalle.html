@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Materia</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #eef2f7;
+            margin: 0;
+            padding: 0;
+            color: #2c3e50;
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            color: #34495e;
+            margin-top: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contenedor {
+            max-width: 600px;
+            margin: 80px auto;
+            background: #ffffff;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 35px rgba(0,0,0,0.08);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .contenedor-botones {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .boton {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-guardar {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-guardar:hover {
+            background: #1e8449;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .btn-cancelar {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-cancelar:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .contenedor {
+                margin: 20px;
+                padding: 1.5rem;
+            }
+
+            .contenedor-botones {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .errorlist {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin: -10px 0 10px 0;
+            list-style: none;
+            padding-left: 0;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>Editar Materia</h1>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <div>
+                <label for="id_nombre">Nombre de la materia</label>
+                {{ form.nombre }}
+                {% if form.nombre.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.nombre.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div>
+                <label for="id_profesor">Profesor</label>
+                {{ form.profesor }}
+                {% if form.profesor.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.profesor.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+
+            <div class="contenedor-botones">
+                <button type="submit" class="boton btn-guardar">
+                    <i class="fas fa-save"></i>
+                    Guardar cambios
+                </button>
+                <a href="{% url 'app:editar_materia' %}" class="boton btn-cancelar">
+                    <i class="fas fa-times"></i>
+                    Cancelar
+                </a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
