@@ -84,5 +84,13 @@ urlpatterns = [
     path("materia/eliminar/", views.eliminar_materia, name="eliminar_materia"),
     path("materia/eliminar/<str:token>/", views.eliminar_materia_detalle, name="eliminar_materia_detalle"),
 
+
+    #estudiante
+    path('perfil/', views.perfil_estudiante, name= 'perfil'),
+    path('notas_estudiante/', views.views_notas, name='notas_estudiante'),
+    path('ver_evaluaciones/', views.ver_evaluaciones, name = 'evaluaciones_ver')
+
 ]
 
+
+#estudiante

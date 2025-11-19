@@ -121,10 +121,13 @@ class ProfesorForm(forms.ModelForm):
         if "." not in correo:
             raise forms.ValidationError("El correo debe contener un dominio válido (ejemplo: .com)")
 
+        # Verificar unicidad
+        qs = self.Meta.model.objects.filter(correo=correo)
         if self.instance.pk:
-            qs = qs.exclude(pk=self.instance.pk)
-            if qs.exists():
-                raise forms.ValidationError("Este correo ya está registrado")
+            qs = qs.exclude(pk=self.instance.pk)  # Excluir el registro actual si estamos editando
+
+        if qs.exists():
+            raise forms.ValidationError("Este correo ya está registrado")
 
         return correo
 

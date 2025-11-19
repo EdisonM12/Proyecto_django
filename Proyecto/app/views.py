@@ -59,6 +59,50 @@ def login_estudiante(request):
         'form_login': form_login,
         'form_registro': form_registro
     })
+def perfil_estudiante(request):
+    estudiante_id = request.session.get("estudiante_id")
+
+    if not estudiante_id:
+        return redirect("app:Estudiante_login")
+
+    estudiante = Estudiante.objects.get(id=estudiante_id)
+
+    return render(request, "estudiante/perfil.html", {"estudiante": estudiante})
+
+def views_notas(request):
+    estudiante_id = request.session.get("estudiante_id")
+
+    if not estudiante_id:
+        return redirect("app:Estudiante_login")
+
+    estudiante = Estudiante.objects.get(id=estudiante_id)
+
+    calificaciones = estudiante.calificaciones.select_related(
+        "evaluacion__materia"
+    )
+
+    return render(request, "estudiante/notas.html", {
+        "calificaciones": calificaciones,
+        "estudiante": estudiante
+    })
+
+def ver_evaluaciones(request):
+    estudiante_id = request.session.get("estudiante_id")
+
+    if not estudiante_id:
+        return redirect("app:Estudiante_login")
+
+    estudiante = Estudiante.objects.select_related("curso").get(id=estudiante_id)
+
+    # Filtramos evaluaciones por el curso del estudiante
+    evaluaciones = Evaluaciones.objects.filter(curso=estudiante.curso).select_related("materia")
+
+    return render(request, "estudiante/ver_evaluaciones.html", {
+        "estudiante": estudiante,
+        "evaluaciones": evaluaciones
+    })
+
+
 
 
 def ver_pendientes(request):
@@ -307,7 +351,7 @@ def crear_profesor(request):
         form = ProfesorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("app:listar_profesor")
+            return redirect("app:listar_profesores")
     return render(request, "curso/crear_profesor.html", {"form": form})
 
 # EDITAR PROFESOR
@@ -354,7 +398,7 @@ def crear_evaluacion(request):
         form = EvaluacionesForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("app:crear_evaluaciones")
+            return redirect("app:crear_evaluacion")
     else:
         form = EvaluacionesForm()
     return render(request, "eval/crear_evaluacion.html", {"form": form, "accion": "Crear"})
@@ -386,7 +430,7 @@ def eliminar_evaluacion_detalle(request, token):
     evaluacion = get_object_or_404(Evaluaciones, id=id_real)
     if request.method == "POST":
         evaluacion.delete()
-        return redirect("app:eliminar_evaluaciones")  # vuelve a la lista de eliminar
+        return redirect("app:eliminar_evaluacion")  # vuelve a la lista de eliminar
     return render(request, "eval/eliminar_evaluacion_detalle.html", {"evaluacion": evaluacion})
 
 
@@ -402,7 +446,7 @@ def crear_calificacion(request):
         form = CalificacionForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect("app:crear_calificacion")
+            return redirect("app:listar_calificacion")
     else:
         form = CalificacionForm()
     return render(request, "calificacion/crear_calificacion.html", {"form": form, "accion": "Crear"})
@@ -507,4 +551,5 @@ def eliminar_materia_detalle(request, token):
         materia.delete()
         return redirect("app:eliminar_materia")  # vuelve a la lista de eliminar
     return render(request, "app/eliminar_materia_detalle.html", {"materia": materia})
+
 

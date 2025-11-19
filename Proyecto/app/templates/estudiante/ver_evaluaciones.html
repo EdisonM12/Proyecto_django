@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluaciones del Curso</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ==========================
+           FUENTE Y ESTILOS GENERALES
+        ========================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        /* ==========================
+           CONTENEDOR PRINCIPAL
+        ========================== */
+        .seccion-evaluaciones {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ==========================
+           ENCABEZADO
+        ========================== */
+        .encabezado {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            text-align: center;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .encabezado .icono-curso {
+            font-size: 3.5rem;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .encabezado h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .encabezado .nombre-curso {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        /* ==========================
+           CONTENEDOR DE TABLA
+        ========================== */
+        .contenedor-tabla {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            animation: slideUp 0.8s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================
+           TABLA
+        ========================== */
+        .tabla-evaluaciones {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .tabla-evaluaciones thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tabla-evaluaciones th {
+            padding: 18px 15px;
+            font-size: 15px;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .tabla-evaluaciones td {
+            padding: 16px 15px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .tabla-evaluaciones tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .tabla-evaluaciones tbody tr:hover {
+            background: linear-gradient(90deg, #f0f4ff 0%, #e8f0ff 100%);
+            transform: scale(1.01);
+        }
+
+        .tabla-evaluaciones tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        /* ==========================
+           MATERIA CON ICONO
+        ========================== */
+        .materia-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .materia-cell i {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .materia-nombre {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        /* ==========================
+           PERÍODO CON BADGE
+        ========================== */
+        .periodo-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1565c0;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* ==========================
+           ESTADO PENDIENTE
+        ========================== */
+        .estado-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .estado-pendiente {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            color: #e65100;
+        }
+
+        .estado-completado {
+            background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+            color: #2e7d32;
+        }
+
+        /* ==========================
+           BOTÓN DE ARCHIVO
+        ========================== */
+        .btn-archivo {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-archivo:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .no-disponible {
+            color: #999;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .no-disponible i {
+            color: #ccc;
+        }
+
+        /* ==========================
+           ESTADO VACÍO
+        ========================== */
+        .estado-vacio {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .estado-vacio i {
+            font-size: 5rem;
+            color: #ddd;
+            margin-bottom: 20px;
+        }
+
+        .estado-vacio h3 {
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .estado-vacio p {
+            color: #999;
+            font-size: 1rem;
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 768px) {
+            .encabezado h2 {
+                font-size: 1.5rem;
+            }
+
+            .encabezado .icono-curso {
+                font-size: 2.5rem;
+            }
+
+            .tabla-evaluaciones thead {
+                display: none;
+            }
+
+            .tabla-evaluaciones tbody tr {
+                display: block;
+                margin-bottom: 20px;
+                background: #fff;
+                border-radius: 15px;
+                padding: 15px;
+                box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+            }
+
+            .tabla-evaluaciones td {
+                display: flex;
+                justify-content: space-between;
+                padding: 12px 0;
+                border-bottom: 1px solid #f0f0f0;
+            }
+
+            .tabla-evaluaciones td:last-child {
+                border-bottom: none;
+            }
+
+            .tabla-evaluaciones td::before {
+                content: attr(data-label);
+                font-weight: 700;
+                color: #667eea;
+                text-transform: uppercase;
+                font-size: 0.85rem;
+            }
+
+            .materia-cell {
+                flex-direction: column;
+                align-items: flex-end;
+                text-align: right;
+            }
+
+            .btn-archivo {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="seccion-evaluaciones">
+        <!-- Encabezado -->
+        <div class="encabezado">
+            <div class="icono-curso">
+                <i class="fas fa-chalkboard-teacher"></i>
+            </div>
+            <h2>Evaluaciones del Curso</h2>
+            <span class="nombre-curso">
+                <i class="fas fa-book-open"></i>
+                {{ estudiante.curso.nombre }}
+            </span>
+        </div>
+
+        <!-- Tabla de Evaluaciones -->
+        <div class="contenedor-tabla">
+            <table class="tabla-evaluaciones">
+                <thead>
+                    <tr>
+                        <th><i class="fas fa-book"></i> Materia</th>
+                        <th><i class="fas fa-calendar-alt"></i> Período</th>
+                        <th><i class="fas fa-tasks"></i> Estado</th>
+                        <th><i class="fas fa-file-pdf"></i> Archivo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for eva in evaluaciones %}
+                    <tr>
+                        <td data-label="Materia">
+                            <div class="materia-cell">
+                                <i class="fas fa-book-reader"></i>
+                                <span class="materia-nombre">{{ eva.materia.nombre }}</span>
+                            </div>
+                        </td>
+                        <td data-label="Período">
+                            <span class="periodo-badge">
+                                <i class="fas fa-calendar"></i>
+                                {{ eva.periodo }}
+                            </span>
+                        </td>
+                        <td data-label="Estado">
+                            {% if eva.pendiente %}
+                                <span class="estado-badge estado-pendiente">
+                                    <i class="fas fa-clock"></i>
+                                    Pendiente
+                                </span>
+                            {% else %}
+                                <span class="estado-badge estado-completado">
+                                    <i class="fas fa-check-circle"></i>
+                                    Completado
+                                </span>
+                            {% endif %}
+                        </td>
+                        <td data-label="Archivo">
+                            {% if eva.archivo %}
+                                <a href="{{ eva.archivo.url }}" target="_blank" class="btn-archivo">
+                                    <i class="fas fa-file-pdf"></i>
+                                    Ver PDF
+                                </a>
+                            {% else %}
+                                <span class="no-disponible">
+                                    <i class="fas fa-times-circle"></i>
+                                    No disponible
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">
+                            <div class="estado-vacio">
+                                <i class="fas fa-clipboard-list"></i>
+                                <h3>No hay evaluaciones registradas</h3>
+                                <p>Las evaluaciones de tu curso aparecerán aquí</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

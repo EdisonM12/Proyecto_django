@@ -240,9 +240,9 @@
         <h1>Bienvenido</h1>
         <nav>
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Materias</a></li>
-                <li><a href="#">Tareas</a></li>
+                <li><a href="{% url 'app:perfil' %}">Inicio</a></li>
+                <li><a href="{% url 'app:notas_estudiante' %}">Materias</a></li>
+                <li><a href="{% url 'app:evaluaciones_ver'%}">Tareas</a></li>
                 <li><a href="#">Perfil</a></li>
                 <li><a href="#" class="btn">Ir a Estudiante</a></li>
             </ul>

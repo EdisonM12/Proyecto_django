@@ -710,9 +710,9 @@
                                     <i class="fa-solid fa-list"></i>
                                     <span>Lista de Estudiantes</span>
                                 </a>
-                                <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:crear_estudiante'%}">
+                                <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:ver_pendiente'%}">
                                     <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar Estudiante</span>
+                                    <span>Agregar Registro</span>
                                 </a>
                                 <a href="#" class="item-desplegable" id="editar1" data-url="{% url 'app:editar_estudiantes'%}">
                                     <i class="bi bi-pencil-square"></i>
@@ -781,12 +781,7 @@
                         </details>
 
                     </li>
-                    <li>
-                        <a class="item-desplegable" href="#" id="crear5" data-url="{% url 'app:ver_pendiente'%}">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar registro</span>
-                                </a>
-                    </li>
+
                     <li>
                         <details class="desplegable">
                             <summary class="boton-desplegable">
@@ -840,12 +835,7 @@
                         Plataforma integral para administrar estudiantes, profesores, cursos y calificaciones.
                         Simplicidad y eficiencia en un solo lugar.
                     </p>
-                    <div class="botones-hero">
-                        <button class="boton boton-primario">
-                            <i class="fas fa-rocket"></i>
-                            <span>Comenzar Ahora</span>
-                        </button>
-                    </div>
+
                 </div>
 
                 <div class="imagen-hero">
@@ -898,9 +888,6 @@
         window.location.href = this.dataset.url
         }
         document.getElementById('lista3').onclick = function (){
-        window.location.href = this.dataset.url
-        }
-        document.getElementById('crear5').onclick = function (){
         window.location.href = this.dataset.url
         }
 
