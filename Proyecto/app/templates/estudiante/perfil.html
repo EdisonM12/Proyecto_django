@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Estudiante</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* ==========================
+           FUENTE Y ESTILOS GENERALES
+        ========================== */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* ==========================
+           CONTENEDOR PRINCIPAL
+        ========================== */
+        .contenedor-perfil {
+            max-width: 600px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ==========================
+           CABECERA CON AVATAR
+        ========================== */
+        .cabecera-perfil {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .avatar-contenedor {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #667eea;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            }
+            50% {
+                box-shadow: 0 10px 40px rgba(255,255,255,0.4);
+            }
+        }
+
+        .nombre-completo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .rol-usuario {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            color: #ffffff;
+            font-size: 0.9rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ==========================
+           CUERPO DE INFORMACIÓN
+        ========================== */
+        .cuerpo-perfil {
+            padding: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .info-icono {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .info-icono i {
+            font-size: 1.3rem;
+            color: #ffffff;
+        }
+
+        .info-contenido {
+            flex: 1;
+        }
+
+        .info-label {
+            font-size: 0.8rem;
+            color: #999;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 3px;
+        }
+
+        .info-valor {
+            font-size: 1.1rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        /* ==========================
+           SECCIÓN CURSO DESTACADA
+        ========================== */
+        .curso-destacado {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .curso-destacado .icono {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .curso-destacado .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .curso-destacado .valor {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* ==========================
+           BOTONES DE ACCIÓN
+        ========================== */
+        .acciones-perfil {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn-accion {
+            padding: 12px;
+            border-radius: 12px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-editar {
+            background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+            color: white;
+        }
+
+        .btn-editar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn-cerrar {
+            background: linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%);
+            color: white;
+        }
+
+        .btn-cerrar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(149, 165, 166, 0.4);
+        }
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+        @media (max-width: 768px) {
+            .contenedor-perfil {
+                border-radius: 0;
+            }
+
+            .cabecera-perfil {
+                padding: 30px 20px;
+            }
+
+            .avatar {
+                width: 120px;
+                height: 120px;
+                font-size: 3rem;
+            }
+
+            .avatar-contenedor {
+                width: 120px;
+                height: 120px;
+            }
+
+            .nombre-completo {
+                font-size: 1.5rem;
+            }
+
+            .cuerpo-perfil {
+                padding: 20px;
+            }
+
+            .info-item {
+                padding: 15px;
+            }
+
+            .acciones-perfil {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor-perfil">
+        <!-- Cabecera con Avatar -->
+        <div class="cabecera-perfil">
+            <div class="avatar-contenedor">
+                <div class="avatar">
+                    <i class="fas fa-user-graduate"></i>
+                </div>
+            </div>
+            <h1 class="nombre-completo">{{ estudiante.nombre }} {{ estudiante.apellido }}</h1>
+            <span class="rol-usuario">
+                <i class="fas fa-graduation-cap"></i> Estudiante
+            </span>
+        </div>
+
+        <!-- Cuerpo con Información -->
+        <div class="cuerpo-perfil">
+            <!-- Nombre -->
+            <div class="info-item">
+                <div class="info-icono">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="info-contenido">
+                    <div class="info-label">Nombre</div>
+                    <div class="info-valor">{{ estudiante.nombre }}</div>
+                </div>
+            </div>
+
+            <!-- Apellido -->
+            <div class="info-item">
+                <div class="info-icono">
+                    <i class="fas fa-user-tag"></i>
+                </div>
+                <div class="info-contenido">
+                    <div class="info-label">Apellido</div>
+                    <div class="info-valor">{{ estudiante.apellido }}</div>
+                </div>
+            </div>
+
+            <!-- Correo -->
+            <div class="info-item">
+                <div class="info-icono">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <div class="info-contenido">
+                    <div class="info-label">Correo Electrónico</div>
+                    <div class="info-valor">{{ estudiante.contraseñas.email }}</div>
+                </div>
+            </div>
+
+            <!-- Cédula -->
+            <div class="info-item">
+                <div class="info-icono">
+                    <i class="fas fa-id-card"></i>
+                </div>
+                <div class="info-contenido">
+                    <div class="info-label">Cédula</div>
+                    <div class="info-valor">{{ estudiante.cedula }}</div>
+                </div>
+            </div>
+
+            <!-- Curso Destacado -->
+            <div class="curso-destacado">
+                <div class="icono">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                </div>
+                <div class="label">Curso Actual</div>
+                <div class="valor">{{ estudiante.curso.nombre }}</div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="acciones-perfil">
+                <a href="#" class="btn-accion btn-editar">
+                    <i class="fas fa-edit"></i>
+                    Editar Perfil
+                </a>
+                <a href="#" class="btn-accion btn-cerrar">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Cerrar Sesión
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

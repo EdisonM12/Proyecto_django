@@ -79,5 +79,13 @@ urlpatterns = [
     path('materias/editar/<int:pk>/', views.editar_materia, name='editar_materia'),
     path('materias/eliminar/<int:pk>/', views.eliminar_materia, name='eliminar_materia'),
 
+
+    #estudiante
+    path('perfil/', views.perfil_estudiante, name= 'perfil'),
+    path('notas_estudiante/', views.views_notas, name='notas_estudiante'),
+    path('ver_evaluaciones/', views.ver_evaluaciones, name = 'evaluaciones_ver')
+
 ]
 
+
+#estudiante

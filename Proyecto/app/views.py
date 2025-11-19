@@ -44,7 +44,11 @@ def login_estudiante(request):
                 try:
                     usuario = LoginEstudiante.objects.get(email=email)
                     if check_password(password, usuario.password):
+                        estudiante = Estudiante.objects.get(contraseñas=usuario)
+
                         request.session['estudiante_email'] = email
+                        request.session['estudiante_id'] = estudiante.id
+
                         return redirect('app:Estudiante_home')
                     else:
                         form_login.add_error('password', 'Contraseña incorrecta')
@@ -59,6 +63,50 @@ def login_estudiante(request):
         'form_login': form_login,
         'form_registro': form_registro
     })
+def perfil_estudiante(request):
+    estudiante_id = request.session.get("estudiante_id")
+
+    if not estudiante_id:
+        return redirect("app:Estudiante_login")
+
+    estudiante = Estudiante.objects.get(id=estudiante_id)
+
+    return render(request, "estudiante/perfil.html", {"estudiante": estudiante})
+
+def views_notas(request):
+    estudiante_id = request.session.get("estudiante_id")
+
+    if not estudiante_id:
+        return redirect("app:Estudiante_login")
+
+    estudiante = Estudiante.objects.get(id=estudiante_id)
+
+    calificaciones = estudiante.calificaciones.select_related(
+        "evaluacion__materia"
+    )
+
+    return render(request, "estudiante/notas.html", {
+        "calificaciones": calificaciones,
+        "estudiante": estudiante
+    })
+
+def ver_evaluaciones(request):
+    estudiante_id = request.session.get("estudiante_id")
+
+    if not estudiante_id:
+        return redirect("app:Estudiante_login")
+
+    estudiante = Estudiante.objects.select_related("curso").get(id=estudiante_id)
+
+    # Filtramos evaluaciones por el curso del estudiante
+    evaluaciones = Evaluaciones.objects.filter(curso=estudiante.curso).select_related("materia")
+
+    return render(request, "estudiante/ver_evaluaciones.html", {
+        "estudiante": estudiante,
+        "evaluaciones": evaluaciones
+    })
+
+
 
 
 def ver_pendientes(request):
@@ -468,3 +516,4 @@ def eliminar_materia(request, pk):
         materia.delete()
         return redirect('app:lista_materias')
     return render(request, 'app/delete_materia.html', {'materia': materia})
+
