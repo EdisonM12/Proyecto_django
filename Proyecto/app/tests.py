@@ -5,7 +5,7 @@ from app.models import Estudiantes_pendientes
 class RegistrarEstudianteTest(TestCase):
 
     def test_registrar_estudiante(self):
-        """Prueba que el registro crea un estudiante y hace redirect"""
+
 
         data = {
             'nombre': 'Edison',
@@ -19,12 +19,12 @@ class RegistrarEstudianteTest(TestCase):
 
         response = self.client.post(reverse('app:registrar_estudiante'), data)
 
-        # 1. Se crea el objeto
+
         self.assertEqual(Estudiantes_pendientes.objects.count(), 1)
 
         estudiante = Estudiantes_pendientes.objects.first()
         self.assertEqual(estudiante.nombre, 'Edison')
 
-        # 2. Hace redirect
+
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("app:Estudiante_login"))

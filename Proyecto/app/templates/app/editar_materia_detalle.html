@@ -183,14 +183,14 @@
         const nombre = document.getElementById("id_nombre").value.trim();
         const profesor = document.getElementById("id_profesor").value;
 
-        // Validación nombre
+
         if (nombre.length < 3) {
             alert("El nombre de la materia debe tener al menos 3 caracteres.");
             e.preventDefault();
             return;
         }
 
-        // Validación profesor
+
         if (profesor === "" || profesor === null) {
             alert("Seleccione un profesor.");
             e.preventDefault();

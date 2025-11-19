@@ -4,28 +4,46 @@
 {% block content %}
 
     <style>
-        /* ============================
-       ESTILOS GENERALES
-    ============================ */
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f9f9f9;
+        }
+
         .seccion-principal {
             width: 90%;
             max-width: 1100px;
             margin: 40px auto;
-            font-family: "Poppins", sans-serif;
         }
 
-        /* ============================
-           ENCABEZADO
-        ============================ */
+
+        .btn-back {
+            display: inline-block;
+            margin: 0 auto 25px auto;
+            padding: 10px 20px;
+            background: #ddd;
+            color: #333;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #ccc;
+        }
+
+
         .encabezado-pagina {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .titulo-pagina {
             font-size: 32px;
             font-weight: 700;
-            color: #b11b1b; /* Rojo suave */
+            color: #b11b1b;
             margin-bottom: 5px;
         }
 
@@ -34,9 +52,7 @@
             color: #555;
         }
 
-        /* ============================
-           TABLA
-        ============================ */
+
         .contenedor-tabla {
             overflow-x: auto;
             border-radius: 10px;
@@ -76,9 +92,7 @@
             color: #333;
         }
 
-        /* ============================
-           BOTONES
-        ============================ */
+
         .boton-accion {
             text-decoration: none;
             color: #fff;
@@ -92,7 +106,6 @@
             transition: 0.3s;
         }
 
-        /* Botón ELIMINAR */
         .boton-eliminar {
             background: #d9534f;
         }
@@ -101,9 +114,7 @@
             background: #b52b27;
         }
 
-        /* ============================
-           ESTADO VACÍO
-        ============================ */
+
         .estado-vacio {
             text-align: center;
             padding: 25px 10px;
@@ -115,9 +126,7 @@
             margin-bottom: 10px;
         }
 
-        /* ============================
-           RESPONSIVE
-        ============================ */
+
         @media (max-width: 768px) {
             table thead {
                 display: none;
@@ -144,14 +153,21 @@
                 color: #b11b1b;
             }
         }
-
     </style>
+
     <div class="seccion-principal">
+
+
+        <a href="{% url 'app:inicio' %}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+
 
         <div class="encabezado-pagina">
             <h1 class="titulo-pagina">Eliminar Estudiantes</h1>
             <p class="subtitulo-pagina">Selecciona un estudiante para eliminarlo</p>
         </div>
+
 
         <div class="contenedor-tabla">
             <table>
@@ -160,23 +176,17 @@
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Cédula</th>
-                    <th>Correo</th>
                     <th>Curso</th>
-                    <th>Materia</th>
                     <th>Acciones</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 {% for e in estudiantes %}
                     <tr>
                         <td>{{ e.nombre }}</td>
                         <td>{{ e.apellido }}</td>
                         <td>{{ e.cedula }}</td>
-                        <td>{{ e.correo }}</td>
                         <td>{{ e.curso }}</td>
-                        <td>{{ e.datos }}</td>
-
                         <td class="acciones">
                             <a href="{% url 'app:eliminar_estudiantes_detalle' e.id|sign %}"
                                class="boton-accion boton-eliminar">
@@ -184,7 +194,6 @@
                             </a>
                         </td>
                     </tr>
-
                 {% empty %}
                     <tr>
                         <td colspan="7">
@@ -202,18 +211,19 @@
         </div>
 
     </div>
+
     <script>
-        // Selecciona todos los botones de eliminar
+
         const botonesEliminar = document.querySelectorAll('.boton-eliminar');
 
         botonesEliminar.forEach(function (boton) {
             boton.addEventListener('click', function (e) {
-                // Muestra un confirm
                 const confirmacion = confirm("¿Estás seguro de que deseas eliminar este estudiante?");
                 if (!confirmacion) {
-                    e.preventDefault(); // Cancela la acción si presionó "Cancelar"
+                    e.preventDefault();
                 }
             });
         });
     </script>
+
 {% endblock %}

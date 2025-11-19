@@ -8,9 +8,7 @@
     <title>Mis Calificaciones</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* ==========================
-           FUENTE Y ESTILOS GENERALES
-        ========================== */
+
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         * {
@@ -26,18 +24,14 @@
             padding: 40px 20px;
         }
 
-        /* ==========================
-           CONTENEDOR PRINCIPAL
-        ========================== */
+
         .seccion-notas {
             width: 90%;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        /* ==========================
-           ENCABEZADO
-        ========================== */
+
         .encabezado {
             text-align: center;
             margin-bottom: 40px;
@@ -75,9 +69,7 @@
             font-weight: 400;
         }
 
-        /* ==========================
-           TARJETA DE ESTADÍSTICAS
-        ========================== */
+
         .estadisticas {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -123,9 +115,7 @@
             font-weight: 500;
         }
 
-        /* ==========================
-           CONTENEDOR DE TABLA
-        ========================== */
+
         .contenedor-tabla {
             background: #ffffff;
             border-radius: 20px;
@@ -145,9 +135,7 @@
             }
         }
 
-        /* ==========================
-           TABLA
-        ========================== */
+
         .tabla-notas {
             width: 100%;
             border-collapse: collapse;
@@ -187,9 +175,7 @@
             border-bottom: none;
         }
 
-        /* ==========================
-           BADGES DE NOTAS
-        ========================== */
+
         .nota-badge {
             display: inline-block;
             padding: 8px 16px;
@@ -219,9 +205,7 @@
             color: white;
         }
 
-        /* ==========================
-           ÍCONOS DE MATERIA
-        ========================== */
+
         .materia-cell {
             display: flex;
             align-items: center;
@@ -238,9 +222,7 @@
             color: #2c3e50;
         }
 
-        /* ==========================
-           PERÍODO CON BADGE
-        ========================== */
+
         .periodo-badge {
             display: inline-block;
             padding: 5px 12px;
@@ -251,9 +233,7 @@
             font-weight: 600;
         }
 
-        /* ==========================
-           FECHA
-        ========================== */
+
         .fecha-cell {
             color: #777;
             font-size: 0.9rem;
@@ -266,9 +246,7 @@
             color: #667eea;
         }
 
-        /* ==========================
-           ESTADO VACÍO
-        ========================== */
+
         .estado-vacio {
             text-align: center;
             padding: 60px 20px;
@@ -292,9 +270,7 @@
             font-size: 1rem;
         }
 
-        /* ==========================
-           RESPONSIVE
-        ========================== */
+
         @media (max-width: 768px) {
             .encabezado h1 {
                 font-size: 2rem;
@@ -346,7 +322,7 @@
 </head>
 <body>
     <div class="seccion-notas">
-        <!-- Encabezado -->
+
         <div class="encabezado">
             <div class="icono-titulo">
                 <i class="fas fa-graduation-cap"></i>
@@ -355,7 +331,7 @@
             <p>Seguimiento de tu rendimiento académico</p>
         </div>
 
-        <!-- Estadísticas (opcional - calcula en el backend) -->
+
         <div class="estadisticas">
             <div class="tarjeta-stat">
                 <div class="icono">
@@ -380,7 +356,7 @@
             </div>
         </div>
 
-        <!-- Tabla de Calificaciones -->
+
         <div class="contenedor-tabla">
             <table class="tabla-notas">
                 <thead>

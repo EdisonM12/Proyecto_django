@@ -2,9 +2,7 @@
 
 {% block content %}
     <style>
-        /* ============================
-       ESTILOS GENERALES
-    ============================ */
+
         .seccion-principal {
             width: 90%;
             max-width: 700px;
@@ -12,9 +10,7 @@
             font-family: "Poppins", sans-serif;
         }
 
-        /* ============================
-           ENCABEZADO
-        ============================ */
+
         .encabezado-pagina {
             text-align: center;
             margin-bottom: 25px;
@@ -23,7 +19,7 @@
         .titulo-pagina {
             font-size: 30px;
             font-weight: 700;
-            color: #b11b1b; /* Rojo alerta */
+            color: #b11b1b;
         }
 
         .subtitulo-pagina {
@@ -32,9 +28,7 @@
             margin-top: 5px;
         }
 
-        /* ============================
-           CONTENEDOR
-        ============================ */
+
         .contenedor-tabla {
             background: #ffffff;
             border-radius: 12px;
@@ -49,9 +43,7 @@
             margin-bottom: 25px;
         }
 
-        /* ============================
-           BOTONES
-        ============================ */
+
         .boton-accion {
             text-decoration: none;
             padding: 0.75rem 2rem;
@@ -65,7 +57,7 @@
             margin: 0 10px;
         }
 
-        /* Botón eliminar (rojo) */
+
         .boton-eliminar {
             background: #d9534f;
             color: white;
@@ -75,7 +67,7 @@
             background: #b52b27;
         }
 
-        /* Botón cancelar (azul) */
+
         .boton-editar {
             background: #4A90E2;
             color: white;
@@ -123,7 +115,7 @@
                     "⚠️ Atención: Esta acción eliminará al estudiante de forma permanente. ¿Deseas continuar?"
                 );
                 if (!confirmacion) {
-                    e.preventDefault(); // Cancela la acción si el usuario presiona "Cancelar"
+                    e.preventDefault();
                 }
             });
         </script>

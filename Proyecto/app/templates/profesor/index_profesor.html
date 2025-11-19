@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <!-- Header -->
+
     <header class="header">
         <div class="logo">
             <div class="logo-icon">📚</div>
@@ -56,20 +56,20 @@
     </header>
 
     {% block content %}
-    <!-- Hero Section - Solo visible en página principal -->
+
     <section class="hero">
         <div class="hero-gradient"></div>
         <div class="hero-content">
             <h1 class="hero-title">Educación para todos.</h1>
             <p class="hero-subtitle">Miles de estudiantes. Aprendizaje sin límites.</p>
-            <button class="cta-button">ACCEDER AL PORTAL</button>
+
         </div>
         <div class="floating-circle circle-1"></div>
         <div class="floating-circle circle-2"></div>
         <div class="floating-circle circle-3"></div>
     </section>
 
-    <!-- Video/Image Section -->
+
     <section class="about-section">
         <div class="container">
             <div class="about-content">
@@ -89,7 +89,7 @@
         </div>
     </section>
 
-    <!-- Mission and Vision -->
+
     <section class="mission-vision">
         <div class="container">
             <div class="mv-grid">
@@ -111,7 +111,7 @@
         </div>
     </section>
 
-    <!-- Achievements -->
+
     <section class="achievements">
         <div class="container">
             <h2 class="section-title">Nuestros Logros</h2>
@@ -141,16 +141,15 @@
     </section>
     {% endblock %}
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p>&copy; 2025 Instituto Académico Horizonte. Todos los derechos reservados a grupo 6.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
+
     <script>
-        // Rotación de imágenes
+
         document.addEventListener("DOMContentLoaded", () => {
             const images = [
                 "{% static 'img/1.jpg'%}",

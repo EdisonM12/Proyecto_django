@@ -1,7 +1,7 @@
 {% load static %}
 
 <style>
-    /* ======= ESTILOS GENERALES ======= */
+
     .seccion-principal {
         width: 90%;
         max-width: 1200px;
@@ -10,7 +10,7 @@
         color: #333;
     }
 
-    /* ======= ENCABEZADO ======= */
+
     .encabezado-pagina {
         text-align: center;
         margin-bottom: 25px;
@@ -28,7 +28,7 @@
         margin-top: 5px;
     }
 
-    /* ======= BARRA DE ACCIONES ======= */
+
     .barra-acciones {
         display: flex;
         justify-content: space-between;
@@ -75,7 +75,7 @@
         font-weight: 600;
     }
 
-    /* ======= TABLA ======= */
+
     .contenedor-tabla {
         overflow-x: auto;
         margin-top: 10px;
@@ -110,7 +110,7 @@
         transition: 0.2s;
     }
 
-    /* ======= ESTADO VACÍO ======= */
+
     .estado-vacio {
         text-align: center;
         padding: 30px 0;
@@ -131,7 +131,7 @@
         font-size: 0.9rem;
     }
 
-    /* ======= BOTÓN VOLVER ======= */
+
     .volver {
         margin: 25px auto;
         width: 160px;
@@ -150,7 +150,7 @@
         transform: translateY(-2px);
     }
 
-    /* ======= RESPONSIVE ======= */
+
     @media (max-width: 768px) {
         .barra-acciones {
             flex-direction: column;
@@ -225,7 +225,7 @@
 
     </div>
     <script>
-        // Búsqueda en tiempo real
+
         const inputBuscar = document.getElementById('buscar-estudiante');
         const tabla = document.getElementById('tabla-estudiantes');
         inputBuscar.addEventListener('input', function () {
@@ -236,7 +236,7 @@
             }
         });
 
-        // Resaltar fila al pasar el mouse
+
         for (let row of tabla.rows) {
             row.addEventListener('mouseover', () => row.style.backgroundColor = '#f1f1f1');
             row.addEventListener('mouseout', () => row.style.backgroundColor = '');

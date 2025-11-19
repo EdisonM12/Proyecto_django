@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/eliminar_profesor.css' %}">
-<h1>Eliminar Profesores</h1>
-<table class="table table-striped">
-    <thead>
+    <link rel="stylesheet" href="{% static 'css/eliminar_profesor.css' %}">
+    <h1>Eliminar Profesores</h1>
+    <table class="table table-striped">
+        <thead>
         <tr>
             <th>Nombre</th>
             <th>Apellido</th>
@@ -13,21 +13,29 @@
             <th>Correo</th>
             <th>Acciones</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for p in profesores %}
-        <tr>
-            <td>{{ p.nombre }}</td>
-            <td>{{ p.apellido }}</td>
-            <td>{{ p.cedula }}</td>
-            <td>{{ p.correo }}</td>
-            <td>
-                <a class="btn btn-sm btn-danger" href="{% url 'app:eliminar_profesor_detalle' p.id|sign  %}">Eliminar</a>
-            </td>
-        </tr>
+            <tr>
+                <td>{{ p.nombre }}</td>
+                <td>{{ p.apellido }}</td>
+                <td>{{ p.cedula }}</td>
+                <td>{{ p.correo }}</td>
+                <td>
+                    <a class="btn btn-sm btn-danger"
+                       href="{% url 'app:eliminar_profesor_detalle' p.id|sign %}">Eliminar</a>
+                </td>
+            </tr>
         {% empty %}
-        <tr><td colspan="7">No hay profesores.</td></tr>
+            <tr>
+                <td colspan="7">No hay profesores.</td>
+            </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="{% url 'app:inicio' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
 {% endblock %}

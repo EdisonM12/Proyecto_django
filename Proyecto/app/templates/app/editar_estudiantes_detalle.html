@@ -3,9 +3,7 @@
 {% block content %}
 
     <style>
-        /* ============================
-       ESTILOS GENERALES
-    ============================ */
+
         .seccion-principal {
             width: 90%;
             max-width: 900px;
@@ -13,9 +11,7 @@
             font-family: "Poppins", sans-serif;
         }
 
-        /* ============================
-           ENCABEZADO
-        ============================ */
+
         .encabezado-pagina {
             text-align: center;
             margin-bottom: 30px;
@@ -33,9 +29,7 @@
             color: #555;
         }
 
-        /* ============================
-           FORMULARIO
-        ============================ */
+
         .contenedor-tabla {
             background: #ffffff;
             padding: 30px;
@@ -49,7 +43,7 @@
             color: #333;
         }
 
-        /* Inputs */
+
         input[type="text"],
         input[type="number"],
         input[type="email"],
@@ -71,9 +65,7 @@
             box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
         }
 
-        /* ============================
-           BOTONES
-        ============================ */
+
         .boton {
             display: inline-flex;
             align-items: center;
@@ -88,7 +80,7 @@
             border: none;
         }
 
-        /* Botón Guardar */
+
         .boton-primario {
             background: #4A90E2;
             color: white;
@@ -98,7 +90,7 @@
             background: #357ABD;
         }
 
-        /* Botón Cancelar */
+
         .boton-eliminar {
             background: #bbb;
             color: white;
@@ -108,9 +100,7 @@
             background: #999;
         }
 
-        /* ============================
-           RESPONSIVE
-        ============================ */
+
         @media (max-width: 768px) {
             .seccion-principal {
                 width: 95%;
@@ -156,41 +146,40 @@
     <script>
 
         document.querySelector("form").addEventListener("submit", function (e) {
-            // Obtener valores
+
             const nombre = document.getElementById("id_nombre").value.trim();
             const apellido = document.getElementById("id_apellido").value.trim();
             const cedula = document.getElementById("id_cedula").value.trim();
             const curso = document.getElementById("id_curso").value;
 
-            // Validar nombre
+
             if (nombre.length < 3) {
                 alert("El nombre debe tener al menos 3 caracteres.");
                 e.preventDefault();
                 return;
             }
 
-            // Validar apellido
+
             if (apellido.length < 3) {
                 alert("El apellido debe tener al menos 3 caracteres.");
                 e.preventDefault();
                 return;
             }
 
-            // Validar cédula (solo números y 10 dígitos)
+
             if (!/^\d{10}$/.test(cedula)) {
                 alert("La cédula debe tener 10 dígitos numéricos.");
                 e.preventDefault();
                 return;
             }
 
-            // Validar curso seleccionado
             if (curso === "") {
                 alert("Debes seleccionar un curso.");
                 e.preventDefault();
                 return;
             }
 
-            // Si todo está bien, el formulario se envía automáticamente
+
         });
 
     </script>

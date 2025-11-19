@@ -8,14 +8,13 @@
     <title>Materias</title>
 
     <style>
-        /* ============================
-           ESTILOS GENERALES
-        ============================ */
+
         body {
             font-family: "Poppins", sans-serif;
             background: #f4f6f9;
             margin: 0;
             padding: 30px;
+            color: #333;
         }
 
         h1 {
@@ -24,9 +23,7 @@
             margin-bottom: 25px;
         }
 
-        /* ============================
-           LISTA DE MATERIAS
-        ============================ */
+
         .materia-lista {
             max-width: 700px;
             margin: auto;
@@ -39,29 +36,36 @@
         .materia-item {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            align-items: center;
+            padding: 12px 15px;
             border-bottom: 1px solid #eee;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            transition: background 0.3s, transform 0.2s;
         }
 
         .materia-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .materia-item:hover {
+            background: #f1f5fb;
+            transform: translateY(-2px);
         }
 
         .materia-info {
             font-size: 16px;
-            color: #333;
         }
 
-        /* ============================
-           BOTONES
-        ============================ */
+
         .acciones a {
             text-decoration: none;
             padding: 6px 14px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s;
             margin-left: 8px;
             color: white;
         }
@@ -74,22 +78,31 @@
             background: #357ABD;
         }
 
-        .eliminar {
-            background: #d9534f;
-        }
 
-        .eliminar:hover {
-            background: #b52b27;
-        }
-
-        /* ============================
-           ESTADO VACÍO
-        ============================ */
         .vacio {
             text-align: center;
             padding: 15px;
             color: #777;
         }
+
+
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0 auto;
+            padding: 10px 25px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+
     </style>
 
 </head>
@@ -107,7 +120,6 @@
 
             <div class="acciones">
                 <a href="{% url 'app:editar_materia_detalle' m.id|sign %}" class="editar">Editar</a>
-
             </div>
         </div>
 
@@ -116,19 +128,27 @@
     {% endfor %}
 
 </div>
+
+
+<div style="text-align:center;">
+    <a href="{% url 'app:inicio' %}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
+</div>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const materias = document.querySelectorAll(".materia-item");
         const vacio = document.querySelector(".vacio");
 
-        // Si no hay materias, mostrar mensaje destacado
+
         if (materias.length === 0 && vacio) {
             vacio.style.color = "#d9534f";
             vacio.style.fontWeight = "600";
             vacio.style.fontSize = "18px";
         }
 
-        // Validación simple antes de abrir edición
+
         document.querySelectorAll(".acciones a.editar").forEach(link => {
             link.addEventListener("click", function (e) {
                 const nombreMateria = this.closest(".materia-item").querySelector(".materia-info").innerText;

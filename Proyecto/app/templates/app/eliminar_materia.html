@@ -83,6 +83,29 @@
         form {
             display: inline;
         }
+
+
+
+        .btn-back {
+            display: inline-block;
+            margin: 25px auto 0 auto;
+            padding: 10px 25px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+
+        .volver-container {
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -106,9 +129,17 @@
         <p class="vacio">No hay materias registradas.</p>
     {% endfor %}
 </div>
+
+
+<div class="volver-container">
+    <a href="{% url 'app:inicio' %}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
+</div>
+
 <script>
-    // Selecciona todos los formularios de eliminar
-    const formulariosEliminar = document.querySelectorAll(".form-eliminar");
+
+    const formulariosEliminar = document.querySelectorAll(".acciones form");
 
     formulariosEliminar.forEach(form => {
         form.addEventListener("submit", function (e) {
@@ -116,7 +147,7 @@
                 "⚠️ Atención: Esta acción eliminará la materia de forma permanente. ¿Deseas continuar?"
             );
             if (!confirmacion) {
-                e.preventDefault(); // Cancela la acción si el usuario presiona "Cancelar"
+                e.preventDefault();
             }
         });
     });

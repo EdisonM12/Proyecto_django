@@ -6,9 +6,7 @@
     <title>Mi Perfil - Estudiante</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* ==========================
-           FUENTE Y ESTILOS GENERALES
-        ========================== */
+
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
         * {
@@ -27,9 +25,7 @@
             padding: 20px;
         }
 
-        /* ==========================
-           CONTENEDOR PRINCIPAL
-        ========================== */
+
         .contenedor-perfil {
             max-width: 600px;
             width: 100%;
@@ -51,9 +47,7 @@
             }
         }
 
-        /* ==========================
-           CABECERA CON AVATAR
-        ========================== */
+
         .cabecera-perfil {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 40px 30px;
@@ -111,9 +105,7 @@
             backdrop-filter: blur(10px);
         }
 
-        /* ==========================
-           CUERPO DE INFORMACIÓN
-        ========================== */
+
         .cuerpo-perfil {
             padding: 30px;
         }
@@ -170,9 +162,7 @@
             font-weight: 600;
         }
 
-        /* ==========================
-           SECCIÓN CURSO DESTACADA
-        ========================== */
+
         .curso-destacado {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -199,9 +189,7 @@
             font-weight: 700;
         }
 
-        /* ==========================
-           BOTONES DE ACCIÓN
-        ========================== */
+
         .acciones-perfil {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -243,9 +231,7 @@
             box-shadow: 0 8px 20px rgba(149, 165, 166, 0.4);
         }
 
-        /* ==========================
-           RESPONSIVE
-        ========================== */
+
         @media (max-width: 768px) {
             .contenedor-perfil {
                 border-radius: 0;
@@ -299,9 +285,9 @@
             </span>
         </div>
 
-        <!-- Cuerpo con Información -->
+
         <div class="cuerpo-perfil">
-            <!-- Nombre -->
+
             <div class="info-item">
                 <div class="info-icono">
                     <i class="fas fa-user"></i>
@@ -312,7 +298,7 @@
                 </div>
             </div>
 
-            <!-- Apellido -->
+
             <div class="info-item">
                 <div class="info-icono">
                     <i class="fas fa-user-tag"></i>
@@ -323,7 +309,7 @@
                 </div>
             </div>
 
-            <!-- Correo -->
+
             <div class="info-item">
                 <div class="info-icono">
                     <i class="fas fa-envelope"></i>
@@ -334,7 +320,7 @@
                 </div>
             </div>
 
-            <!-- Cédula -->
+
             <div class="info-item">
                 <div class="info-icono">
                     <i class="fas fa-id-card"></i>
@@ -345,7 +331,7 @@
                 </div>
             </div>
 
-            <!-- Curso Destacado -->
+
             <div class="curso-destacado">
                 <div class="icono">
                     <i class="fas fa-chalkboard-teacher"></i>
@@ -354,7 +340,7 @@
                 <div class="valor">{{ estudiante.curso.nombre }}</div>
             </div>
 
-            <!-- Botones de Acción -->
+
             <div class="acciones-perfil">
                 <a href="#" class="btn-accion btn-editar">
                     <i class="fas fa-edit"></i>

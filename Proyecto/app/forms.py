@@ -121,10 +121,10 @@ class ProfesorForm(forms.ModelForm):
         if "." not in correo:
             raise forms.ValidationError("El correo debe contener un dominio válido (ejemplo: .com)")
 
-        # Verificar unicidad
+
         qs = self.Meta.model.objects.filter(correo=correo)
         if self.instance.pk:
-            qs = qs.exclude(pk=self.instance.pk)  # Excluir el registro actual si estamos editando
+            qs = qs.exclude(pk=self.instance.pk)
 
         if qs.exists():
             raise forms.ValidationError("Este correo ya está registrado")
@@ -155,7 +155,7 @@ class ProfesorForm(forms.ModelForm):
         if not materia:
             raise forms.ValidationError("El campo materia no puede estar vacío.")
         return materia
-    #************************************************
+
 class Login3(forms.Form):
     email = forms.CharField(
         required=True,
@@ -189,7 +189,7 @@ class Login1(forms.Form):
         email = cleaned.get("email")
         password = cleaned.get("password")
 
-         # Validar si existe un admin con ese email y contraseña
+
         if not Administrador.objects.filter(email=email, password=password).exists():
             raise forms.ValidationError("Correo o contraseña incorrectos")
 
@@ -208,7 +208,7 @@ class Login2(forms.Form):
         email = cleaned.get("email")
         password = cleaned.get("password")
 
-        # Validar si existe un admin con ese email y contraseña
+
         if not LoginProfesor.objects.filter(email=email, password=password).exists():
             raise forms.ValidationError("Correo o contraseña incorrectos")
         return cleaned
@@ -216,9 +216,9 @@ class Login2(forms.Form):
 
 
 
-#ESTUDIANTES PENDIENTES
+
 class PendientesForm(forms.ModelForm):
-        """Formulario de registro de estudiante pendiente"""
+
 
 
         password = forms.CharField(
@@ -355,7 +355,7 @@ class CalificacionForm(forms.ModelForm):
         if estudiante and evaluacion:
             qs = Calificacion.objects.filter(estudiante=estudiante, evaluacion=evaluacion)
 
-            # Ignorar el propio registro si se está editando
+
             if self.instance.pk:
                 qs = qs.exclude(pk=self.instance.pk)
 

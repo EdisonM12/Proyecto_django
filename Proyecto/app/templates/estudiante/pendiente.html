@@ -149,6 +149,13 @@
             font-weight: 500;
         }
 
+        .btn-back:hover {
+            background: var(--accent-purple);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
+        }
+
+
         .card-info {
             margin-bottom: 20px;
         }
@@ -214,64 +221,80 @@
                 font-size: 2em;
             }
         }
+
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1><i class="fas fa-clipboard-list"></i> Solicitudes Pendientes</h1>
-            <p>Revisa y gestiona las solicitudes de registro de estudiantes</p>
-        </div>
+<div class="container">
+    <div class="header">
+        <h1><i class="fas fa-clipboard-list"></i> Solicitudes Pendientes</h1>
+        <p>Revisa y gestiona las solicitudes de registro de estudiantes</p>
 
-        {% if pendiente %}
-            <div class="cards-grid">
-                {% for estudiante in pendiente %}
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="card-title">
-                            <h3>{{ estudiante.nombre }} {{ estudiante.apellido }}</h3>
-                            <span class="card-badge">
+        <a href="{% url 'app:inicio' %}" class="btn btn-back" style="
+        display: inline-block;
+        margin-top: 15px;
+        padding: 10px 20px;
+        background: rgba(156, 39, 176, 0.7);
+        color: white;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+    ">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
+</div>
+
+{% if pendiente %}
+    <div class="cards-grid">
+        {% for estudiante in pendiente %}
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="card-title">
+                        <h3>{{ estudiante.nombre }} {{ estudiante.apellido }}</h3>
+                        <span class="card-badge">
                                 <i class="fas fa-clock"></i> PENDIENTE
                             </span>
-                        </div>
-                    </div>
-
-                    <div class="card-info">
-                        <div class="info-row">
-                            <i class="fas fa-envelope"></i>
-                            <span>{{ estudiante.email }}</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-phone"></i>
-                            <span>{{ estudiante.telefono }}</span>
-                        </div>
-                        <div class="info-row">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>{{ estudiante.direccion }}</span>
-                        </div>
-                    </div>
-
-                    <div class="card-actions">
-                        <a href="{% url 'app:aceptar_pendiente' estudiante.id %}" class="btn btn-accept">
-                            <i class="fas fa-check"></i> Aceptar
-                        </a>
-                        <button class="btn btn-reject">
-                            <i class="fas fa-times"></i> Rechazar
-                        </button>
                     </div>
                 </div>
-                {% endfor %}
+
+                <div class="card-info">
+                    <div class="info-row">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ estudiante.email }}</span>
+                    </div>
+                    <div class="info-row">
+                        <i class="fas fa-phone"></i>
+                        <span>{{ estudiante.telefono }}</span>
+                    </div>
+                    <div class="info-row">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ estudiante.direccion }}</span>
+                    </div>
+                </div>
+
+                <div class="card-actions">
+                    <a href="{% url 'app:aceptar_pendiente' estudiante.id %}" class="btn btn-accept">
+                        <i class="fas fa-check"></i> Aceptar
+                    </a>
+                    <button class="btn btn-reject">
+                        <i class="fas fa-times"></i> Rechazar
+                    </button>
+                </div>
             </div>
-        {% else %}
-            <div class="empty-state">
-                <i class="fas fa-inbox"></i>
-                <h2>No hay solicitudes pendientes</h2>
-                <p>Todas las solicitudes han sido procesadas</p>
-            </div>
-        {% endif %}
+        {% endfor %}
     </div>
+{% else %}
+    <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        <h2>No hay solicitudes pendientes</h2>
+        <p>Todas las solicitudes han sido procesadas</p>
+    </div>
+{% endif %}
+</div>
 </body>
 </html>

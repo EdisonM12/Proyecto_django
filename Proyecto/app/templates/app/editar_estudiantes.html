@@ -3,9 +3,35 @@
 
 {% block content %}
     <style>
-        /* ===========================
-       ESTILOS GENERALES
-    =========================== */
+
+        .btn-back-container {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+
+        .btn-back {
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            display: inline-block;
+            padding: 10px 20px;
+            background: #ddd;
+            color: #333;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-back:hover {
+            background: #ccc;
+        }
+
+
         .seccion-principal {
             width: 90%;
             max-width: 1100px;
@@ -13,9 +39,7 @@
             font-family: "Poppins", sans-serif;
         }
 
-        /* ===========================
-           ENCABEZADO
-        =========================== */
+
         .encabezado-pagina {
             text-align: center;
             margin-bottom: 30px;
@@ -33,9 +57,7 @@
             color: #555;
         }
 
-        /* ===========================
-           TABLA
-        =========================== */
+
         .contenedor-tabla {
             overflow-x: auto;
             border-radius: 10px;
@@ -74,9 +96,7 @@
             color: #333;
         }
 
-        /* ===========================
-           ESTADO VACÍO
-        =========================== */
+
         .estado-vacio {
             text-align: center;
             padding: 25px 10px;
@@ -88,9 +108,7 @@
             margin-bottom: 10px;
         }
 
-        /* ===========================
-           BOTONES
-        =========================== */
+
         .boton-accion {
             text-decoration: none;
             color: #ffffff;
@@ -113,9 +131,7 @@
             background: #357ABD;
         }
 
-        /* ===========================
-           RESPONSIVE
-        =========================== */
+
         @media (max-width: 768px) {
             table thead {
                 display: none;
@@ -142,6 +158,7 @@
                 color: #2a3d66;
             }
         }
+
 
     </style>
     <div class="seccion-principal">
@@ -197,7 +214,7 @@
 
     </div>
     <script>
-        // Confirmación al hacer clic en "Editar"
+
         document.querySelectorAll('.boton-editar').forEach(function (boton) {
             boton.addEventListener('click', function (e) {
                 const nombre = this.closest('tr').querySelector('td:first-child').textContent;
@@ -209,7 +226,7 @@
             });
         });
 
-        // Filtro rápido por nombre o cédula
+
         const searchInput = document.createElement('input');
         searchInput.placeholder = "Buscar estudiante...";
         searchInput.style.marginBottom = "15px";
@@ -235,4 +252,9 @@
             });
         });
     </script>
+    <div class="back-container">
+        <a href="{% url 'app:inicio' %}" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
 {% endblock %}

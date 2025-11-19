@@ -7,14 +7,13 @@
     <title>Materias</title>
 
     <style>
-        /* ============================
-           ESTILOS GENERALES
-        ============================ */
+
         body {
             font-family: "Poppins", sans-serif;
-            background: #f4f6f9;
+            background: #f0f4f8;
             margin: 0;
-            padding: 30px;
+            padding: 30px 20px;
+            color: #333;
         }
 
         h1 {
@@ -23,44 +22,49 @@
             margin-bottom: 25px;
         }
 
-        /* ============================
-           LISTA DE MATERIAS
-        ============================ */
+
         .materia-lista {
             max-width: 700px;
             margin: auto;
-            background: white;
+            background: #ffffff;
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
         }
 
         .materia-item {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            align-items: center;
+            padding: 12px 15px;
             border-bottom: 1px solid #eee;
+            transition: background 0.3s, transform 0.2s;
+            border-radius: 8px;
+            margin-bottom: 5px;
         }
 
         .materia-item:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+        }
+
+        .materia-item:hover {
+            background: #f1f5fb;
+            transform: translateY(-2px);
         }
 
         .materia-info {
             font-size: 16px;
-            color: #333;
         }
 
-        /* ============================
-           BOTONES
-        ============================ */
+
         .acciones a {
             text-decoration: none;
             padding: 6px 14px;
             border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s;
             margin-left: 8px;
             color: white;
         }
@@ -81,54 +85,54 @@
             background: #b52b27;
         }
 
-        /* ============================
-           ESTADO VACÍO
-        ============================ */
+
         .vacio {
             text-align: center;
             padding: 15px;
             color: #777;
         }
-    </style>
 
+
+        .btn-back {
+            display: inline-block;
+            margin: 20px auto 0 auto;
+            padding: 10px 25px;
+            background: #6c757d;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .btn-back:hover {
+            background: #5a6268;
+        }
+    </style>
 </head>
 <body>
 
 <h1>Materias</h1>
 
 <div class="materia-lista">
-
     {% for materia in materias %}
         <div class="materia-item">
             <div class="materia-info">
                 {{ materia.nombre }} — <strong>{{ materia.profesor.nombre }}</strong>
             </div>
-
-
         </div>
-
     {% empty %}
         <p class="vacio">No hay materias registradas.</p>
     {% endfor %}
-
 </div>
-<script>
-    // Búsqueda en tiempo real
-    const inputBuscar = document.getElementById('buscar-materia');
-    const lista = document.getElementById('lista-materias');
-    inputBuscar.addEventListener('input', function () {
-        const filtro = inputBuscar.value.toLowerCase();
-        for (let item of lista.getElementsByClassName('materia-item')) {
-            const texto = item.textContent.toLowerCase();
-            item.style.display = texto.includes(filtro) ? '' : 'none';
-        }
-    });
 
-    // Resaltar al pasar el cursor
-    for (let item of lista.getElementsByClassName('materia-item')) {
-        item.addEventListener('mouseover', () => item.style.backgroundColor = '#f1f1f1');
-        item.addEventListener('mouseout', () => item.style.backgroundColor = '');
-    }
-</script>
+
+<div style="text-align:center;">
+    <a href="{% url 'app:inicio' %}" class="btn-back">
+        <i class="fas fa-arrow-left"></i> Volver
+    </a>
+</div>
+
 </body>
 </html>

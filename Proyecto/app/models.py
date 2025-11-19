@@ -11,7 +11,7 @@ class Administrador(models.Model):
         db_table = "Administrador"
         managed = False
 
-# Estudiante, Evaluación, Calificación
+
 
 class LoginProfesor(models.Model):
     email = models.EmailField(unique=True)

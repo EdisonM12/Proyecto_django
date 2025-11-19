@@ -14,7 +14,7 @@ def validar_correo(request):
     existe = Estudiante.objects.filter(email=email).exists() or LoginEstudiante.objects.filter(email=email).exists()
     return JsonResponse({'existe': existe})
 
-# views.py
+
 def login_estudiante(request):
 
     if request.method == "POST":
@@ -35,7 +35,7 @@ def login_estudiante(request):
                 messages.error(request, "corriga los enunciados correspondientes")
 
         else:
-            # Formulario de LOGIN con prefijo
+
             form_login = Login3(request.POST, prefix='login')
             if form_login.is_valid():
                 email = form_login.cleaned_data['email']
@@ -51,7 +51,7 @@ def login_estudiante(request):
                 except LoginEstudiante.DoesNotExist:
                     form_login.add_error('email', 'Usuario no encontrado')
 
-    # Crear formularios vacíos CON PREFIJOS
+
     form_login = Login3(prefix='login')
     form_registro = PendientesForm(prefix='registro')
 
@@ -94,7 +94,7 @@ def ver_evaluaciones(request):
 
     estudiante = Estudiante.objects.select_related("curso").get(id=estudiante_id)
 
-    # Filtramos evaluaciones por el curso del estudiante
+
     evaluaciones = Evaluaciones.objects.filter(curso=estudiante.curso).select_related("materia")
 
     return render(request, "estudiante/ver_evaluaciones.html", {
@@ -112,9 +112,9 @@ def ver_pendientes(request):
 
 def registrar_pendiente(request):
     if request.method == "POST":
-        # 1. Crear credenciales
 
-        # 2. Crear pendiente
+
+
         Estudiantes_pendientes.objects.create(
             nombre=request.POST['nombre'],
             apellido=request.POST['apellido'],
@@ -140,14 +140,13 @@ def aceptar_pendiente(request, id):
     if request.method == "POST":
         curso = Curso.objects.get(id=request.POST['curso'])
 
-        # 🔥 Verificar si ya existe un login con ese email
+
         login, creado = LoginEstudiante.objects.get_or_create(
             email=pendiente.email,
             defaults={'password': pendiente.password}
         )
 
-        # Si ya existía, solo se reutiliza
-        # Si no existía, se crea con defaults
+
 
         Estudiante.objects.create(
             nombre=pendiente.nombre,
@@ -160,7 +159,7 @@ def aceptar_pendiente(request, id):
         )
 
         pendiente.delete()
-        return redirect("app:listar_estudiantes")
+        return redirect("app:ver_pendiente")
 
     return render(request, "estudiante/aceptar.html", {
         "pendiente": pendiente,
@@ -172,7 +171,7 @@ def aceptar_pendiente(request, id):
 
 def home_estudiante(request):
     return render(request, 'estudiante/home_estudiante.html')
-# LOGIN
+
 def cerrar_sesion(request):
     logout(request)
     return redirect('app:home')
@@ -208,8 +207,7 @@ def Login_profesor(request):
 
     return render(request, "profesor/login_profesor.html", {"form" : form })
 
-#def home_page(request):
-    #return render(request, "app/Home_admin.html")
+
 def home_page(request):
     profesores = Profesor.objects.all()  # Trae todos los profesores
     return render(request, "app/Home_admin.html", {"profesores": profesores})
@@ -228,7 +226,6 @@ def crear_estudiante(request):
     return render(request, "app/estudiante_form.html", {"form": form, "accion": "Crear"})
 
 
-# LISTAR ESTUDIANTES
 def listar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
 
@@ -265,9 +262,6 @@ def editar_estudiantes_detalle(request, token):
 
 
 
-
-
-
 def eliminar_estudiantes(request):
     estudiantes = Estudiante.objects.all()
     return render(request, "app/eliminar_estudiantes.html", {
@@ -290,13 +284,6 @@ def eliminar_estudiantes_detalle(request, token):
 
 
 
-# Create your views here.
-#def login(request):
-    #return render(request, 'app/login.html')
-
-#def login(request):
-   # return render(request, 'curso/home_curso.html')
-
 def crear_curso(request):
     form = CursoForm()
 
@@ -309,42 +296,66 @@ def crear_curso(request):
     return render(request, 'curso/crear_curso.html', {'form': form})
 
 def listar_cursos(request):
-    cursos = Curso.objects.all()
-    return render(request, "curso/listar_cursos.html", {"cursos": cursos})
+    curso = Curso.objects.all()
+    return render(request, "curso/listar_cursos.html", {"curso": curso})
 
-def editar_curso(request, id):
-    curso = get_object_or_404(Curso, id=id)
+def editar_curso(request):
+    curso = Curso.objects.all()
+    return render(request, "curso/editar_cursos.html", {
+        "curso": curso
+    })
+
+
+def editar_curso_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+
+    curso = get_object_or_404(Curso, id=id_real)
     form = CursoForm(request.POST or None, instance=curso)
 
     if form.is_valid():
         form.save()
-        return redirect("app:listar_cursos")
+        return redirect("app:editar_curso")
 
-    return render(request, "curso/editar_curso.html", {
+    return render(request, "curso/editar_curso_detalle.html", {
         "form": form,
         "curso": curso
     })
-def eliminar_curso(request, id):
-    cursos = get_object_or_404(Curso, id=id)
+
+
+
+
+
+
+def eliminar_curso(request):
+    curso = Curso.objects.all()
+    return render(request, "curso/eliminar_curso.html", {
+        "curso": curso
+    })
+def eliminar_curso_detalle(request, token):
+    try:
+        id_real = signing.loads(token)
+    except signing.BadSignature:
+        return HttpResponse("Token inválido", status=400)
+    curso = get_object_or_404(Curso, id=id_real)
 
     if request.method == "POST":
-        cursos.delete()
-        return redirect("app:listar_cursos")
+        curso.delete()
+        return redirect("app:eliminar_curso")
 
-    return render(request, "curso/eliminar_curso.html", {
-        "curso": cursos
+    return render(request, "curso/eliminar_curso_detalle.html", {
+        "curso": curso
     })
-#profesor
-
-# views.py
 
 
-# LISTAR PROFESORES
+
+
 def listar_profesores(request):
     profesores = Profesor.objects.all()
     return render(request, "curso/listar_profesor.html", {"profesores": profesores})
 
-# CREAR PROFESOR
 def crear_profesor(request):
     form = ProfesorForm()
     if request.method == "POST":
@@ -354,7 +365,7 @@ def crear_profesor(request):
             return redirect("app:listar_profesores")
     return render(request, "curso/crear_profesor.html", {"form": form})
 
-# EDITAR PROFESOR
+
 def editar_profesor(request):
     profesores = Profesor.objects.all()
     return render(request, "curso/editar_profesor.html", {"profesores": profesores})
@@ -368,10 +379,10 @@ def editar_profesor_detalle(request, token):
     form = ProfesorForm(request.POST or None, instance=profesor)
     if form.is_valid():
         form.save()
-        return redirect("app:editar_profesor")  # vuelve a la lista de edición
+        return redirect("app:editar_profesor")
     return render(request, "curso/editar_profesor_detalle.html", {"form": form, "profesor": profesor})
 
-# ELIMINAR PROFESOR
+
 def eliminar_profesor(request):
     profesores = Profesor.objects.all()
     return render(request, "curso/eliminar_profesor.html", {"profesores": profesores})
@@ -383,12 +394,11 @@ def eliminar_profesor_detalle(request, token):
     profesor = get_object_or_404(Profesor, id=id_real)
     if request.method == "POST":
         profesor.delete()
-        return redirect("app:eliminar_profesor")  # vuelve a la lista de eliminar
+        return redirect("app:eliminar_profesor")
     return render(request, "curso/eliminar_profesor_detalle.html", {"profesor": profesor})
 
 
-#EVALUACIONES
-#CREAR EVALIUACIONES
+
 def listar_evaluacion(request):
     evalua = Evaluaciones.objects.all()
     return render(request, "eval/listar_evaluacion.html", {"evaluaciones": evalua})
@@ -417,7 +427,7 @@ def editar_evaluacion_detalle(request, token):
     form = EvaluacionesForm(request.POST or None, instance=evaluacion)
     if form.is_valid():
         form.save()
-        return redirect("app:editar_evaluacion")  # vuelve a la lista de edición
+        return redirect("app:editar_evaluacion")
     return render(request, "eval/editar_evaluacion_detalle.html", {"form": form, "evaluacion": evaluacion})
 def eliminar_evaluacion(request):
     evaluacion = Evaluaciones.objects.all()
@@ -430,12 +440,11 @@ def eliminar_evaluacion_detalle(request, token):
     evaluacion = get_object_or_404(Evaluaciones, id=id_real)
     if request.method == "POST":
         evaluacion.delete()
-        return redirect("app:eliminar_evaluacion")  # vuelve a la lista de eliminar
+        return redirect("app:eliminar_evaluacion")
     return render(request, "eval/eliminar_evaluacion_detalle.html", {"evaluacion": evaluacion})
 
 
 
-#Calificacion
 
 def listar_calificacion(request):
     calificacion = Calificacion.objects.all()
@@ -494,14 +503,11 @@ def eliminar_calificacion_detalle(request, token):
 
 
 
-#CRUD DE MATERIAS
 
-# LISTAR todas las materias
 def listar_materia(request):
     materias = Materia.objects.all()
     return render(request, 'app/listar_materia.html', {'materias': materias})
 
-# CREAR una nueva materia
 def crear_materia(request):
     if request.method == "POST":
         form = MateriaForm(request.POST, request.FILES)
@@ -531,7 +537,7 @@ def editar_materia_detalle(request, token):
 
     if form.is_valid():
         form.save()
-        return redirect("app:editar_materia")  # vuelve a la lista de edición
+        return redirect("app:editar_materia")
 
     return render(
         request,
@@ -549,7 +555,8 @@ def eliminar_materia_detalle(request, token):
     materia = get_object_or_404(Materia, id=id_real)
     if request.method == "POST":
         materia.delete()
-        return redirect("app:eliminar_materia")  # vuelve a la lista de eliminar
+        return redirect("app:eliminar_materia")
     return render(request, "app/eliminar_materia_detalle.html", {"materia": materia})
+
 
 

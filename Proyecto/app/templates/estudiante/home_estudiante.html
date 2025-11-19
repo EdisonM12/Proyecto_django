@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Estudiante</title>
     <style>
-        /* ===== CSS ===== */
+
         * {
             margin: 0;
             padding: 0;
@@ -240,11 +240,11 @@
         <h1>Bienvenido</h1>
         <nav>
             <ul>
-                <li><a href="{% url 'app:perfil' %}">Inicio</a></li>
-                <li><a href="{% url 'app:notas_estudiante' %}">Materias</a></li>
-                <li><a href="{% url 'app:evaluaciones_ver'%}">Tareas</a></li>
-                <li><a href="#">Perfil</a></li>
-                <li><a href="#" class="btn">Ir a Estudiante</a></li>
+                <li><a href="{% url 'app:listar_cursos' %}">Cursos</a></li>
+                <li><a href="{% url 'app:listar_profesores' %}">Profesores</a></li>
+                <li><a href="{% url 'app:listar_evaluacion'%}">Actividades</a></li>
+                <li><a href="{% url 'app:listar_calificacion'%}">Notas</a></li>
+                <li><a href="{% url 'app:home'%}" class="btn">Cerrar cesion</a></li>
             </ul>
         </nav>
     </header>
@@ -253,7 +253,7 @@
         <div class="hero-text">
             <h2>Tu espacio de estudio personalizado</h2>
             <p>Organiza tus materias, tareas y proyectos en un solo lugar.</p>
-            <a href="#" class="btn">Ver mis materias</a>
+            <a href="{% url 'app:listar_evaluacion'%}" class="btn">Ver mis materias</a>
         </div>
     </section>
 
@@ -279,7 +279,7 @@
     </section>
 
     <footer>
-        <p>© 2025 Portal del Estudiante | Todos los derechos reservados</p>
+        <p>© 2025 Portal del Estudiante | Todos los derechos reservados al grupo 6</p>
     </footer>
 
 </body>

@@ -13,11 +13,11 @@
     <a href="{% url 'app:listar_estudiantes' %}">Cancelar</a>
 </form>
 <script>
-    // Confirmación adicional
+
     document.getElementById("eliminarForm").addEventListener("submit", function (e) {
         const confirmar = confirm("Esta acción no se puede deshacer. ¿Deseas continuar?");
         if (!confirmar) {
-            e.preventDefault(); // Cancela el envío si el usuario dice "No"
+            e.preventDefault();
         }
     });
 </script>

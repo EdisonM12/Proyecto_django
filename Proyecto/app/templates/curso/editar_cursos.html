@@ -219,6 +219,7 @@
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
+                    <th style="text-align: right;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -227,9 +228,12 @@
                     <td data-label="Código">{{ c.codigo }}</td>
                     <td data-label="Nombre">{{ c.nombre }}</td>
                     <td data-label="Descripción">{{ c.descripcion }}</td>
+                    <td data-label="Acciones" class="acciones">
+                        <a class="btn-accion btn-editar" href="{% url 'app:editar_curso_detalle' c.id|sign %}">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
 
-
-
+                    </td>
                 </tr>
                 {% empty %}
                 <tr>

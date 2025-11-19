@@ -144,7 +144,7 @@
             min-height: 100px;
         }
 
-        /* Estilos para los errores de Django */
+
         .errorlist {
             list-style: none;
             padding: 0;
@@ -166,7 +166,7 @@
             font-weight: 900;
         }
 
-        /* Mensaje de error general */
+
         .alert-error {
             background: rgba(239, 68, 68, 0.1);
             border-left: 4px solid var(--error);
@@ -229,7 +229,7 @@
             color: white;
         }
 
-        /* Modal */
+
         .modal {
             display: none;
             position: fixed;
@@ -342,7 +342,7 @@
 </div>
 
 <script>
-    // Animación de entrada del contenedor
+
     anime({
         targets: '.container',
         translateY: [50, 0],
@@ -351,7 +351,7 @@
         easing: 'easeOutExpo'
     });
 
-    // Animación del icono del header
+
     anime({
         targets: '.header-icon',
         scale: [0, 1],
@@ -361,7 +361,7 @@
         easing: 'easeOutElastic(1, .6)'
     });
 
-    // Animación de los campos del formulario
+
     anime({
         targets: '.form-group',
         translateX: [-30, 0],
@@ -371,7 +371,7 @@
         easing: 'easeOutExpo'
     });
 
-    // Animación de los botones
+
     anime({
         targets: '.btn-group',
         translateY: [20, 0],
@@ -381,7 +381,7 @@
         easing: 'easeOutExpo'
     });
 
-    // Añadir clase error a inputs con errores
+
     document.querySelectorAll('.errorlist').forEach(function (errorList) {
         const input = errorList.previousElementSibling;
         if (input && (input.tagName === 'INPUT' || input.tagName === 'SELECT' || input.tagName === 'TEXTAREA')) {
@@ -389,7 +389,7 @@
         }
     });
 
-    // Animación de errores si existen
+
     if (document.querySelectorAll('.errorlist').length > 0 || document.querySelectorAll('.alert-error').length > 0) {
         anime({
             targets: '.errorlist, .alert-error',
@@ -414,7 +414,7 @@
         });
     }
 
-    // Animación sutil en focus de inputs
+
     document.querySelectorAll('input, select, textarea').forEach(input => {
         input.addEventListener('focus', function () {
             anime({

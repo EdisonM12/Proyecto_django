@@ -16,21 +16,21 @@
             const correo = document.getElementById("id_correo")?.value.trim();
             const cedula = document.getElementById("id_cedula")?.value.trim();
 
-            // Validar nombre
+
             if (nombre.length < 2) {
                 alert("El nombre debe tener al menos 2 caracteres.");
                 e.preventDefault();
                 return;
             }
 
-            // Validar apellido
+
             if (apellido.length < 2) {
                 alert("El apellido debe tener al menos 2 caracteres.");
                 e.preventDefault();
                 return;
             }
 
-            // Validar correo
+
             const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!correoRegex.test(correo)) {
                 alert("Ingrese un correo válido.");
@@ -38,7 +38,7 @@
                 return;
             }
 
-            // Validar cédula
+
             if (!/^\d{10}$/.test(cedula)) {
                 alert("La cédula debe tener exactamente 10 dígitos.");
                 e.preventDefault();

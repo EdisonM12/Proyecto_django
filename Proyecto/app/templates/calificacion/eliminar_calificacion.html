@@ -259,7 +259,7 @@
 
 <body>
 <div class="container">
-    <a href="javascript:history.back()" class="back-button">
+    <a href="{% url 'app:profesor' %}" class="back-button">
         <i class="fas fa-arrow-left"></i> Volver
     </a>
 
@@ -342,7 +342,7 @@
     </div>
 </div>
 <script>
-    // Confirmación de eliminación para todos los botones
+
     document.querySelectorAll('.form-eliminar').forEach(form => {
         form.addEventListener('submit', function (e) {
             const nombre = this.closest('tr').querySelector('[data-label="Estudiante"]').innerText.trim();

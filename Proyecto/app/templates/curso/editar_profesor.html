@@ -3,10 +3,15 @@
 <link rel="stylesheet" href="{% static 'css/editar_profesor.css' %}">
 
 {% block content %}
-<div class="container">
-    <h1>Editar Profesores</h1>
-    <table class="table table-striped">
-        <thead>
+    <div class="container">
+
+
+
+
+        <h1>Editar Profesores</h1>
+
+        <table class="table table-striped">
+            <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
@@ -15,23 +20,30 @@
                 <th>Materia</th>
                 <th>Acciones</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             {% for p in profesores %}
-            <tr>
-                <td>{{ p.nombre }}</td>
-                <td>{{ p.apellido }}</td>
-                <td>{{ p.cedula }}</td>
-                <td>{{ p.correo }}</td>
-                <td>{{ p.materia }}</td>
-                <td>
-                    <a class="btn btn-primary" href="{% url 'app:editar_profesor_detalle' p.id|sign  %}">Editar</a>
-                </td>
-            </tr>
+                <tr>
+                    <td>{{ p.nombre }}</td>
+                    <td>{{ p.apellido }}</td>
+                    <td>{{ p.cedula }}</td>
+                    <td>{{ p.correo }}</td>
+                    <td>{{ p.materia }}</td>
+                    <td>
+                        <a class="btn btn-primary" href="{% url 'app:editar_profesor_detalle' p.id|sign %}">Editar</a>
+                    </td>
+                </tr>
             {% empty %}
-            <tr><td colspan="6">No hay profesores.</td></tr>
+                <tr>
+                    <td colspan="6">No hay profesores.</td>
+                </tr>
             {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="{% url 'app:inicio' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver
+        </a>
+    </div>
 {% endblock %}

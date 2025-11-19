@@ -1,32 +1,147 @@
 {% extends "curso/home_curso.html" %}
 {% block content %}
-<h1>Nuevo Curso</h1>
-<form method="post" class="card card-body">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="btn btn-success">Guardar</button>
-  <a class="btn btn-secondary" href="{% url 'app:listar_cursos' %}">Volver</a>
-</form>
-    <script>
-document.querySelector("form").addEventListener("submit", function(e) {
-    const nombre = document.getElementById("id_nombre").value.trim();
+    <style>
 
-    if(nombre.length < 3) {
-        alert("El nombre del curso debe tener al menos 3 caracteres.");
-        e.preventDefault();
-        return;
-    }
-
-    // Si tu formulario tiene un campo año:
-    const anioElem = document.getElementById("id_anio");
-    if(anioElem) {
-        const anio = parseInt(anioElem.value);
-        if(isNaN(anio) || anio < 1900 || anio > 2100) {
-            alert("Ingrese un año válido entre 1900 y 2100.");
-            e.preventDefault();
-            return;
+        body {
+            font-family: "Poppins", sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 40px 20px;
         }
-    }
-});
-</script>
+
+        h1 {
+            text-align: center;
+            color: #2a3d66;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+
+        form.card {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+        }
+
+        form.card:hover {
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+        }
+
+
+        form.card input,
+        form.card select,
+        form.card textarea {
+            width: 100%;
+            padding: 10px 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        form.card input:focus,
+        form.card select:focus,
+        form.card textarea:focus {
+            outline: none;
+            border-color: #2a3d66;
+            box-shadow: 0 0 5px rgba(42, 61, 102, 0.3);
+        }
+
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-success {
+            background: #4caf50;
+            color: white;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background: #43a047;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            border: none;
+            margin-left: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+
+        form.card .btn {
+            margin-top: 10px;
+        }
+
+
+        form.card label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #2a3d66;
+        }
+
+
+        @media (max-width: 600px) {
+            form.card {
+                padding: 20px;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+            }
+        }
+    </style>
+    <h1>Nuevo Curso</h1>
+    <form method="post" class="card card-body">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-success">Guardar</button>
+        <a class="btn btn-secondary" href="{% url 'app:inicio' %}">Volver</a>
+    </form>
+    <script>
+        document.querySelector("form").addEventListener("submit", function (e) {
+            const nombre = document.getElementById("id_nombre").value.trim();
+
+            if (nombre.length < 3) {
+                alert("El nombre del curso debe tener al menos 3 caracteres.");
+                e.preventDefault();
+                return;
+            }
+
+
+            const anioElem = document.getElementById("id_anio");
+            if (anioElem) {
+                const anio = parseInt(anioElem.value);
+                if (isNaN(anio) || anio < 1900 || anio > 2100) {
+                    alert("Ingrese un año válido entre 1900 y 2100.");
+                    e.preventDefault();
+                    return;
+                }
+            }
+        });
+    </script>
 {% endblock %}

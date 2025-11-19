@@ -1,191 +1,253 @@
-{% extends "curso/home_curso.html" %}
-{% block content %}
 
+{% load signing_tags %}
+{% block extra_css %}
 <style>
-    /* ============================
-       FUENTE BONITA
-    ============================ */
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
     body {
-        font-family: "Poppins", sans-serif;
+        background: #f5f7fa !important;
+        padding-top: 80px !important;
     }
 
-    /* ============================
-       CONTENEDOR GENERAL
-    ============================ */
-    .contenedor-eliminar {
-        max-width: 600px;
-        margin: 80px auto;
-        background: #ffffff;
-        padding: 2.5rem;
-        border-radius: 20px;
-        box-shadow: 0 10px 35px rgba(0,0,0,0.08);
-        animation: fadeIn 0.5s ease;
+
+    .seccion-principal {
+        width: 90%;
+        max-width: 1200px;
+        margin: 40px auto;
+        font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to   { opacity: 1; transform: translateY(0); }
-    }
 
-    /* ============================
-       TÍTULO
-    ============================ */
-    .titulo-eliminar {
-        font-size: 2rem;
-        font-weight: 600;
-        text-align: center;
-        color: #e74c3c;
+    .seccion-principal .encabezado-pagina {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 30px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
     }
 
-    /* ============================
-       ALERTA DE ELIMINAR
-    ============================ */
-    .alerta-eliminar {
-        background: #ffe2e2;
-        padding: 1.5rem;
-        text-align: center;
-        border: 2px solid #ffb3b3;
-        border-radius: 12px;
-        color: #2c3e50;
-        margin-bottom: 25px;
-    }
-
-    .alerta-eliminar i {
-        font-size: 3.5rem;
-        margin-bottom: 15px;
-        display: block;
-        color: #e74c3c;
-    }
-
-    .alerta-eliminar p {
-        margin: 10px 0;
-        font-size: 1.1rem;
-        font-weight: 500;
-    }
-
-    .nombre-curso {
+    .seccion-principal .titulo-pagina {
+        font-size: 32px;
         font-weight: 700;
-        color: #e74c3c;
-        font-size: 1.4rem;
-        display: block;
-        margin: 15px 0;
+        color: #2c3e50;
+        margin: 0;
     }
 
-    .advertencia-texto {
-        margin-top: 15px;
-        font-size: 0.95rem;
-        font-weight: 400;
-        color: #7f8c8d;
-    }
 
-    /* ============================
-       FORMULARIO Y BOTONES
-    ============================ */
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-    }
-
-    .contenedor-botones {
-        display: flex;
-        gap: 15px;
-        margin-top: 20px;
-    }
-
-    .boton {
-        flex: 1;
-        padding: 14px 20px;
-        border-radius: 12px;
-        font-weight: 600;
+    .seccion-principal .btn-nuevo {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        color: white;
+        padding: 12px 24px;
+        border-radius: 8px;
         text-decoration: none;
-        font-size: 1rem;
+        font-weight: 600;
         transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-        text-align: center;
         display: inline-flex;
         align-items: center;
-        justify-content: center;
+        gap: 8px;
+        box-shadow: 0 2px 8px rgba(40, 167, 69, 0.3);
+    }
+
+    .seccion-principal .btn-nuevo:hover {
+        background: linear-gradient(135deg, #218838 0%, #1aa179 100%);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+    }
+
+
+    .seccion-principal .contenedor-tabla {
+        overflow-x: auto;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        background: white;
+    }
+
+    .seccion-principal table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .seccion-principal thead {
+        background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        color: white;
+    }
+
+    .seccion-principal thead th {
+        padding: 16px;
+        text-align: left;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .seccion-principal thead th:last-child {
+        text-align: right;
+    }
+
+    .seccion-principal tbody tr {
+        border-bottom: 1px solid #e9ecef;
+        transition: all 0.2s ease;
+    }
+
+    .seccion-principal tbody tr:hover {
+        background: #f8f9fa;
+        transform: scale(1.002);
+    }
+
+    .seccion-principal tbody td {
+        padding: 14px 16px;
+        font-size: 14px;
+        color: #495057;
+    }
+
+
+    .seccion-principal .estado-vacio {
+        text-align: center;
+        padding: 50px 20px;
+    }
+
+    .seccion-principal .estado-vacio i {
+        font-size: 60px;
+        color: #6c757d;
+        margin-bottom: 20px;
+    }
+
+    .seccion-principal .estado-vacio h3 {
+        color: #495057;
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+
+    .seccion-principal .acciones {
+        display: flex;
+        justify-content: flex-end;
         gap: 8px;
     }
 
-    .btn-eliminar {
-        background: #e74c3c;
+    .seccion-principal .btn-accion {
+        text-decoration: none;
         color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
     }
 
-    .btn-eliminar:hover {
-        background: #c0392b;
+    .seccion-principal .btn-editar {
+        background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+    }
+
+    .seccion-principal .btn-editar:hover {
+        background: linear-gradient(135deg, #357ABD 0%, #2868a8 100%);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
     }
 
-    .btn-cancelar {
-        background: #95a5a6;
-        color: white;
+    .seccion-principal .btn-eliminar {
+        background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
     }
 
-    .btn-cancelar:hover {
-        background: #7f8c8d;
+    .seccion-principal .btn-eliminar:hover {
+        background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(149, 165, 166, 0.4);
     }
 
-    /* ============================
-       RESPONSIVE
-    ============================ */
+
     @media (max-width: 768px) {
-        .contenedor-eliminar {
-            margin: 20px;
-            padding: 1.5rem;
+        body {
+            padding-top: 120px !important;
         }
 
-        .contenedor-botones {
+        .seccion-principal {
+            width: 95%;
+        }
+
+        .seccion-principal .encabezado-pagina {
             flex-direction: column;
+            gap: 15px;
         }
 
-        .titulo-eliminar {
-            font-size: 1.5rem;
+        .seccion-principal table thead {
+            display: none;
         }
 
-        .nombre-curso {
-            font-size: 1.2rem;
+        .seccion-principal table tr {
+            display: block;
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+        }
+
+        .seccion-principal table td {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+        .seccion-principal table td::before {
+            content: attr(data-label);
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .seccion-principal .acciones {
+            flex-direction: column;
         }
     }
 </style>
+{% endblock %}
 
-<div class="contenedor-eliminar">
-    <h1 class="titulo-eliminar">Eliminar Curso</h1>
+{% block content %}
+<div class="seccion-principal">
 
-    <div class="alerta-eliminar">
-        <i class="fas fa-exclamation-triangle"></i>
-        <p>¿Estás seguro que deseas eliminar el curso</p>
-        <span class="nombre-curso">"{{ curso.nombre }}"?</span>
-        <p class="advertencia-texto">
-            <i class="fas fa-info-circle"></i>
-            Esta acción no se puede deshacer y se eliminarán todos los datos relacionados.
-        </p>
+    <div class="encabezado-pagina">
+        <h1 class="titulo-pagina">📚 Cursos</h1>
+        <a class="btn-nuevo" href="{% url 'app:inicio' %}">
+            <i class="fas fa-plus-circle"></i> volver
+        </a>
     </div>
 
-    <form method="post">
-        {% csrf_token %}
-        <div class="contenedor-botones">
-            <button type="submit" class="boton btn-eliminar">
-                <i class="fas fa-trash-alt"></i>
-                Sí, eliminar
-            </button>
-            <a href="{% url 'app:listar_cursos' %}" class="boton btn-cancelar">
-                <i class="fas fa-times"></i>
-                Cancelar
-            </a>
-        </div>
-    </form>
-</div>
 
+    <div class="contenedor-tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th style="text-align: right;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in curso %}
+                <tr>
+                    <td data-label="Código">{{ c.codigo }}</td>
+                    <td data-label="Nombre">{{ c.nombre }}</td>
+                    <td data-label="Descripción">{{ c.descripcion }}</td>
+                    <td data-label="Acciones" class="acciones">
+
+                        <a class="btn-accion btn-eliminar" href="{% url 'app:eliminar_curso_detalle' c.id|sign %}" onclick="return confirm('¿Estás seguro de eliminar este curso?');">
+                            <i class="fas fa-trash-alt"></i> Eliminar
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">
+                        <div class="estado-vacio">
+                            <i class="fas fa-book-open"></i>
+                            <h3>No hay cursos registrados</h3>
+                            <p>Comienza agregando un nuevo curso</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}

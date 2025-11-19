@@ -34,7 +34,7 @@
             overflow-x: hidden;
         }
 
-        /* Barra de navegación */
+
         .barra-navegacion {
             position: fixed;
             top: 0;
@@ -154,7 +154,7 @@
             background: linear-gradient(135deg, var(--primario), var(--secundario));
         }
 
-        /* Menú desplegable personalizado */
+
         .desplegable {
             position: relative;
         }
@@ -316,7 +316,7 @@
             opacity: 1;
         }
 
-        /* Sección Hero */
+
         .seccion-hero {
             min-height: 100vh;
             display: flex;
@@ -458,18 +458,19 @@
             position: relative;
             z-index: 1;
         }
+
         .volver {
-          position: fixed;      /* Para que se mantenga fijo en la pantalla */
-          bottom: 20px;         /* Distancia desde abajo */
-          left: 20px;           /* Distancia desde la izquierda */
-          padding: 10px 20px;
-          background-color: #007bff;
-          color: white;
-          font-size: 18px;
-          border-radius: 8px;
-          cursor: pointer;
-          font-weight: bold;
-}
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
 
         .boton-primario {
@@ -587,7 +588,7 @@
             font-size: 0.875rem;
         }
 
-        /* Menú móvil */
+
         .alternador-movil {
             display: none;
             background: none;
@@ -618,7 +619,7 @@
             transform: rotate(-45deg) translate(7px, -7px);
         }
 
-        /* Responsive */
+
         @media (max-width: 968px) {
             .alternador-movil {
                 display: block;
@@ -682,276 +683,288 @@
     </style>
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav class="barra-navegacion">
-        <div class="contenedor">
-            <div class="contenido-nav">
-                <a href="#" class="logo">
-                    <div class="icono-logo">SA</div>
-                    <span>Sistema Académico</span>
-                </a>
 
-                <button class="alternador-movil" id="alternadorMovil">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
+<nav class="barra-navegacion">
+    <div class="contenedor">
+        <div class="contenido-nav">
+            <a href="#" class="logo">
+                <div class="icono-logo">SA</div>
+                <span>Sistema Académico</span>
+            </a>
 
-                <ul class="menu-nav" id="menuNav">
-                    <li>
-                        <details class="desplegable">
-                            <summary class="boton-desplegable">
-                                <i class="fa-solid fa-user-graduate"></i>
-                                <span>Estudiantes</span>
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </summary>
-                            <div class="menu-desplegable" >
-                                <a href="#" class="item-desplegable" id="lista" data-url="{% url 'app:listar_estudiantes'%}">
-                                    <i class="fa-solid fa-list"></i>
-                                    <span>Lista de Estudiantes</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:ver_pendiente'%}">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar Registro</span>
-                                </a>
-                                <a href="#" class="item-desplegable" id="editar1" data-url="{% url 'app:editar_estudiantes'%}">
-                                    <i class="bi bi-pencil-square"></i>
-                                    <span>Editar Estudiantes</span>
-                                </a>
+            <button class="alternador-movil" id="alternadorMovil">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-                                <a href="#" class="item-desplegable" id="eliminar1" data-url="{% url 'app:eliminar_estudiantes'%}">
-                                    <i class="bi bi-trash"></i>
-                                    <span>Eliminar Estudiantes</span>
-                                </a>
-                            </div>
-                        </details>
-                    </li>
-                    <li>
-                        <details class="desplegable">
-                            <summary class="boton-desplegable">
-                                <i class="bi bi-award-fill"></i>
-                                <span>Profesores</span>
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </summary>
-                            <div class="menu-desplegable" >
-                                <a href="#" class="item-desplegable" id="lista1" data-url="{% url 'app:listar_profesores'%}">
-                                    <i class="fa-solid fa-list"></i>
-                                    <span>Lista de Profesores</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="crear1" data-url="{% url 'app:crear_profesor'%}">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar Profesores</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="lista1_profesor" data-url="{% url 'app:editar_profesor'%}">
-                                    <i class="bi bi-pencil-square"></i>
-                                    <span>Editar Profesores</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="lista1_eliminar" data-url="{% url 'app:eliminar_profesor'%}">
-                                    <i class="bi bi-trash"></i>
-                                    <span>Eliminar Profesores</span>
-                                </a>
-                            </div>
-                        </details>
-                    </li>
-                    <li>
-                        <details class="desplegable">
-                            <summary class="boton-desplegable">
-                                <i class="bi bi-award-fill"></i>
-                                <span>Materia</span>
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </summary>
-                            <div class="menu-desplegable" >
-                                <a href="#" class="item-desplegable" id="lista3" data-url="{% url 'app:listar_materia'%}">
-                                    <i class="fa-solid fa-list"></i>
-                                    <span>Lista de Materia</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="crear3" data-url="{% url 'app:crear_materia'%}">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar Materia</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="editar3" data-url="{% url 'app:editar_materia'%}">
-                                    <i class="fa-solid fa-chart-simple"></i>
-                                    <span>Editar Materia</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="eliminar3" data-url="{% url 'app:eliminar_materia'%}">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                    <span>Eliminar Materia</span>
-                                </a>
-                            </div>
-                        </details>
+            <ul class="menu-nav" id="menuNav">
+                <li>
+                    <details class="desplegable">
+                        <summary class="boton-desplegable">
+                            <i class="fa-solid fa-user-graduate"></i>
+                            <span>Estudiantes</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </summary>
+                        <div class="menu-desplegable">
+                            <a href="#" class="item-desplegable" id="lista"
+                               data-url="{% url 'app:listar_estudiantes' %}">
+                                <i class="fa-solid fa-list"></i>
+                                <span>Lista de Estudiantes</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="crear" data-url="{% url 'app:ver_pendiente' %}">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>Agregar Registro</span>
+                            </a>
+                            <a href="#" class="item-desplegable" id="editar1"
+                               data-url="{% url 'app:editar_estudiantes' %}">
+                                <i class="bi bi-pencil-square"></i>
+                                <span>Editar Estudiantes</span>
+                            </a>
 
-                    </li>
+                            <a href="#" class="item-desplegable" id="eliminar1"
+                               data-url="{% url 'app:eliminar_estudiantes' %}">
+                                <i class="bi bi-trash"></i>
+                                <span>Eliminar Estudiantes</span>
+                            </a>
+                        </div>
+                    </details>
+                </li>
+                <li>
+                    <details class="desplegable">
+                        <summary class="boton-desplegable">
+                            <i class="bi bi-award-fill"></i>
+                            <span>Profesores</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </summary>
+                        <div class="menu-desplegable">
+                            <a href="#" class="item-desplegable" id="lista1"
+                               data-url="{% url 'app:listar_profesores' %}">
+                                <i class="fa-solid fa-list"></i>
+                                <span>Lista de Profesores</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="crear1" data-url="{% url 'app:crear_profesor' %}">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>Agregar Profesores</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="lista1_profesor"
+                               data-url="{% url 'app:editar_profesor' %}">
+                                <i class="bi bi-pencil-square"></i>
+                                <span>Editar Profesores</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="lista1_eliminar"
+                               data-url="{% url 'app:eliminar_profesor' %}">
+                                <i class="bi bi-trash"></i>
+                                <span>Eliminar Profesores</span>
+                            </a>
+                        </div>
+                    </details>
+                </li>
+                <li>
+                    <details class="desplegable">
+                        <summary class="boton-desplegable">
+                            <i class="bi bi-award-fill"></i>
+                            <span>Materia</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </summary>
+                        <div class="menu-desplegable">
+                            <a href="#" class="item-desplegable" id="lista3" data-url="{% url 'app:listar_materia' %}">
+                                <i class="fa-solid fa-list"></i>
+                                <span>Lista de Materia</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="crear3" data-url="{% url 'app:crear_materia' %}">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>Agregar Materia</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="editar3" data-url="{% url 'app:editar_materia' %}">
+                                <i class="fa-solid fa-chart-simple"></i>
+                                <span>Editar Materia</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="eliminar3"
+                               data-url="{% url 'app:eliminar_materia' %}">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>Eliminar Materia</span>
+                            </a>
+                        </div>
+                    </details>
 
-                    <li>
-                        <details class="desplegable">
-                            <summary class="boton-desplegable">
-                                <i class="bi bi-award-fill"></i>
-                                <span>Cursos</span>
-                                <i class="fa-solid fa-chevron-down"></i>
-                            </summary>
-                            <div class="menu-desplegable" >
-                                <a href="#" class="item-desplegable" id="lista2" data-url="{% url 'app:listar_cursos'%}">
-                                    <i class="fa-solid fa-list"></i>
-                                    <span>Lista de Cursos</span>
-                                </a>
-                                <a class="item-desplegable" href="#" id="crear2" data-url="{% url 'app:crear_curso'%}">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <span>Agregar Cursos</span>
-                                </a>
-                                <a href="#" class="item-desplegable">
-                                    <i class="fa-solid fa-chart-simple"></i>
-                                    <span>Editar Cursos</span>
-                                </a>
-                                <a href="#" class="item-desplegable">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                    <span>Eliminar cursos</span>
-                                </a>
-                            </div>
-                        </details>
-                    </li>
-                    <li>
-                        <button class="boton-eliminar" onclick="location.href='{% url 'app:opciones'%}' ">
-                            <svg viewBox="0 0 448 512">
-                                <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
-                            </svg>
-                        </button>
-                    </li>
-                </ul>
-            </div>
+                </li>
+
+                <li>
+                    <details class="desplegable">
+                        <summary class="boton-desplegable">
+                            <i class="bi bi-award-fill"></i>
+                            <span>Cursos</span>
+                            <i class="fa-solid fa-chevron-down"></i>
+                        </summary>
+                        <div class="menu-desplegable">
+                            <a href="#" class="item-desplegable" id="lista2" data-url="{% url 'app:listar_cursos' %}">
+                                <i class="fa-solid fa-list"></i>
+                                <span>Lista de Cursos</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="crear2" data-url="{% url 'app:crear_curso' %}">
+                                <i class="fa-solid fa-user-plus"></i>
+                                <span>Agregar Cursos</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="editar22" data-url="{% url 'app:editar_curso' %}"> <i
+                                    class="fa-solid fa-chart-simple"></i>
+                                <span>Editar Cursos</span>
+                            </a>
+                            <a class="item-desplegable" href="#" id="eliminar22" data-url="{% url 'app:eliminar_curso' %}">
+                                <i class="fa-solid fa-graduation-cap"></i>
+                                <span>Eliminar cursos</span>
+                            </a>
+                        </div>
+                    </details>
+                </li>
+                <li>
+                    <button class="boton-eliminar" onclick="location.href='{% url 'app:opciones' %}' ">
+                        <svg viewBox="0 0 448 512">
+                            <path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"></path>
+                        </svg>
+                    </button>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    <!-- Sección Hero -->
-    <section class="seccion-hero">
-        <div class="contenedor">
-            <div class="cuadricula-hero">
-                <div class="contenido-hero">
-                    <div class="insignia-hero">
-                        <i class="fas fa-star"></i>
-                        <span>Sistema de Gestión Educativa #1</span>
-                    </div>
-                    <h1 class="titulo-hero">Gestiona tu Institución de Forma Inteligente</h1>
-                    <p class="descripcion-hero">
-                        Plataforma integral para administrar estudiantes, profesores, cursos y calificaciones.
-                        Simplicidad y eficiencia en un solo lugar.
-                    </p>
 
+<section class="seccion-hero">
+    <div class="contenedor">
+        <div class="cuadricula-hero">
+            <div class="contenido-hero">
+                <div class="insignia-hero">
+                    <i class="fas fa-star"></i>
+                    <span>Sistema de Gestión Educativa #1</span>
+                </div>
+                <h1 class="titulo-hero">Gestiona tu Institución de Forma Inteligente</h1>
+                <p class="descripcion-hero">
+                    Plataforma integral para administrar estudiantes, profesores, cursos y calificaciones.
+                    Simplicidad y eficiencia en un solo lugar.
+                </p>
+
+            </div>
+
+            <div class="imagen-hero">
+                <div class="contenedor-imagen">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop"
+                         alt="Sistema Académico">
                 </div>
 
-                <div class="imagen-hero">
-                    <div class="contenedor-imagen">
-                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" alt="Sistema Académico">
+                <div class="tarjeta-flotante tarjeta-flotante-1">
+                    <div class="icono-tarjeta">
+                        <i class="fas fa-chart-line"></i>
                     </div>
+                    <div class="titulo-tarjeta">98% Eficiencia</div>
+                    <div class="texto-tarjeta">En gestión académica</div>
+                </div>
 
-                    <div class="tarjeta-flotante tarjeta-flotante-1">
-                        <div class="icono-tarjeta">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <div class="titulo-tarjeta">98% Eficiencia</div>
-                        <div class="texto-tarjeta">En gestión académica</div>
+                <div class="tarjeta-flotante tarjeta-flotante-2">
+                    <div class="icono-tarjeta">
+                        <i class="fas fa-users"></i>
                     </div>
-
-                    <div class="tarjeta-flotante tarjeta-flotante-2">
-                        <div class="icono-tarjeta">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="titulo-tarjeta">5,000+ Usuarios</div>
-                        <div class="texto-tarjeta">Instituciones confían en nosotros</div>
-                    </div>
+                    <div class="titulo-tarjeta">5,000+ Usuarios</div>
+                    <div class="texto-tarjeta">Instituciones confían en nosotros</div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
 
-    <script>
+<script>
 
-        document.getElementById('lista').onclick = function (){
+    document.getElementById('lista').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('lista1').onclick = function (){
+    }
+    document.getElementById('lista1').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('crear').onclick = function (){
+    }
+    document.getElementById('crear').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('crear1').onclick = function (){
+    }
+    document.getElementById('crear1').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('crear2').onclick = function (){
+    }
+    document.getElementById('crear2').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('lista2').onclick = function (){
+    }
+    document.getElementById('lista2').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('crear3').onclick = function (){
+    }
+    document.getElementById('crear3').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('lista3').onclick = function (){
+    }
+    document.getElementById('lista3').onclick = function () {
         window.location.href = this.dataset.url
-        }
+    }
 
-        document.getElementById('lista1_profesor').onclick = function (){
+    document.getElementById('lista1_profesor').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('lista1_eliminar').onclick = function (){
+    }
+    document.getElementById('lista1_eliminar').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('editar1').onclick = function (){
+    }
+    document.getElementById('editar1').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('eliminar1').onclick = function (){
+    }
+    document.getElementById('eliminar1').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('editar3').onclick = function (){
+    }
+    document.getElementById('editar3').onclick = function () {
         window.location.href = this.dataset.url
-        }
-        document.getElementById('eliminar3').onclick = function (){
+    }
+    document.getElementById('eliminar3').onclick = function () {
         window.location.href = this.dataset.url
-        }
+    }
+     document.getElementById('editar22').onclick = function () {
+        window.location.href = this.dataset.url
+    }
+    document.getElementById('eliminar22').onclick = function () {
+        window.location.href = this.dataset.url
+    }
 
 
 
+    const alternadorMovil = document.getElementById('alternadorMovil');
+    const menuNav = document.getElementById('menuNav');
 
-        // Alternador de menú móvil
-        const alternadorMovil = document.getElementById('alternadorMovil');
-        const menuNav = document.getElementById('menuNav');
+    alternadorMovil.addEventListener('click', () => {
+        alternadorMovil.classList.toggle('activo');
+        menuNav.classList.toggle('activo');
+    });
 
-        alternadorMovil.addEventListener('click', () => {
-            alternadorMovil.classList.toggle('activo');
-            menuNav.classList.toggle('activo');
+    document.getElementById('')
+
+
+    document.addEventListener('click', (e) => {
+        if (!alternadorMovil.contains(e.target) && !menuNav.contains(e.target)) {
+            alternadorMovil.classList.remove('activo');
+            menuNav.classList.remove('activo');
+        }
+    });
+
+
+    const barraNavegacion = document.querySelector('.barra-navegacion');
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset <= 0) {
+            barraNavegacion.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+        } else {
+            barraNavegacion.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+        }
+    });
+
+
+    const enlacesNav = document.querySelectorAll('.enlace-nav');
+    enlacesNav.forEach(enlace => {
+        enlace.addEventListener('mouseenter', function () {
+            this.style.transform = 'translateY(-2px)';
         });
-
-        document.getElementById('')
-
-        // Cerrar menú al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!alternadorMovil.contains(e.target) && !menuNav.contains(e.target)) {
-                alternadorMovil.classList.remove('activo');
-                menuNav.classList.remove('activo');
-            }
+        enlace.addEventListener('mouseleave', function () {
+            this.style.transform = 'translateY(0)';
         });
-
-        // Efecto de scroll en la barra de navegación
-        const barraNavegacion = document.querySelector('.barra-navegacion');
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset <= 0) {
-                barraNavegacion.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
-            } else {
-                barraNavegacion.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
-            }
-        });
-
-        // Agregar efecto hover a enlaces de navegación
-        const enlacesNav = document.querySelectorAll('.enlace-nav');
-        enlacesNav.forEach(enlace => {
-            enlace.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-2px)';
-            });
-            enlace.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
-            });
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
