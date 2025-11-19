@@ -12,6 +12,18 @@
       padding: 0;
       box-sizing: border-box;
     }
+    .volver {
+    position: absolute;
+    top: 20px;           /* Ajusta la distancia desde arriba */
+    right: 20px;         /* Ajusta la distancia desde la derecha */
+    padding: 10px 20px;  /* Tamaño del botón */
+    background-color: #007bff; /* Color azul (puedes cambiarlo) */
+    color: white;        /* Texto blanco */
+    font-size: 18px;     /* Texto más grande */
+    border-radius: 8px;  /* Botón redondeado */
+    cursor: pointer;
+    font-weight: bold;
+}
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -405,6 +417,10 @@
         <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
     </div>
+  </div>
+
+  <div class="volver" onclick="location.href='{% url 'app:opciones' %}'">
+    Volver
   </div>
 
   <script>

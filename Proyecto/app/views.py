@@ -90,33 +90,35 @@ def registrar_pendiente(request):
 def aceptar_pendiente(request, id):
     pendiente = Estudiantes_pendientes.objects.get(id=id)
     cursos = Curso.objects.all()
-    materias = Materia.objects.all()
 
     if request.method == "POST":
         curso = Curso.objects.get(id=request.POST['curso'])
-        materia = Materia.objects.get(id=request.POST['materia'])
-        login = LoginEstudiante.objects.create(
-            email= pendiente.email,
-            password = pendiente.password,
+
+        # 🔥 Verificar si ya existe un login con ese email
+        login, creado = LoginEstudiante.objects.get_or_create(
+            email=pendiente.email,
+            defaults={'password': pendiente.password}
         )
+
+        # Si ya existía, solo se reutiliza
+        # Si no existía, se crea con defaults
 
         Estudiante.objects.create(
             nombre=pendiente.nombre,
             apellido=pendiente.apellido,
             direccion=pendiente.direccion,
             telefono=pendiente.telefono,
-            cedula = pendiente.cedula,
+            cedula=pendiente.cedula,
             curso=curso,
-            datos=materia,
             contraseñas=login
         )
 
         pendiente.delete()
         return redirect("app:listar_estudiantes")
+
     return render(request, "estudiante/aceptar.html", {
         "pendiente": pendiente,
         "cursos": cursos,
-        "materias": materias
     })
 
 

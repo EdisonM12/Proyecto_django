@@ -78,7 +78,7 @@ class Estudiantes_pendientes(models.Model):
     email = models.EmailField(unique=True,  null=True , blank=True)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(unique=True, blank= True, null=True )
-    cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
+    cedula = models.CharField(max_length=100, unique=True, null= False, blank=False)
     estado = models.CharField(max_length=20, default="PENDIENTE")
     password = models.CharField(max_length=255, null=True, blank=True)
 
@@ -89,9 +89,8 @@ class Estudiante(models.Model):
     apellido = models.CharField(max_length=255)
     direccion = models.CharField(max_length=255)
     telefono = models.CharField(unique=True, null=True, blank=True)
-    cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
+    cedula = models.CharField(max_length=100, unique=True, null= False, blank=False)
     curso = models.ForeignKey(Curso , on_delete=models.PROTECT, null=True, blank=True)
-    datos = models.ForeignKey(Materia, on_delete=models.PROTECT, null=True, blank=True)
     contraseñas= models.OneToOneField(LoginEstudiante, on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
