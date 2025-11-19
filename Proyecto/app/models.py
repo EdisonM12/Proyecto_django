@@ -1,9 +1,9 @@
 from django.db import models
 from django.contrib import messages
-# Create your models here.
-from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
-# Create your models here.
+
+
+
 class Administrador(models.Model):
     email = models.EmailField(unique=True)
     password = models.CharField(max_length=255)
@@ -30,11 +30,14 @@ class Profesor(models.Model):
     apellido= models.CharField(max_length=100)
     cedula= models.CharField(max_length=100, unique=True)
     correo= models.EmailField(max_length=100, unique=True)
-    fecha_nacimiento= models.DateField()
+    fecha_nacimiento= models.DateField(),
+
+
+
     login = models.OneToOneField(LoginProfesor, on_delete=models.CASCADE, null=True, blank=True)
 
 
-    def str(self):
+    def __str__(self):
         return self.nombre
 
 class Materia(models.Model):
@@ -52,6 +55,7 @@ class Curso(models.Model):
     nombre = models.CharField(max_length=120)
     descripcion = models.CharField(max_length=120)
     materia = models.ManyToManyField(Materia, related_name='cursos')
+
 
     def __str__(self):
         return f"{self.codigo} - {self.nombre}"
@@ -71,9 +75,9 @@ class LoginEstudiante(models.Model):
 class Estudiantes_pendientes(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True,  null=True , blank=True)
     direccion = models.CharField(max_length=255)
-    telefono = models.IntegerField(unique=True)
+    telefono = models.CharField(unique=True, blank= True, null=True )
     cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
     estado = models.CharField(max_length=20, default="PENDIENTE")
     password = models.CharField(max_length=255, null=True, blank=True)
@@ -84,7 +88,7 @@ class Estudiante(models.Model):
     nombre = models.CharField(max_length=255)
     apellido = models.CharField(max_length=255)
     direccion = models.CharField(max_length=255)
-    telefono = models.CharField(unique=True)
+    telefono = models.CharField(unique=True, null=True, blank=True)
     cedula = models.CharField(max_length=100, unique=True, null= True, blank=True)
     curso = models.ForeignKey(Curso , on_delete=models.PROTECT, null=True, blank=True)
     datos = models.ForeignKey(Materia, on_delete=models.PROTECT, null=True, blank=True)
@@ -95,7 +99,7 @@ class Estudiante(models.Model):
 
 
 class Evaluaciones(models.Model):
-    materia = models.CharField(max_length=255)
+    materia = models.ForeignKey(Materia, on_delete=models.CASCADE, max_length=255)
     periodo = models.CharField(max_length=255)
     pendiente = models.BooleanField()
     archivo = models.FileField(upload_to='pdfs/', null=True, blank=True)

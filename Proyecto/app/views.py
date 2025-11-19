@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import Estudiante,Evaluaciones, Profesor, Curso, Calificacion, Materia, LoginProfesor, Estudiantes_pendientes, LoginEstudiante
 from .forms import Login1, EstudianteForm, EvaluacionesForm, ProfesorForm, CursoForm, CalificacionForm, MateriaForm, Login2, Login3, PendientesForm
@@ -8,13 +9,12 @@ from django.db.models import Q
 
 # views.py
 def login_estudiante(request):
-    """Login y Registro en una misma vista"""
 
     if request.method == "POST":
         form_type = request.POST.get('form_type', 'login')
 
         if form_type == 'registro':
-            # Formulario de REGISTRO con prefijo
+
             form_registro = PendientesForm(request.POST, prefix='registro')
 
             if form_registro.is_valid():
@@ -22,34 +22,27 @@ def login_estudiante(request):
                 pendiente.estado = 'PENDIENTE'
                 pendiente.password = make_password(form_registro.cleaned_data['password'])
                 pendiente.save()
-
-                return redirect('app:login_estudiante')
+                messages.success(request, 'El estudiante ha creado correctamente')
+                return redirect('app:Estudiante_login')
+            else:
+                messages.error(request, "corriga los enunciados correspondientes")
 
         else:
             # Formulario de LOGIN con prefijo
             form_login = Login3(request.POST, prefix='login')
-
             if form_login.is_valid():
                 email = form_login.cleaned_data['email']
                 password = form_login.cleaned_data['password']
 
                 try:
                     usuario = LoginEstudiante.objects.get(email=email)
-
-                    if usuario.check_password(password):
+                    if check_password(password, usuario.password):
                         request.session['estudiante_email'] = email
-
-                        try:
-                            estudiante = Estudiante.objects.get(contraseñas=usuario)
-                            request.session['estudiante_id'] = estudiante.id
-                            request.session['estudiante_nombre'] = estudiante.nombre
-                        except Estudiante.DoesNotExist:
-                            pass
-
-                        return redirect('app:estudiante_home')
-
+                        return redirect('app:Estudiante_home')
+                    else:
+                        form_login.add_error('password', 'Contraseña incorrecta')
                 except LoginEstudiante.DoesNotExist:
-                    pass
+                    form_login.add_error('email', 'Usuario no encontrado')
 
     # Crear formularios vacíos CON PREFIJOS
     form_login = Login3(prefix='login')
@@ -59,6 +52,8 @@ def login_estudiante(request):
         'form_login': form_login,
         'form_registro': form_registro
     })
+
+
 def ver_pendientes(request):
     persona = Estudiantes_pendientes.objects.filter(estado="PENDIENTE")
     return render(request, 'estudiante/pendiente.html', {"pendiente":persona})
@@ -74,10 +69,12 @@ def registrar_pendiente(request):
             apellido=request.POST['apellido'],
             direccion=request.POST['direccion'],
             telefono=request.POST['telefono'],
+            cedula = request.POST['cedula'],
             email = request.POST['email'],
             password= make_password(request.Post['password']),
             estado = "PENDIENTE"
         )
+        messages.success(request, "Registro realizado")
 
         return redirect("app:Estudiante_login")
 
@@ -103,6 +100,7 @@ def aceptar_pendiente(request, id):
             apellido=pendiente.apellido,
             direccion=pendiente.direccion,
             telefono=pendiente.telefono,
+            cedula = pendiente.cedula,
             curso=curso,
             datos=materia,
             contraseñas=login
@@ -178,10 +176,6 @@ def crear_estudiante(request):
 
 
 # LISTAR ESTUDIANTES
-#def listar_estudiantes(request):
- #   estudiantes = Estudiante.objects.all()
-  #  return render(request, "app/listar_estudiantes.html", {"estudiantes": estudiantes})
-
 def listar_estudiantes(request):
 
 
@@ -322,9 +316,6 @@ def eliminar_profesor_detalle(request, id):
         profesor.delete()
         return redirect("app:eliminar_profesor")  # vuelve a la lista de eliminar
     return render(request, "curso/eliminar_profesor_detalle.html", {"profesor": profesor})
-
-
-
 
 
 #EVALUACIONES
@@ -470,7 +461,7 @@ def lista_materias(request):
     materias = Materia.objects.all()
     return render(request, 'app/materia_list.html', {'materias': materias})
 
-# CREAR una nueva materia
+# CREAR una nueva materia now
 def crear_materia(request):
     if request.method == 'POST':
         form = MateriaForm(request.POST)

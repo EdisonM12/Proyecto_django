@@ -8,6 +8,8 @@ urlpatterns = [
 
     path('logout/', views.cerrar_sesion, name='logout'),
     path('login_Estudiante/', views.login_estudiante, name='Estudiante_login'),
+
+
     path('profesor/', views.pag_profesor, name='profesor'),
     path("listar_cursos/", views.listar_cursos, name="listar_cursos"),
     path("crear_curso/", views.crear_curso, name="crear_curso"),
@@ -26,7 +28,7 @@ urlpatterns = [
    path('login/', views.Login_Admin, name='opciones'),
     path('Inicio/', views.home_page, name= 'inicio'),
     path('login_profe/', views.Login_profesor, name='Login_profesor'),
-    path('profesores/', views.home_estudiante, name='Estudiante_home'),
+    path('Estudiante_home/', views.home_estudiante, name='Estudiante_home'),
 
 
 

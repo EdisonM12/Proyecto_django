@@ -1,4 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.template.context_processors import request
+
 from .models import Curso, Profesor, Administrador, Estudiante, Evaluaciones, Calificacion, Materia, LoginProfesor, LoginEstudiante, Estudiantes_pendientes
 
 import re
@@ -155,21 +158,18 @@ class Login3(forms.Form):
         required=True,
         widget=forms.TextInput(attrs={
             'placeholder': 'Ej: 202410230',
-            'style': 'width: 100%; padding: 14px 18px; border: 1px solid rgba(156, 39, 176, 0.4); border-radius: 10px; background-color: rgba(255, 255, 255, 0.08); color: #f0f0f0; font-size: 1em;'
+            'style': 'width: 100%; padding: 14px 18px; border: 1px solid rgba(156, 39, 176, 0.4); border-radius: 10px; background-color: rgba(255, 255, 255, 0.08); color: #f0f0f0; font-size: 1em;',
+             'id':'login_es',
         })
     )
     password = forms.CharField(
-        widget=forms.PasswordInput(attrs={'class': 'input-group input', 'placeholder': 'Contraseña'})
+        widget=forms.PasswordInput(attrs={'class': 'input-group input',
+                                          'placeholder': 'Contraseña',
+                                          'id':'password'}),
 
     )
-    def clean(self):
-        cleaned= super().clean()
-        email =cleaned.get("email")
-        password = cleaned.get("password")
-        if not LoginEstudiante.objects.filter(email=email, password=password).exists():
-            raise forms.ValidationError("Correo o contraseña incorrectos")
 
-        return cleaned
+
 
 class Login1(forms.Form):
     email = forms.EmailField(
@@ -216,6 +216,8 @@ class Login2(forms.Form):
 #ESTUDIANTES PENDIENTES
 class PendientesForm(forms.ModelForm):
         """Formulario de registro de estudiante pendiente"""
+
+
         password = forms.CharField(
             widget=forms.PasswordInput(attrs={
                 'placeholder': 'Crea una contraseña segura'
@@ -225,15 +227,22 @@ class PendientesForm(forms.ModelForm):
 
         class Meta:
             model = Estudiantes_pendientes
-            fields = ['nombre', 'apellido', 'email', 'direccion', 'telefono']
+            fields = ['nombre', 'apellido', 'email', 'direccion', 'telefono', 'cedula']
             widgets = {
                 'nombre': forms.TextInput(attrs={'placeholder': 'Tu nombre'}),
                 'apellido': forms.TextInput(attrs={'placeholder': 'Tu apellido'}),
-                'email': forms.EmailInput(attrs={'placeholder': 'correo@ejemplo.com'}),
+                'email': forms.EmailInput(attrs={'placeholder': 'correo@ejemplo.com', 'id': 'email'}),
                 'direccion': forms.TextInput(attrs={'placeholder': 'Tu dirección'}),
+                'cedula': forms.TextInput(attrs={'placeholder': 'Tu cedula'}),
                 'telefono': forms.TextInput(attrs={'placeholder': '0999999999'}),
             }
 
+        def clean_email(self):
+            correo = self.cleaned_data.get("email")
+            qs = LoginEstudiante.objects.filter(email=correo).exists()
+            if qs:
+                raise forms.ValidationError( "Correo o usuario ya existente")
+            return correo
 
 
 class EstudianteForm(forms.ModelForm):
@@ -266,9 +275,9 @@ class EstudianteForm(forms.ModelForm):
             raise forms.ValidationError("Cédula inválida.")
         fields = ['nombre', 'apellido', 'direccion', 'telefono', 'curso', 'contraseñas']
 
-    def clean_correo(self):
-        correo = self.cleaned_data.get("correo")
-        qs = Estudiante.objects.filter(correo=correo)
+    def clean_email(self):
+        correo = self.cleaned_data.get("email")
+        qs = LoginEstudiante.objects.filter(email=correo)
         if self.instance.pk:
             qs = qs.exclude(pk=self.instance.pk)
         if qs.exists():
