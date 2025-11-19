@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Tareas</title>
+</head>
+<body>
+<h2>Mis Tareas</h2>
+<ul>
+    {% for tarea in tareas %}
+    <li>
+        {{ tarea.titulo }} - Fecha entrega: {{ tarea.fecha_entrega }}
+        {% if tarea.archivo %}- <a href="{{ tarea.archivo.url }}">Ver archivo</a>{% endif %}
+    </li>
+    {% empty %}
+    <li>No tienes tareas asignadas.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'home_estudiante' %}">Volver al inicio</a>
+</body>
+</html>

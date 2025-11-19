@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Notas</title>
+</head>
+<body>
+<h2>Mis Calificaciones</h2>
+<ul>
+    {% for calificacion in calificaciones %}
+    <li>{{ calificacion.evaluacion.materia.nombre }} - {{ calificacion.evaluacion.periodo }}: {{ calificacion.nota }}</li>
+    {% empty %}
+    <li>No tienes calificaciones registradas aún.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'home_estudiante' %}">Volver al inicio</a>
+</body>
+</html>

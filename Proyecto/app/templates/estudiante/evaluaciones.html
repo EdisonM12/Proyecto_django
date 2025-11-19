@@ -1,0 +1,19 @@
+<h1>Evaluaciones</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Materia</th>
+        <th>Fecha</th>
+        <th>Puntaje Máximo</th>
+    </tr>
+    {% for e in evaluaciones %}
+    <tr>
+        <td>{{ e.id }}</td>
+        <td>{{ e.titulo }}</td>
+        <td>{{ e.materia.nombre }}</td>
+        <td>{{ e.fecha }}</td>
+        <td>{{ e.puntaje_maximo }}</td>
+    </tr>
+    {% endfor %}
+</table>

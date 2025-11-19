@@ -118,3 +118,11 @@ class Calificacion(models.Model):
     def __str__(self):
         return f"{self.estudiante} - {self.evaluacion} = {self.nota}"
 
+
+class Tarea(models.Model):
+    titulo = models.CharField(max_length=255)
+    descripcion = models.TextField()
+    fecha_entrega = models.DateField()
+    curso = models.ForeignKey(Curso, on_delete=models.CASCADE)
+    archivo = models.FileField(upload_to='tareas/', null=True, blank=True)
+

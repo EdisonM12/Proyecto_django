@@ -407,3 +407,24 @@ def eliminar_materia(request, pk):
         materia.delete()
         return redirect('app:lista_materias')
     return render(request, 'app/delete_materia.html', {'materia': materia})
+
+def ver_materias(request):
+    email = request.session.get('estudiante_email')
+    estudiante = get_object_or_404(Estudiante, contraseñas__email=email)
+
+    materias = estudiante.curso.materia.all() if estudiante.curso else []
+    return render(request, 'estudiante/materias.html', {'materias': materias})
+
+
+def ver_tareas(request):
+    email = request.session.get('estudiante_email')
+    estudiante = get_object_or_404(Estudiante, contraseñas__email=email)
+    tareas = Tarea.objects.filter(curso=estudiante.curso) if estudiante.curso else []
+    return render(request, 'estudiante/tareas.html', {'tareas': tareas})
+
+
+def ver_notas(request):
+    email = request.session.get('estudiante_email')
+    estudiante = get_object_or_404(Estudiante, contraseñas__email=email)
+    calificaciones = Calificacion.objects.filter(estudiante=estudiante)
+    return render(request, 'estudiante/notas.html', {'calificaciones': calificaciones})

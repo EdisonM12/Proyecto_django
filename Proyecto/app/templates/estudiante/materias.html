@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Materias</title>
+</head>
+<body>
+<h2>Mis Materias</h2>
+<ul>
+    {% for materia in materias %}
+    <li>{{ materia.nombre }} - Profesor: {{ materia.profesor.nombre }} {{ materia.profesor.apellido }}</li>
+    {% empty %}
+    <li>No tienes materias asignadas.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'home_estudiante' %}">Volver al inicio</a>
+</body>
+</html>
